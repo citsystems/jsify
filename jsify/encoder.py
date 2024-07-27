@@ -1,7 +1,7 @@
 import json
 from typing import Any
 
-from jsify import JsonObject
+from .jsify import JsonObject
 
 
 class JsonObjectEncoder(json.JSONEncoder):

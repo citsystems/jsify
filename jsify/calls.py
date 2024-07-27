@@ -1,4 +1,4 @@
-from jsify import unjsify, JsonObject, deep_unjsify
+from .jsify import unjsify, JsonObject, deep_unjsify
 
 
 def jsified_function(*args, result_original=False, result_deep_original=False):

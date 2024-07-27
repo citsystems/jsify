@@ -1,4 +1,4 @@
-from jsify import JsonObject
+from .jsify import JsonObject
 
 
 class JsonAssert:

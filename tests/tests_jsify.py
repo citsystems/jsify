@@ -1,13 +1,13 @@
 import pickle
 from unittest import TestCase
 
-from jsify import JsonDict, jsify, json_copy, json_get, json_pop, json_popitem, json_setdefault, json_update, \
+from ..jsify.jsify import JsonDict, jsify, json_copy, json_get, json_pop, json_popitem, json_setdefault, json_update, \
     json_values, json_keys, json_items, unjsify
-from jsify import JsonObject
+from ..jsify.jsify import JsonObject
 
 from json import dumps
 
-from ..undefined import Undefined
+from jsify.jsify.undefined import Undefined
 
 
 class TestJsonObject(TestCase):
