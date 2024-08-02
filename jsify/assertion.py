@@ -1,3 +1,13 @@
+"""
+The `assertion` module provides a suite of tools for performing assertions on JSON-like objects, ensuring that their
+structure and content conform to expected criteria. This module is particularly useful in testing scenarios where you
+need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON
+structures.
+At the heart of this module is the `JsonAssert` class, which offers a range of assertion methods designed to work with
+instances of `JsonObject`. These assertions enable you to verify that certain keys are either present or absent within
+a JSON object and that the values associated with those keys are as expected.
+"""
+
 from .jsify import JsonObject
 
 

@@ -9,7 +9,8 @@ setup(
     version="0.9.0",  # Update the version as necessary
     author="Zbigniew Rajewski",
     author_email="zbigniew.r@citsystems.pl",
-    description="A library to use Python objects to JSON-compatible formats and vice versa",
+    description="Library designed to allow you to use Python objects in a manner you can use them in JavaScript "
+                "accessing properties using dot notation instead of square brackets.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/citsystems/jsify",  # Replace with the correct URL
@@ -19,7 +20,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',  # Specify the required Python versions
+    python_requires='>=3.0',  # Specify the required Python versions
     install_requires=[
         # List your project dependencies here
         # e.g., "requests >= 2.20.0",

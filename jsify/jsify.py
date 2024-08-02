@@ -1,3 +1,15 @@
+"""
+The `jsify` module provides a set of classes and functions designed to wrap standard Python data structures
+(such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as `JsonObject`,
+`JsonDict`, `JsonList`, and `JsonTuple`, allow for attribute-style access, dynamic nesting, and additional
+functionality that is commonly required when working with JSON data.
+The core component of this module is the `JsonObject` class, which provides a flexible and dynamic interface for
+accessing and manipulating underlying data. The `JsonDict`, `JsonList`, and `JsonTuple` classes extend `JsonObject`
+to offer more specific behaviors for dictionaries, lists, and tuples, respectively.
+Additionally, the module offers a series of utility functions such as `jsify` for converting standard Python objects
+into their JSON-like counterparts, and `unjsify` for reversing this transformation.
+"""
+
 from typing import Iterable, Iterator
 
 from .exceptions import AnyError
@@ -6,11 +18,12 @@ from .undefined import Undefined
 
 class JsonObject:
     """
-    A dynamic JSON-like object that allows attribute-style access
-    and supports automatic creation of nested elements.
-
-    :param o: The original dictionary or object to wrap.
-    :type o: dict or object
+    The `JsonObject` class is designed to provide convenient access to object properties using dot notation instead of
+    square brackets, enhancing code readability and ease of use. It acts as a wrapper around original objects,
+    preserving their data without duplication or alteration. This wrapper supports nested access to properties,
+    allowing deeper navigation into the original data using dot notation. Essentially, `JsonObject` facilitates
+    intuitive and simplified interaction with JSON-like objects, while maintaining the integrity and structure of the
+    original data.
     """
 
     def __init__(self, o):
@@ -749,8 +762,7 @@ class JsonList(JsonObject):
         """
         digits = len(str(len(self.__orig__)))
         return {
-            f"{key:0{digits}}": jsify(value)
-            for key, value in enumerate(self.__orig__)
+            f"{key:0{digits}}": jsify(value) for key, value in enumerate(self.__orig__)
         }
 
     def __contains__(self, item):
@@ -1027,12 +1039,15 @@ def json_keys(obj):
     Return a new view of the dictionary's keys.
 
     :param obj: The object to get the keys from.
-    :type obj: JsonObject or Any
-    :return: A view object displaying a list of the dictionary's keys.
+    :type obj: JsonObject, JsonList, JsonTuple or Any
+    :return: A view object displaying a list of the object's keys (in case of list or tuple these would be the indexes
+    in string format).
     :rtype: JsonIterator
     """
     return JsonIterator(
-        super(JsonObject, obj).__getattribute__("__orig__").keys()
+        obj.__dict__.keys()
+        if isinstance(obj, (JsonList, JsonTuple))
+        else super(JsonObject, obj).__getattribute__("__orig__").keys()
         if isinstance(obj, JsonObject)
         else obj.keys()
     )
@@ -1043,12 +1058,15 @@ def json_items(obj):
     Return a new view of the dictionary's items (key, value pairs).
 
     :param obj: The object to get the items from.
-    :type obj: JsonObject or Any
-    :return: A view object displaying a list of the dictionary's items.
+    :type obj: JsonObject, JsonList, JsonTuple or Any
+    :return: A view object displaying a list of the objects's items (in case of list or tuple these would be values with
+     keys being their indexes in string format).
     :rtype: JsonIterator
     """
     return JsonIterator(
-        super(JsonObject, obj).__getattribute__("__orig__").items()
+        obj.__dict__.items()
+        if isinstance(obj, (JsonList, JsonTuple))
+        else super(JsonObject, obj).__getattribute__("__orig__").items()
         if isinstance(obj, JsonObject)
         else obj.items()
     )

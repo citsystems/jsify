@@ -1,3 +1,13 @@
+"""
+The `encoder` module provides custom JSON serialization functionality specifically designed to handle `JsonObject`
+instances. This module extends Python's built-in `json` module to ensure that `JsonObject` instances are correctly
+converted into their original dictionary representation during the serialization process.
+The module features the `JsonObjectEncoder` class, which overrides the default JSON encoding behavior to accommodate
+`JsonObject` instances. Additionally, it provides custom `dump` and `dumps` functions that leverage this encoder,
+allowing seamless integration with standard JSON serialization workflows.
+You must import this module if you want to use serialization done by json module.
+"""
+
 import json
 from typing import Any
 

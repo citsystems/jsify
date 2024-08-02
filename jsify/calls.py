@@ -1,4 +1,15 @@
+"""
+The `calls` module provides a decorator that facilitates the handling of JSON-like data structures within Python
+functions. This module is particularly useful for developers working with data in the form of dictionaries, lists,
+and tuples, as it simplifies the conversion of these data structures into `JsonObject` instances, enabling
+attribute-style access and other JSON-like behaviors.
+At the heart of this module is the `jsified_function` decorator, which automatically converts function arguments into
+`JsonObject` instances. Additionally, the decorator offers options to process the function's return value, allowing it
+to be returned in its original form or as a deeply unjsified structure, depending on the specified flags.
+"""
+
 from .jsify import unjsify, JsonObject, deep_unjsify
+from .stringcase import json_camel_to_snake
 
 
 def jsified_function(*args, result_original=False, result_deep_original=False):
@@ -40,3 +51,25 @@ def jsified_function(*args, result_original=False, result_deep_original=False):
         return create_decorator()(function=args[0])
     else:
         return create_decorator()
+
+
+def camelized_function(replace=None):
+    """
+    A decorator to convert the keys of JSON-like dictionaries from camelCase to snake_case before passing them to the
+    function.
+
+    Parameters
+    ----------
+    replace : dict, optional
+        A dictionary to specify replacements for certain keys after conversion to snake_case.
+
+    Returns
+    -------
+    function
+        A decorator that applies the conversion to the decorated function's keyword arguments.
+    """
+    def wrapper_with_parameters(func):
+        def wrapper(**kwargs):
+            return func(**json_camel_to_snake(kwargs, replace=replace))
+        return wrapper
+    return wrapper_with_parameters

@@ -1,26 +1,13 @@
+"""
+The `stringcase` module provides utilities for converting string formats between `camelCase` and `snake_case`,
+particularly for handling JSON-like data structures. These tools are essential for developers working in environments
+where consistent naming conventions are required, such as in API development or data transformation tasks.
+This module includes functions for converting individual strings from `camelCase` to `snake_case` and vice versa,
+as well as tools for transforming the keys of JSON-like dictionaries. Additionally, a decorator is provided to
+automatically convert the keys of dictionary arguments passed to a function.
+"""
+
 import re
-
-
-def camel_case_json_function(replace=None):
-    """
-    A decorator to convert the keys of JSON-like dictionaries from camelCase to snake_case before passing them to the function.
-
-    Parameters
-    ----------
-    replace : dict, optional
-        A dictionary to specify replacements for certain keys after conversion to snake_case.
-
-    Returns
-    -------
-    function
-        A decorator that applies the conversion to the decorated function's keyword arguments.
-    """
-    def wrapper_with_parameters(func):
-        def wrapper(**kwargs):
-            return func(**json_camel_to_snake(kwargs, replace=replace))
-        return wrapper
-    return wrapper_with_parameters
-
 
 camel_to_snake_regex = re.compile(r'(?<!^)(?=[A-Z])')
 
