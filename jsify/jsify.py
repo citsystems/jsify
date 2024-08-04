@@ -9,7 +9,7 @@ to offer more specific behaviors for dictionaries, lists, and tuples, respective
 Additionally, the module offers a series of utility functions such as `jsify` for converting standard Python objects
 into their JSON-like counterparts, and `unjsify` for reversing this transformation.
 """
-
+from copy import copy, deepcopy
 from typing import Iterable, Iterator
 
 from .exceptions import AnyError
@@ -495,6 +495,9 @@ class JsonObject:
         """
         return JsonIterator(self)
 
+    def __deepcopy__(self, memo):
+        return deepcopy(self.__orig__, memo=memo)
+
 
 class JsonTuple(JsonObject):
     """
@@ -563,15 +566,16 @@ class JsonTuple(JsonObject):
         """
         return self.__orig__.index(unjsify(value))
 
-    def copy(self):
+    def copy(self, deep=False):
         """
         Return a shallow copy of the tuple.
 
+        :param deep: True if the object should be deep copied, False otherwise.
+        :type deep: bool
         :return: A shallow copy of the tuple.
         :rtype: JsonTuple
         """
-        orig = self.__orig__
-        return jsify(tuple(value for value in orig))
+        return jsify(copy(self.__orig__) if not deep else deepcopy(self.__orig__))
 
     @property
     def __dict__(self):
@@ -652,14 +656,15 @@ class JsonList(JsonObject):
 
     __getattr__ = __getitem__
 
-    def copy(self):
+    def copy(self, deep=False):
         """
         Return a shallow copy of the list.
-
+        :param deep: True if the object should be deep copied, False otherwise.
+        :type deep: bool
         :return: A shallow copy of the list.
         :rtype: JsonList
         """
-        return json_copy(self)
+        return jsify(copy(self.__orig__) if not deep else deepcopy(self.__orig__))
 
     def count(self, value):
         """
@@ -844,7 +849,7 @@ class JsonIterator(Iterator):
         Initialize the JsonIterator with the given JSON object.
 
         :param json_object: The JSON object to iterate over.
-        :type json_object: JsonObject
+        :type json_object: JsonObject or Any
         """
         self.iterator = iter(unjsify(json_object))
 
@@ -892,26 +897,21 @@ def deep_unjsify(obj):
     :return: The original object if obj is a JsonObject, otherwise returns obj.
     :rtype: Any
     """
-    if isinstance(obj, JsonObject):
-        return obj.__orig__
-    else:
-        return obj
+    return unjsify(json_copy(obj, deep=True))
 
 
-def json_copy(obj):
+def json_copy(obj, deep=True):
     """
-    Create a shallow copy of the object.
+    Create a shallow or deep copy of the object.
 
     :param obj: The object to copy.
     :type obj: JsonObject or Any
+    :param deep: True if the object should be deep copied, False otherwise.
+    :type deep: bool
     :return: A shallow copy of the object.
     :rtype: JsonObject or Any
     """
-    return jsify(
-        super(JsonObject, obj).__getattribute__("__orig__").copy()
-        if isinstance(obj, JsonObject)
-        else obj.copy()
-    )
+    return jsify(copy(obj) if not deep else deepcopy(obj))
 
 
 def json_get(obj, item, *args, **kwargs):
@@ -1072,6 +1072,21 @@ def json_items(obj):
     )
 
 
+class PropertiesExistResult:
+    def __init__(self, value=None):
+        """
+        Initialize the result with an optional value.
+
+        :param value: The value to store.
+        :type value: Any
+        """
+        self.jsified = jsify(value)
+        self.unjsified = unjsify(value)
+
+    def __bool__(self):
+        return True
+
+
 def properties_exist(obj, *path):
     """
     Check if a series of properties exist in the JSON object.
@@ -1079,28 +1094,20 @@ def properties_exist(obj, *path):
     :param obj: The JSON object to check.
     :type obj: JsonObject or Any
     :param path: The sequence of properties to check.
-    :type path: tuple
+    :type path: str
     :return: True if the properties exist, False otherwise.
-    :rtype: bool
+    :rtype: bool or PropertiesExistResult
     """
-
-    class PropertiesExistResult:
-        def __init__(self, value=None):
-            """
-            Initialize the result with an optional value.
-
-            :param value: The value to store.
-            :type value: Any
-            """
-            self.value = value
 
     obj = JsonObject(obj)
     try:
         for node in path:
             obj = obj[node]
+            if obj is Undefined:
+                return False
     except AnyError:
         return False
-    return PropertiesExistResult(unjsify(obj))
+    return PropertiesExistResult(obj)
 
 
 def jsify(o, **kwargs):

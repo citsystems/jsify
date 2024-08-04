@@ -1,8 +1,9 @@
 import pickle
 from unittest import TestCase
 
+from jsify.calls import jsified_function, camelized_function
 from jsify.jsify import JsonDict, jsify, json_copy, json_get, json_pop, json_popitem, json_setdefault, json_update, \
-    json_values, json_keys, json_items, unjsify
+    json_values, json_keys, json_items, unjsify, JsonIterator, properties_exist, PropertiesExistResult
 from jsify.jsify import JsonObject
 
 from json import dumps
@@ -117,18 +118,20 @@ class TestJsonObject(TestCase):
         json_object.append(additional_json_object)
         self.assertNotIsInstance(unjsify(json_object[-1]), JsonObject)
 
-
     def test_vars(self):
         class MyClass:
             pass
+
         json_object = jsify(MyClass())
         self.assertDictEqual(unjsify(vars(json_object)), {})
         json_object = jsify(self.test_list)
         digits = len(str(len(self.test_list)))
-        self.assertDictEqual(unjsify(vars(json_object)), {f"{key:0{digits}}": value for key, value in enumerate(self.test_list)})
+        self.assertDictEqual(unjsify(vars(json_object)),
+                             {f"{key:0{digits}}": value for key, value in enumerate(self.test_list)})
         json_object = jsify(self.test_tuple)
         digits = len(str(len(self.test_tuple)))
-        self.assertDictEqual(unjsify(vars(json_object)), {f"{key:0{digits}}": value for key, value in enumerate(self.test_tuple)})
+        self.assertDictEqual(unjsify(vars(json_object)),
+                             {f"{key:0{digits}}": value for key, value in enumerate(self.test_tuple)})
         json_object = jsify(self.test_dict)
         self.assertDictEqual(unjsify(vars(json_object)), {key: value for key, value in self.test_dict.items()})
 
@@ -162,7 +165,7 @@ class TestJsonObject(TestCase):
         self.assertEqual(unjsify(json_object.copy()), unjsify(json_object))
 
         json_object = jsify(self.test_dict)
-        json_object_copy = json_copy(json_object)
+        json_object_copy = json_copy(json_object, deep=True)
         self.assertEqual(unjsify(json_object_copy), unjsify(json_object))
         b = json_object_copy.a
         json_object_copy.a = None
@@ -210,7 +213,7 @@ class TestJsonObject(TestCase):
     def test_dict_functions(self):
         test_dict = self.test_dict.copy()
         json_object = json_copy(jsify(test_dict))
-        self.assertEqual(json_get(json_object,'a'), test_dict.get('a'))
+        self.assertEqual(json_get(json_object, 'a'), test_dict.get('a'))
         self.assertListEqual(list(json_items(json_object)), list(test_dict.items()))
         self.assertListEqual(list(json_keys(json_object)), list(test_dict.keys()))
         self.assertListEqual(list(json_values(json_object)), list(test_dict.values()))
@@ -281,3 +284,65 @@ class TestJsonObject(TestCase):
         self.assertTrue(json_object.unexisting.a == 1)
         self.assertTrue(json_object.unexisting.b == 2)
         self.assertTrue(json_object.unexisting.c == 5)
+
+    def test_iterator(self):
+        dict_iterator = JsonIterator(self.test_dict)
+        for json_key, native_key in zip(dict_iterator, self.test_dict.keys()):
+            self.assertEqual(json_key, native_key)
+        list_iterator = JsonIterator(self.test_list)
+        for json_value, native_value in zip(list_iterator, self.test_list):
+            self.assertEqual(json_value, native_value)
+        tuple_iterator = JsonIterator(self.test_tuple)
+        for json_value, native_value in zip(tuple_iterator, self.test_tuple):
+            self.assertEqual(json_value, native_value)
+        dict_iterator = JsonIterator(jsify(self.test_dict))
+        for json_key, native_key in zip(dict_iterator, self.test_dict.keys()):
+            self.assertEqual(json_key, native_key)
+        list_iterator = JsonIterator(jsify(self.test_list))
+        for json_value, native_value in zip(list_iterator, self.test_list):
+            self.assertEqual(json_value, native_value)
+        tuple_iterator = JsonIterator(jsify(self.test_tuple))
+        for json_value, native_value in zip(tuple_iterator, self.test_tuple):
+            self.assertEqual(json_value, native_value)
+
+    def test_properties_exist(self):
+        result = properties_exist(self.test_dict, 'b', 'b')
+        self.assertTrue(result)
+        self.assertEqual(result.unjsified, self.test_dict['b']['b'])
+        self.assertEqual(result.jsified, jsify(self.test_dict['b']['b']))
+        self.assertFalse(properties_exist(self.test_dict, 'a', 'b'))
+
+    def test_jsified_camelized_function(self):
+
+        @jsified_function(result_original=True)
+        @camelized_function(replace=dict(last_parameter='last'))
+        def test_function_original(first_parameter, second_parameter, last):
+            return [first_parameter.value, second_parameter.value, last.value]
+        input_parameters = dict(firstParameter=dict(value=1), second_parameter=dict(value=2),
+                                lastParameter=dict(value=(3, jsify([1,2]))))
+        result = test_function_original(**input_parameters)
+        self.assertEqual(result, [1,2,(3, jsify([1,2]))])
+        self.assertNotIsInstance(result, JsonObject)
+        self.assertIsInstance(result[2][1], JsonObject)
+
+        @jsified_function(result_deep_original=True)
+        @camelized_function(replace=dict(last_parameter='last'))
+        def test_function_deep_original(first_parameter, second_parameter, last):
+            return [first_parameter.value, second_parameter.value, last.value]
+        input_parameters = dict(firstParameter=dict(value=1), second_parameter=dict(value=2),
+                                lastParameter=dict(value=(3, jsify([1, 2]))))
+        result = test_function_deep_original(**input_parameters)
+        self.assertEqual(result, [1, 2, (3, [1, 2])])
+        self.assertNotIsInstance(result, JsonObject)
+        self.assertNotIsInstance(result[2][1], JsonObject)
+
+        @jsified_function
+        @camelized_function(replace=dict(last_parameter='last'))
+        def test_function(first_parameter, second_parameter, last):
+            return [first_parameter.value, second_parameter.value, last.value]
+        input_parameters = dict(firstParameter=dict(value=1), second_parameter=dict(value=2),
+                                lastParameter=dict(value=(3, jsify([1, 2]))))
+        result = test_function(**input_parameters)
+        self.assertEqual(result, [1, 2, (3, [1, 2])])
+        self.assertIsInstance(result, JsonObject)
+

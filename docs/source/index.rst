@@ -21,6 +21,7 @@ Welcome to jsify's documentation!
    using_assertions
    jsified_functions
    camelized_functions
+   properties_exist
    reference/index
 
 Indices and tables

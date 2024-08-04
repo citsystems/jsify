@@ -21,7 +21,7 @@ class UndefinedClass:
         return UndefinedClass.Undefined
 
     @classmethod
-    def __call__(cls):
+    def __call__(cls, *args, **kwargs):
         return UndefinedClass.Undefined
 
     @classmethod
