@@ -1,6 +1,6 @@
 __pycache__/
 dist/
 build/
-!docs/build/
 jsify.egg-info/
 .idea/
+/docs/.buildinfo
