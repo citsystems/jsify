@@ -138,11 +138,7 @@ print(result)  # Outputs: 40
 
 ## Documentation
 
-For detailed documentation and more advanced usage, please refer to the [official documentation](https://github.com/yourusername/jsify).
-
-## Contributing
-
-Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before making any contributions.
+For detailed documentation and more advanced usage, please refer to the [official documentation](https://citsystems.github.io/jsify/).
 
 ## License
 
