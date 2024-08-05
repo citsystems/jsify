@@ -17,9 +17,6 @@ copyright = '2024, Zbigniew Rajewski'
 author = 'Zbigniew Rajewski'
 release = '0.9.0'
 
-# Example URL: https://<username>.github.io/<repository-name>/
-html_baseurl = 'https://citsystems.github.io/jsify/'
-
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
