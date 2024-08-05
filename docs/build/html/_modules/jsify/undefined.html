@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jsify.undefined &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jsify.undefined</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jsify.undefined</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The `undefined` module provides a Python implementation of the JavaScript `undefined` value, which can be used in</span>
+<span class="sd">scenarios where a placeholder for &quot;no value&quot; is needed. This module introduces the `UndefinedClass` and its singleton</span>
+<span class="sd">instance `Undefined`, which mimics the behavior of `undefined` in JavaScript.</span>
+<span class="sd">The `UndefinedClass` is designed to ensure that there is only one instance of `Undefined`, making it functionally</span>
+<span class="sd">similar to `None` in Python but with distinct behavior. This class provides several special methods to ensure that</span>
+<span class="sd">`Undefined` interacts gracefully with Python&#39;s object model, including comparison operations, string representation,</span>
+<span class="sd">and attribute access.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UndefinedClass">
+<a class="viewcode-back" href="../../reference/undefined.html#jsify.undefined.UndefinedClass">[docs]</a>
+<span class="k">class</span> <span class="nc">UndefinedClass</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class which behaves like JavaScript &quot;undefined&quot; value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Undefined</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">UndefinedClass</span><span class="o">.</span><span class="n">Undefined</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">UndefinedClass</span><span class="o">.</span><span class="n">Undefined</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">UndefinedClass</span><span class="o">.</span><span class="n">Undefined</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">UndefinedClass</span><span class="o">.</span><span class="n">Undefined</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Undefined&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">UndefinedClass</span><span class="o">.</span><span class="n">Undefined</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">UndefinedClass</span><span class="o">.</span><span class="n">Undefined</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<span class="c1"># Object which behaves like JavaScript &#39;undefined&#39; value</span>
+<span class="n">Undefined</span> <span class="o">=</span> <span class="n">UndefinedClass</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

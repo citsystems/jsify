@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jsify.assertion &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jsify.assertion</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jsify.assertion</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The `assertion` module provides a suite of tools for performing assertions on JSON-like objects, ensuring that their</span>
+<span class="sd">structure and content conform to expected criteria. This module is particularly useful in testing scenarios where you</span>
+<span class="sd">need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON</span>
+<span class="sd">structures.</span>
+<span class="sd">At the heart of this module is the `JsonAssert` class, which offers a range of assertion methods designed to work with</span>
+<span class="sd">instances of `JsonObject`. These assertions enable you to verify that certain keys are either present or absent within</span>
+<span class="sd">a JSON object and that the values associated with those keys are as expected.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">.jsify</span> <span class="kn">import</span> <span class="n">JsonObject</span>
+
+
+<div class="viewcode-block" id="JsonAssert">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert">[docs]</a>
+<span class="k">class</span> <span class="nc">JsonAssert</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class providing assertions to verify the contents of JSON-like objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="JsonAssert.Assertion">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.Assertion">[docs]</a>
+    <span class="k">class</span> <span class="nc">Assertion</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Base class for assertions on JSON objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="JsonAssert.Assertion.assertion">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.Assertion.assertion">[docs]</a>
+        <span class="k">def</span> <span class="nf">assertion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_object</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Perform an assertion on a JSON object.</span>
+
+<span class="sd">            :param json_object: The JSON object to perform the assertion on.</span>
+<span class="sd">            :type json_object: JsonObject</span>
+<span class="sd">            :param key: The key to check in the JSON object.</span>
+<span class="sd">            :type key: str or int</span>
+<span class="sd">            :param path: The current path in the JSON object.</span>
+<span class="sd">            :type path: str</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">pass</span></div>
+</div>
+
+
+<div class="viewcode-block" id="JsonAssert.NotIn">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.NotIn">[docs]</a>
+    <span class="k">class</span> <span class="nc">NotIn</span><span class="p">(</span><span class="n">Assertion</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assertion to check that a key is not in the JSON object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initialize the NotIn assertion.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">pass</span>
+
+<div class="viewcode-block" id="JsonAssert.NotIn.assertion">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.NotIn.assertion">[docs]</a>
+        <span class="k">def</span> <span class="nf">assertion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_object</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Assert that a key is not in the JSON object.</span>
+
+<span class="sd">            :param json_object: The JSON object to perform the assertion on.</span>
+<span class="sd">            :type json_object: JsonObject</span>
+<span class="sd">            :param key: The key to check in the JSON object.</span>
+<span class="sd">            :type key: str</span>
+<span class="sd">            :param path: The current path in the JSON object.</span>
+<span class="sd">            :type path: str</span>
+<span class="sd">            :raises AssertionError: If the key is found in the JSON object.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">json_object</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2"> shouldn&#39;t be in JTO object.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="JsonAssert.IsIn">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.IsIn">[docs]</a>
+    <span class="k">class</span> <span class="nc">IsIn</span><span class="p">(</span><span class="n">Assertion</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assertion to check that a key is in the JSON object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initialize the IsIn assertion.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">pass</span>
+
+<div class="viewcode-block" id="JsonAssert.IsIn.assertion">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.IsIn.assertion">[docs]</a>
+        <span class="k">def</span> <span class="nf">assertion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_object</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Assert that a key is in the JSON object.</span>
+
+<span class="sd">            :param json_object: The JSON object to perform the assertion on.</span>
+<span class="sd">            :type json_object: JsonObject</span>
+<span class="sd">            :param key: The key to check in the JSON object.</span>
+<span class="sd">            :type key: str</span>
+<span class="sd">            :param path: The current path in the JSON object.</span>
+<span class="sd">            :type path: str</span>
+<span class="sd">            :raises AssertionError: If the key is not found in the JSON object.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">json_object</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2"> should be in JTO object.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                <span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="JsonAssert.values_equal">
+<a class="viewcode-back" href="../../reference/assertion.html#jsify.assertion.JsonAssert.values_equal">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">values_equal</span><span class="p">(</span><span class="n">json_object</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assert that the values in a JSON object match the expected values.</span>
+
+<span class="sd">        :param json_object: The JSON object to check.</span>
+<span class="sd">        :type json_object: JsonObject</span>
+<span class="sd">        :param values: The expected values to match against the JSON object.</span>
+<span class="sd">        :type values: dict or list</span>
+<span class="sd">        :param path: The current path in the JSON object (used for error messages).</span>
+<span class="sd">        :type path: str</span>
+<span class="sd">        :raises AssertionError: If the values do not match the expected values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is an object not a value&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">iteration</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">iteration</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">iteration</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="n">JsonAssert</span><span class="o">.</span><span class="n">Assertion</span><span class="p">):</span>
+                <span class="n">attribute</span><span class="o">.</span><span class="n">assertion</span><span class="p">(</span><span class="n">json_object</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">json_object</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2"> not in JTO object.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                <span class="n">jto_attribute_value</span> <span class="o">=</span> <span class="n">json_object</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">jto_attribute_value</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
+                    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span>
+                        <span class="n">jto_attribute_value</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">jto_attribute_value</span> <span class="o">!=</span> <span class="n">attribute</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                        <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2"> not equal to </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">json_object</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

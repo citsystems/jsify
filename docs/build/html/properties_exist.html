@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checking if Properties Path Exists &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Jsify’s manual reference" href="reference/index.html" />
+    <link rel="prev" title="Creating Camelized Functions" href="camelized_functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Checking if Properties Path Exists</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage-of-properties-exist">Usage of <cite>properties_exist</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-result-of-properties-exist">Using the Result of <cite>properties_exist</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Checking if Properties Path Exists</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/properties_exist.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="checking-if-properties-path-exists">
+<span id="properties-exist-usage"></span><h1>Checking if Properties Path Exists<a class="headerlink" href="#checking-if-properties-path-exists" title="Link to this heading"></a></h1>
+<p>The <cite>properties_exist</cite> function in the Jsify library is a utility designed to check if a series of properties exist within a JSON-like object (<cite>JsonObject</cite>). This function is particularly useful for validating the presence of nested properties in complex data structures, ensuring that your code can safely access deeply nested data without encountering errors.</p>
+<p>The <cite>properties_exist</cite> function is a valuable tool for validating the presence of properties in JSON-like data structures, particularly when working with deeply nested objects. By using this function, you can avoid errors that might arise from accessing non-existent properties, making your code more reliable and easier to maintain. This utility is especially useful in scenarios where data structures are dynamic or partially defined, providing a simple and effective way to ensure the integrity of your data access patterns.</p>
+<section id="usage-of-properties-exist">
+<h2>Usage of <cite>properties_exist</cite><a class="headerlink" href="#usage-of-properties-exist" title="Link to this heading"></a></h2>
+<p>The <cite>properties_exist</cite> function allows you to verify the existence of a sequence of nested properties within a <cite>JsonObject</cite>. If all the properties in the given path exist, the function returns <cite>True</cite>; otherwise, it returns <cite>False</cite>.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">properties_exist</span>
+
+<span class="c1"># Example JSON-like data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;zipcode&#39;</span><span class="p">:</span> <span class="s1">&#39;12345&#39;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Convert to a jsified object</span>
+<span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Check if a series of properties exist</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">properties_exist</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># Outputs: True</span>
+
+<span class="c1"># Check for a non-existent property</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">properties_exist</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># Outputs: False</span>
+</pre></div>
+</div>
+</section>
+<section id="using-the-result-of-properties-exist">
+<h2>Using the Result of <cite>properties_exist</cite><a class="headerlink" href="#using-the-result-of-properties-exist" title="Link to this heading"></a></h2>
+<p>The result of the <cite>properties_exist</cite> function can be directly used in conditional statements to make your code more robust, especially when dealing with optional or dynamically structured data.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">exists</span> <span class="o">=</span> <span class="n">properties_exist</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+    <span class="c1"># The result contains both jsified and unjsified value of target element</span>
+    <span class="c1"># if the element exists</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User&#39;s city unjsified: </span><span class="si">{</span><span class="n">exists</span><span class="o">.</span><span class="n">unjsified</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User&#39;s city jsified: </span><span class="si">{</span><span class="n">exists</span><span class="o">.</span><span class="n">jsified</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;City information is not available.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="camelized_functions.html" class="btn btn-neutral float-left" title="Creating Camelized Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="reference/index.html" class="btn btn-neutral float-right" title="Jsify’s manual reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

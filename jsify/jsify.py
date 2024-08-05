@@ -568,11 +568,11 @@ class JsonTuple(JsonObject):
 
     def copy(self, deep=False):
         """
-        Return a shallow copy of the tuple.
+        Create a shallow or deep copy of the tuple.
 
         :param deep: True if the object should be deep copied, False otherwise.
         :type deep: bool
-        :return: A shallow copy of the tuple.
+        :return: A copy of the tuple.
         :rtype: JsonTuple
         """
         return jsify(copy(self.__orig__) if not deep else deepcopy(self.__orig__))
@@ -658,10 +658,11 @@ class JsonList(JsonObject):
 
     def copy(self, deep=False):
         """
-        Return a shallow copy of the list.
+        Create a shallow or deep copy of the list.
+
         :param deep: True if the object should be deep copied, False otherwise.
         :type deep: bool
-        :return: A shallow copy of the list.
+        :return: A copy of the list.
         :rtype: JsonList
         """
         return jsify(copy(self.__orig__) if not deep else deepcopy(self.__orig__))
@@ -908,7 +909,7 @@ def json_copy(obj, deep=True):
     :type obj: JsonObject or Any
     :param deep: True if the object should be deep copied, False otherwise.
     :type deep: bool
-    :return: A shallow copy of the object.
+    :return: A copy of the object.
     :rtype: JsonObject or Any
     """
     return jsify(copy(obj) if not deep else deepcopy(obj))

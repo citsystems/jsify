@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assertion module &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Calls module" href="calls.html" />
+    <link rel="prev" title="Jsify’s manual reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Jsify’s manual reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Assertion module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.assertion.JsonAssert"><code class="docutils literal notranslate"><span class="pre">JsonAssert</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.Assertion"><code class="docutils literal notranslate"><span class="pre">JsonAssert.Assertion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.IsIn"><code class="docutils literal notranslate"><span class="pre">JsonAssert.IsIn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.NotIn"><code class="docutils literal notranslate"><span class="pre">JsonAssert.NotIn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.values_equal"><code class="docutils literal notranslate"><span class="pre">JsonAssert.values_equal()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="calls.html">Calls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoder.html">Encoder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify.html">Jsify module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stringcase.html">Stringcase module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="undefined.html">Undefined module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Jsify’s manual reference</a></li>
+      <li class="breadcrumb-item active">Assertion module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/assertion.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="assertion-module">
+<h1>Assertion module<a class="headerlink" href="#assertion-module" title="Link to this heading"></a></h1>
+<p id="module-jsify.assertion">The <cite>assertion</cite> module provides a suite of tools for performing assertions on JSON-like objects, ensuring that their
+structure and content conform to expected criteria. This module is particularly useful in testing scenarios where you
+need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON
+structures.
+At the heart of this module is the <cite>JsonAssert</cite> class, which offers a range of assertion methods designed to work with
+instances of <cite>JsonObject</cite>. These assertions enable you to verify that certain keys are either present or absent within
+a JSON object and that the values associated with those keys are as expected.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.assertion.</span></span><span class="sig-name descname"><span class="pre">JsonAssert</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class providing assertions to verify the contents of JSON-like objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.Assertion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Assertion</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.Assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.Assertion" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for assertions on JSON objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.Assertion.assertion">
+<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.Assertion.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.Assertion.assertion" title="Link to this definition"></a></dt>
+<dd><p>Perform an assertion on a JSON object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to perform the assertion on.</p></li>
+<li><p><strong>key</strong> (<em>str</em><em> or </em><em>int</em>) – The key to check in the JSON object.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.IsIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsIn</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.IsIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.IsIn" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.assertion.JsonAssert.Assertion" title="jsify.assertion.JsonAssert.Assertion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assertion</span></code></a></p>
+<p>Assertion to check that a key is in the JSON object.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.IsIn.assertion">
+<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.IsIn.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.IsIn.assertion" title="Link to this definition"></a></dt>
+<dd><p>Assert that a key is in the JSON object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to perform the assertion on.</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – The key to check in the JSON object.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the key is not found in the JSON object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.NotIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NotIn</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.NotIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.NotIn" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.assertion.JsonAssert.Assertion" title="jsify.assertion.JsonAssert.Assertion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assertion</span></code></a></p>
+<p>Assertion to check that a key is not in the JSON object.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.NotIn.assertion">
+<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.NotIn.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.NotIn.assertion" title="Link to this definition"></a></dt>
+<dd><p>Assert that a key is not in the JSON object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to perform the assertion on.</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – The key to check in the JSON object.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the key is found in the JSON object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.values_equal">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.values_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.values_equal" title="Link to this definition"></a></dt>
+<dd><p>Assert that the values in a JSON object match the expected values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to check.</p></li>
+<li><p><strong>values</strong> (<em>dict</em><em> or </em><em>list</em>) – The expected values to match against the JSON object.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object (used for error messages).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – If the values do not match the expected values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Jsify’s manual reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="calls.html" class="btn btn-neutral float-right" title="Calls module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

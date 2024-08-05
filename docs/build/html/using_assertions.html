@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Assertions in Jsify &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Creating Jsified Functions" href="jsified_functions.html" />
+    <link rel="prev" title="Serializing JsonObject Instances with JSON" href="json_serialization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using Assertions in Jsify</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/using_assertions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-assertions-in-jsify">
+<span id="assertions-usage"></span><h1>Using Assertions in Jsify<a class="headerlink" href="#using-assertions-in-jsify" title="Link to this heading"></a></h1>
+<p>The Jsify library includes a powerful assertion framework through the <cite>JsonAssert</cite> class, which allows you to verify the structure and content of JSON-like objects. This is particularly useful in testing scenarios where you need to ensure that your data matches expected formats or values.</p>
+<p><strong>Key Concept: JsonAssert</strong></p>
+<p>The <cite>JsonAssert</cite> class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a <cite>JsonObject</cite> match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.</p>
+<p>### Basic Assertion Methods</p>
+<ol class="arabic simple">
+<li><p><strong>IsIn Assertion:</strong>
+- Checks whether a specific key exists in a <cite>JsonObject</cite>.
+- Raises an <cite>AssertionError</cite> if the key is not found.</p></li>
+<li><p><strong>NotIn Assertion:</strong>
+- Checks whether a specific key does not exist in a <cite>JsonObject</cite>.
+- Raises an <cite>AssertionError</cite> if the key is found.</p></li>
+</ol>
+<p>### Using <cite>IsIn</cite> and <cite>NotIn</cite> Assertions</p>
+<p>The <cite>IsIn</cite> and <cite>NotIn</cite> assertions are used to verify the presence or absence of keys in your JSON-like data structures.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">JsonAssert</span>
+
+<span class="c1"># Example data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Convert to a jsified object</span>
+<span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Using the IsIn assertion to check for key presence</span>
+<span class="n">assert_key_present</span> <span class="o">=</span> <span class="n">JsonAssert</span><span class="o">.</span><span class="n">IsIn</span><span class="p">()</span>
+<span class="n">assert_key_present</span><span class="o">.</span><span class="n">assertion</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">)</span>  <span class="c1"># No error</span>
+
+<span class="c1"># Using the NotIn assertion to check for key absence</span>
+<span class="n">assert_key_absent</span> <span class="o">=</span> <span class="n">JsonAssert</span><span class="o">.</span><span class="n">NotIn</span><span class="p">()</span>
+<span class="n">assert_key_absent</span><span class="o">.</span><span class="n">assertion</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;nonexistent&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">)</span>  <span class="c1"># No error</span>
+
+<span class="c1"># This will raise an AssertionError because &#39;name&#39; exists</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">assert_key_absent</span><span class="o">.</span><span class="n">assertion</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>  <span class="c1"># Outputs: root.name shouldn&#39;t be in JTO object.</span>
+</pre></div>
+</div>
+<p>### Asserting Values with <cite>values_equal</cite></p>
+<p>The <cite>values_equal</cite> method allows you to perform deep comparisons between a <cite>JsonObject</cite> and a dictionary or list of expected values. It ensures that the structure and content of the <cite>JsonObject</cite> match the expected format.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Expected values</span>
+<span class="n">expected_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Using values_equal to assert that the values match</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assertion passed: Values match expected data.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assertion failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Modifying the json_obj to introduce an error</span>
+<span class="n">json_obj</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="s1">&#39;Metropolis&#39;</span>
+
+<span class="c1"># This will raise an AssertionError because &#39;city&#39; does not match</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assertion failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Outputs: root.details.city not equal to Metropolis</span>
+</pre></div>
+</div>
+<p>### Handling Complex Assertions</p>
+<p>The <cite>JsonAssert</cite> class is designed to handle complex data structures, including nested dictionaries and lists. You can use the provided assertions to validate that every part of your JSON-like structure adheres to the expected format.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complex data structure</span>
+<span class="n">complex_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s1">&#39;preferences&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;colors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;languages&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;JavaScript&#39;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">complex_data</span><span class="p">)</span>
+
+<span class="c1"># Expected structure</span>
+<span class="n">expected_structure</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s1">&#39;preferences&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;colors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;languages&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;JavaScript&#39;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Using values_equal to assert the entire structure matches</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_structure</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assertion passed: Complex structure matches expected data.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assertion failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="json_serialization.html" class="btn btn-neutral float-left" title="Serializing JsonObject Instances with JSON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jsified_functions.html" class="btn btn-neutral float-right" title="Creating Jsified Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

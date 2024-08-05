@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jsifying and unjsyfing objects &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using Jsified Dictionaries" href="using_dictionaries.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Jsifying and unjsyfing objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1"><cite>jsify</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unjsify-and-deep-unjsify"><cite>unjsify</cite> and <cite>deep_unjsify</cite></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Jsifying and unjsyfing objects</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/jsifying_unjsifying.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jsifying-and-unjsyfing-objects">
+<span id="jsify"></span><h1>Jsifying and unjsyfing objects<a class="headerlink" href="#jsifying-and-unjsyfing-objects" title="Link to this heading"></a></h1>
+<p>The <cite>jsify</cite> and <cite>unjsify</cite> functions are key utilities for converting between standard Python data structures and <cite>JsonObject</cite> instances within the library. These functions enable smooth integration of Python’s native types with the JSON-like behavior provided by <cite>JsonObject</cite>, allowing for flexible and dynamic data manipulation.</p>
+<section id="id1">
+<h2><cite>jsify</cite><a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>The <cite>jsify</cite> function converts standard Python objects such as dictionaries, lists, and tuples into their corresponding <cite>JsonObject</cite> representations. This conversion enables attribute-style access and other JSON-like features, making it easier to work with complex nested data structures.</p>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="c1"># Convert a dictionary into a JsonObject</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;nestedKey&#39;</span><span class="p">:</span> <span class="s1">&#39;nestedValue&#39;</span><span class="p">}}</span>
+<span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Access nested elements using attribute-style access</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_obj</span><span class="o">.</span><span class="n">key2</span><span class="o">.</span><span class="n">nestedKey</span><span class="p">)</span>  <span class="c1"># Outputs: nestedValue</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code> : The object to convert, which can be of type <code class="docutils literal notranslate"><span class="pre">dict</span></code>, <code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">tuple</span></code>, or any other object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kwargs</span></code> : Additional keyword arguments to customize the conversion.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A <cite>JsonObject</cite>, <cite>JsonDict</cite>, <cite>JsonList</cite>, or <cite>JsonTuple</cite>, depending on the type of the input object.</p></li>
+</ul>
+</section>
+<section id="unjsify-and-deep-unjsify">
+<h2><cite>unjsify</cite> and <cite>deep_unjsify</cite><a class="headerlink" href="#unjsify-and-deep-unjsify" title="Link to this heading"></a></h2>
+<p>The <cite>unjsify</cite> function converts a <cite>JsonObject</cite> back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.</p>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">unjsify</span>
+
+<span class="c1"># Assuming json_obj is a JsonObject</span>
+<span class="n">original_data</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">json_obj</span><span class="p">)</span>
+
+<span class="c1"># The original_data is now a standard Python dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>  <span class="c1"># Outputs: {&#39;key1&#39;: &#39;value1&#39;, &#39;key2&#39;: {&#39;nestedKey&#39;: &#39;nestedValue&#39;}}</span>
+</pre></div>
+</div>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">obj</span></code> : The <cite>JsonObject</cite> to convert back into its original form.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>The original object if <code class="docutils literal notranslate"><span class="pre">obj</span></code> is a <cite>JsonObject</cite>, otherwise returns the object unchanged.</p></li>
+</ul>
+<p><strong>Deep unjsifying:</strong></p>
+<p>In scenarios where you have nested <cite>JsonObject</cite> instances and want to deeply convert them back to their original Python structures, the <cite>deep_unjsify</cite> function can be used. It performs a recursive unjsification, ensuring that all nested <cite>JsonObject</cite> instances are properly converted.
+This function is particularly useful in scenarios where you have complex, deeply nested JSON-like objects that need to be converted back to standard Python types, such as dictionaries, lists, and tuples, for further processing or serialization.</p>
+<p><strong>Using `deep_unjsify`:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">deep_unjsify</span>
+
+<span class="c1"># Complex deeply jsified structure</span>
+<span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span>
+    <span class="s1">&#39;level1&#39;</span><span class="p">:</span> <span class="n">jsify</span><span class="p">({</span>
+        <span class="s1">&#39;level2&#39;</span><span class="p">:</span> <span class="n">jsify</span><span class="p">({</span>
+            <span class="s1">&#39;level3&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span>
+        <span class="p">}),</span>
+        <span class="s1">&#39;level2_list&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s1">&#39;nested_key&#39;</span><span class="p">:</span> <span class="s1">&#39;nested_value&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;another_key&#39;</span><span class="p">:</span> <span class="s1">&#39;another_value&#39;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+<span class="p">})</span>
+
+<span class="c1"># Accessing elements in a JSON-like manner</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_obj</span><span class="o">.</span><span class="n">level1</span><span class="o">.</span><span class="n">level2</span><span class="o">.</span><span class="n">level3</span><span class="p">)</span>  <span class="c1"># Outputs: value</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_obj</span><span class="o">.</span><span class="n">level1</span><span class="o">.</span><span class="n">level2_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nested_key</span><span class="p">)</span>  <span class="c1"># Outputs: nested_value</span>
+
+<span class="c1"># Now, deeply unjsify the JsonObject back to its original form</span>
+<span class="n">original_data</span> <span class="o">=</span> <span class="n">deep_unjsify</span><span class="p">(</span><span class="n">json_obj</span><span class="p">)</span>
+
+<span class="c1"># Verify the structure</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Expected Output:</strong></p>
+<p>As a result, the <cite>original_data</cite> object should consist of native <cite>dict</cite> and <cite>list</cite> instance objects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;level1&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;level2&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;level3&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;level2_list&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s1">&#39;nested_key&#39;</span><span class="p">:</span> <span class="s1">&#39;nested_value&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;another_key&#39;</span><span class="p">:</span> <span class="s1">&#39;another_value&#39;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>By utilizing the <cite>jsify</cite> and <cite>unjsify</cite> functions, developers can easily switch between Python’s native data types and the enhanced JSON-like structures provided by the library, facilitating more flexible and intuitive data manipulation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_dictionaries.html" class="btn btn-neutral float-right" title="Using Jsified Dictionaries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -6,7 +6,7 @@ from jsify.jsify import JsonDict, jsify, json_copy, json_get, json_pop, json_pop
     json_values, json_keys, json_items, unjsify, JsonIterator, properties_exist, PropertiesExistResult
 from jsify.jsify import JsonObject
 
-from json import dumps
+from jsify.encoder import dumps
 
 from jsify.undefined import Undefined
 
@@ -233,11 +233,16 @@ class TestJsonObject(TestCase):
         self.assertEqual(jsify(json_object), test_dict)
 
     def test_json_dump(self):
-        json_object = dict(a=1, b=2, c=jsify(self.test_dict), d=jsify(self.test_list),
-                           e=jsify(self.test_tuple))
-        test_dict = dict(a=1, b=2, c=self.test_dict, d=self.test_list, e=self.test_tuple)
-        json_object_dump = dumps(json_object)
-        self.assertEqual(json_object_dump, dumps(test_dict))
+        json_object = jsify(dict(a=1, b=2, c=jsify(self.test_dict), d=jsify(self.test_list),
+                                 e=jsify(self.test_tuple), undef=Undefined))
+        test_dict_with_undefined = dict(a=1, b=2, c=self.test_dict, d=self.test_list, e=self.test_tuple,
+                                        undef=Undefined)
+        test_dict_without_undefined = dict(a=1, b=2, c=self.test_dict, d=self.test_list, e=self.test_tuple)
+        self.assertNotEqual(dumps(json_object, omit_undefined=False), dumps(test_dict_with_undefined))
+        self.assertEqual(dumps(json_object, omit_undefined=False),
+                         dumps(test_dict_with_undefined, omit_undefined=False))
+        self.assertEqual(dumps(json_object), dumps(test_dict_without_undefined))
+        self.assertNotEqual(dumps(json_object, omit_undefined=False), dumps(test_dict_without_undefined))
 
     def test_keys_values_items(self):
         json_object = jsify(self.test_dict)
@@ -318,10 +323,11 @@ class TestJsonObject(TestCase):
         @camelized_function(replace=dict(last_parameter='last'))
         def test_function_original(first_parameter, second_parameter, last):
             return [first_parameter.value, second_parameter.value, last.value]
+
         input_parameters = dict(firstParameter=dict(value=1), second_parameter=dict(value=2),
-                                lastParameter=dict(value=(3, jsify([1,2]))))
+                                lastParameter=dict(value=(3, jsify([1, 2]))))
         result = test_function_original(**input_parameters)
-        self.assertEqual(result, [1,2,(3, jsify([1,2]))])
+        self.assertEqual(result, [1, 2, (3, jsify([1, 2]))])
         self.assertNotIsInstance(result, JsonObject)
         self.assertIsInstance(result[2][1], JsonObject)
 
@@ -329,6 +335,7 @@ class TestJsonObject(TestCase):
         @camelized_function(replace=dict(last_parameter='last'))
         def test_function_deep_original(first_parameter, second_parameter, last):
             return [first_parameter.value, second_parameter.value, last.value]
+
         input_parameters = dict(firstParameter=dict(value=1), second_parameter=dict(value=2),
                                 lastParameter=dict(value=(3, jsify([1, 2]))))
         result = test_function_deep_original(**input_parameters)
@@ -340,9 +347,9 @@ class TestJsonObject(TestCase):
         @camelized_function(replace=dict(last_parameter='last'))
         def test_function(first_parameter, second_parameter, last):
             return [first_parameter.value, second_parameter.value, last.value]
+
         input_parameters = dict(firstParameter=dict(value=1), second_parameter=dict(value=2),
                                 lastParameter=dict(value=(3, jsify([1, 2]))))
         result = test_function(**input_parameters)
         self.assertEqual(result, [1, 2, (3, [1, 2])])
         self.assertIsInstance(result, JsonObject)
-

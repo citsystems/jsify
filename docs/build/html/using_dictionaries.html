@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Jsified Dictionaries &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using Jsified Lists" href="using_lists.html" />
+    <link rel="prev" title="Jsifying and unjsyfing objects" href="jsifying_unjsifying.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using Jsified Dictionaries</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/using_dictionaries.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-jsified-dictionaries">
+<span id="using-dictionaries"></span><h1>Using Jsified Dictionaries<a class="headerlink" href="#using-jsified-dictionaries" title="Link to this heading"></a></h1>
+<p>The Jsify library allows you to work with dictionaries in a more flexible and dynamic way by converting them into <cite>JsonDict</cite> instances, which are specialized versions of <cite>JsonObject</cite>. These jsified dictionaries enable attribute-style access to their keys and provide a more intuitive interface for manipulating nested data structures. However, to avoid potential naming collisions that could arise from adding methods directly to these JSON-like objects, some dictionary manipulation functions are implemented separately as standalone functions rather than as methods of <cite>JsonDict</cite>.</p>
+<p><strong>Creating and Using Jsified Dictionaries:</strong></p>
+<p>To create a jsified dictionary, you can use the <cite>jsify</cite> function, which converts a standard Python dictionary into a <cite>JsonDict</cite>. This allows you to access dictionary keys as if they were attributes of an object.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="c1"># Standard Python dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Convert to a jsified dictionary</span>
+<span class="n">json_dict</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Accessing keys using attribute-style access</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_dict</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># Outputs: Alice</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_dict</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>  <span class="c1"># Outputs: 30</span>
+
+<span class="c1"># Accessing nested dictionary keys with the same ease</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_dict</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">city</span><span class="p">)</span>  <span class="c1"># Outputs: Wonderland</span>
+</pre></div>
+</div>
+<p><strong>Handling Dictionary Manipulations:</strong></p>
+<p>While <cite>JsonDict</cite> provides an intuitive way to access and modify dictionary data, certain dictionary operations are implemented as separate functions. This design choice is intentional to avoid naming collisions in JSON-like data, where keys might have the same names as methods, potentially causing unexpected behavior.</p>
+<p><strong>Standalone Dictionary Manipulation Functions:</strong></p>
+<p>The library includes several standalone functions for common dictionary operations that would traditionally be methods in a regular Python dictionary:</p>
+<ul class="simple">
+<li><p><strong>json_copy:</strong> Creates a shallow copy of a <cite>JsonDict</cite>.</p></li>
+<li><p><strong>json_get:</strong> Retrieves a value for a specified key, with support for a default value if the key is not found.</p></li>
+<li><p><strong>json_update:</strong> Updates the dictionary with key-value pairs from another dictionary.</p></li>
+<li><p><strong>json_values, json_keys, json_items:</strong> Functions that return views of the dictionary’s values, keys, and items, respectively.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">json_copy</span><span class="p">,</span> <span class="n">json_get</span><span class="p">,</span> <span class="n">json_update</span>
+
+<span class="c1"># Example jsified dictionary</span>
+<span class="n">json_dict</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s1">&#39;key1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span><span class="p">})</span>
+
+<span class="c1"># Copying the dictionary</span>
+<span class="n">copied_dict</span> <span class="o">=</span> <span class="n">json_copy</span><span class="p">(</span><span class="n">json_dict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">copied_dict</span><span class="p">)</span>  <span class="c1"># Outputs a copy of the jsified dictionary</span>
+
+<span class="c1"># Using json_get to safely access a key</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">json_get</span><span class="p">(</span><span class="n">json_dict</span><span class="p">,</span> <span class="s1">&#39;key1&#39;</span><span class="p">,</span> <span class="s1">&#39;default_value&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># Outputs: value1</span>
+
+<span class="c1"># Updating the dictionary with new key-value pairs</span>
+<span class="n">json_update</span><span class="p">(</span><span class="n">json_dict</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;key3&#39;</span><span class="p">:</span> <span class="s1">&#39;value3&#39;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json_dict</span><span class="o">.</span><span class="n">key3</span><span class="p">)</span>  <span class="c1"># Outputs: value3</span>
+</pre></div>
+</div>
+<p><strong>Why Separate Functions?</strong></p>
+<p>In JSON-like data structures, it’s crucial to avoid method naming collisions. For example, if a dictionary key were named “get”, it could conflict with a <cite>get</cite> method, leading to unexpected behavior. By implementing operations like <cite>get</cite>, <cite>update</cite>, and <cite>copy</cite> as standalone functions, Jsify maintains the integrity of JSON-like data while still providing the functionality needed to manipulate dictionaries effectively.</p>
+<p>This approach ensures that you can safely work with keys that might otherwise clash with common method names, allowing for a more consistent and predictable experience when handling JSON-like data in Python.</p>
+<p id="views-functions"><strong>Using View Functions with Jsified Dictionaries</strong></p>
+<p>The Jsify library provides standalone functions for retrieving views of a <cite>JsonDict</cite>’s keys, values, and items
+(<cite>json_keys</cite>, <cite>json_values</cite>, and <cite>json_items</cite>), similar to the standard dictionary methods in Python.
+These functions return a <cite>JsonIterator</cite>, which allows for iteration over the results while maintaining the JSON-like
+behavior of the data.</p>
+<p><strong>Example of Usage:</strong></p>
+<p>Consider the following example where we work with a jsified dictionary and use the view functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">json_keys</span><span class="p">,</span> <span class="n">json_values</span><span class="p">,</span> <span class="n">json_items</span>
+
+<span class="c1"># Example jsified dictionary</span>
+<span class="n">json_dict</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span>
+<span class="p">})</span>
+
+<span class="c1"># Getting a view of the keys</span>
+<span class="n">keys_view</span> <span class="o">=</span> <span class="n">json_keys</span><span class="p">(</span><span class="n">json_dict</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys_view</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>  <span class="c1"># Outputs: &#39;name&#39;, &#39;age&#39;, &#39;city&#39;</span>
+
+<span class="c1"># Getting a view of the values</span>
+<span class="n">values_view</span> <span class="o">=</span> <span class="n">json_values</span><span class="p">(</span><span class="n">json_dict</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values_view</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="c1"># Outputs: &#39;Alice&#39;, 30, &#39;Wonderland&#39;</span>
+
+<span class="c1"># Getting a view of the items (key-value pairs)</span>
+<span class="n">items_view</span> <span class="o">=</span> <span class="n">json_items</span><span class="p">(</span><span class="n">json_dict</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">items_view</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># Outputs:</span>
+    <span class="c1"># name: Alice</span>
+    <span class="c1"># age: 30</span>
+    <span class="c1"># city: Wonderland</span>
+</pre></div>
+</div>
+<p><strong>Remark on `JsonIterator` Result:</strong></p>
+<p>The view functions <cite>json_keys</cite>, <cite>json_values</cite>, and <cite>json_items</cite> return a <cite>JsonIterator</cite>, which is an iterator
+specifically designed to work with JSON-like objects in the Jsify library. <cite>JsonIterator</cite> preserves the JSON-like
+behavior during iteration, meaning that if you access elements of the iterator, they retain their <cite>JsonObject</cite>
+characteristics.</p>
+<p>This is particularly useful when working with nested structures, as you can iterate over keys, values, or items and
+still access deeply nested data using attribute-style access or other JSON-like operations.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nested_dict</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span>
+    <span class="s1">&#39;user1&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+            <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Metropolis&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;user2&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Warsaw&#39;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1"># Iterating over nested keys</span>
+<span class="n">user_keys</span> <span class="o">=</span> <span class="n">json_keys</span><span class="p">(</span><span class="n">nested_dict</span><span class="o">.</span><span class="n">user1</span><span class="o">.</span><span class="n">details</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">user_keys</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>  <span class="c1"># Outputs: &#39;age&#39;, &#39;city&#39;</span>
+
+<span class="c1"># Accessing nested values during iteration</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">json_values</span><span class="p">(</span><span class="n">nested_dict</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> of age </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># Outputs: &#39;Bob of age 25&#39;, &#39;Alice of age 30&#39;</span>
+
+<span class="c1"># Accessing nested items during iteration</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">json_items</span><span class="p">(</span><span class="n">nested_dict</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> of age </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># Outputs: &#39;user1: Bob of age 25&#39;, &#39;user2: Alice of age 30&#39;</span>
+</pre></div>
+</div>
+<p>The use of <cite>JsonIterator</cite> ensures that even as you iterate over the elements of a <cite>JsonDict</cite>, you maintain the ability to interact with the data in a JSON-like manner. This seamless integration of iteration and JSON-like behavior makes the Jsify library particularly powerful when dealing with complex and nested data structures.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jsifying_unjsifying.html" class="btn btn-neutral float-left" title="Jsifying and unjsyfing objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_lists.html" class="btn btn-neutral float-right" title="Using Jsified Lists" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

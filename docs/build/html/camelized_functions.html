@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating Camelized Functions &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Checking if Properties Path Exists" href="properties_exist.html" />
+    <link rel="prev" title="Creating Jsified Functions" href="jsified_functions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Creating Camelized Functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/camelized_functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="creating-camelized-functions">
+<span id="id1"></span><h1>Creating Camelized Functions<a class="headerlink" href="#creating-camelized-functions" title="Link to this heading"></a></h1>
+<p>The Jsify library includes a <cite>camelized_function</cite> decorator that allows you to create functions that automatically convert camelCase keys in JSON-like dictionaries to snake_case before processing them. This is particularly useful in scenarios where you need to interface with systems or APIs that use camelCase naming conventions, while you prefer to work with snake_case in your Python code.</p>
+<p>The <cite>camelized_function</cite> decorator converts the keys of incoming keyword arguments from camelCase to snake_case before they are passed to the function. This enables you to define functions that internally work with snake_case, while still accepting camelCase input.</p>
+<p><strong>Decorator Signature:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">camelized_function</span><span class="p">(</span><span class="n">replace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>`replace` (dict, optional):</strong> A dictionary that specifies replacements for certain keys after they are converted to snake_case. This is useful for handling specific cases where a different key name is desired.</p></li>
+</ul>
+<p><strong>Basic Usage of `camelized_function`</strong></p>
+<p>To use <cite>camelized_function</cite>, simply apply the decorator to your function. The function will then accept camelCase keys, convert them to snake_case, and process them accordingly.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify.calls</span> <span class="kn">import</span> <span class="n">camelized_function</span>
+
+<span class="nd">@camelized_function</span>
+<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">snake_case_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">another_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># The function processes snake_case keys</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">snake_case_key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">another_key</span><span class="p">)</span>
+
+<span class="c1"># Calling the function with camelCase keys</span>
+<span class="n">process_data</span><span class="p">(</span><span class="n">snakeCaseKey</span><span class="o">=</span><span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="n">anotherKey</span><span class="o">=</span><span class="s1">&#39;value2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Outputs:</span>
+<span class="c1"># value1</span>
+<span class="c1"># value2</span>
+</pre></div>
+</div>
+<p>In this example, the <cite>process_data</cite> function expects <cite>snake_case_key</cite> and <cite>another_key</cite> as arguments. However, it can be called with camelCase keys (<cite>snakeCaseKey</cite> and <cite>anotherKey</cite>), which are automatically converted to the corresponding snake_case keys.</p>
+<p><strong>Handling Specific Key Replacements</strong></p>
+<p>The <cite>replace</cite> parameter allows you to define custom key replacements after the initial camelCase to snake_case conversion. This is useful when you need to map specific keys to custom names.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@camelized_function</span><span class="p">(</span><span class="n">replace</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;some_specific_key&#39;</span><span class="p">:</span> <span class="s1">&#39;custom_key&#39;</span><span class="p">})</span>
+<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">custom_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">custom_key</span><span class="p">)</span>
+
+<span class="c1"># Calling the function with a camelCase key that matches the replacement rule</span>
+<span class="n">process_data</span><span class="p">(</span><span class="n">someSpecificKey</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+
+<span class="c1"># Outputs:</span>
+<span class="c1"># value</span>
+</pre></div>
+</div>
+<p>In this example, the <cite>someSpecificKey</cite> input is first converted to <cite>some_specific_key</cite>, and then it is replaced with <cite>custom_key</cite> according to the <cite>replace</cite> dictionary.</p>
+<p><strong>Combining with Other Decorators</strong></p>
+<p>You can combine <cite>camelized_function</cite> with other decorators, such as <cite>jsified_function</cite>, to create functions that are both camelized and jsified.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify.calls</span> <span class="kn">import</span> <span class="n">jsified_function</span><span class="p">,</span> <span class="n">camelized_function</span>
+
+<span class="nd">@camelized_function</span>
+<span class="nd">@jsified_function</span>
+<span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">snake_case_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">another_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Now the function can also handle JSON-like objects</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">snake_case_key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">another_key</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;snakeCaseKey&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;anotherKey&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span><span class="p">}</span>
+
+<span class="c1"># Calling the function with camelCase keys and jsified input</span>
+<span class="n">process_data</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Outputs:</span>
+<span class="c1"># value1</span>
+<span class="c1"># value2</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jsified_functions.html" class="btn btn-neutral float-left" title="Creating Jsified Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="properties_exist.html" class="btn btn-neutral float-right" title="Checking if Properties Path Exists" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

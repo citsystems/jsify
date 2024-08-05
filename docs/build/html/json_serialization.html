@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serializing JsonObject Instances with JSON &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using Assertions in Jsify" href="using_assertions.html" />
+    <link rel="prev" title="Undefined Value" href="undefined_value.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Serializing <cite>JsonObject</cite> Instances with JSON</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#when-to-use-the-omit-undefined-feature">When to Use the <cite>omit_undefined</cite> Feature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Serializing <cite>JsonObject</cite> Instances with JSON</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/json_serialization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="serializing-jsonobject-instances-with-json">
+<span id="json-serialization"></span><h1>Serializing <cite>JsonObject</cite> Instances with JSON<a class="headerlink" href="#serializing-jsonobject-instances-with-json" title="Link to this heading"></a></h1>
+<p>The Jsify library provides seamless integration with Python’s built-in <cite>json</cite> module, allowing you to serialize <cite>JsonObject</cite> instances and other jsified structures into JSON format. This is achieved through the use of the <cite>JsonObjectEncoder</cite>, a custom JSON encoder that ensures <cite>JsonObject</cite> instances are correctly converted back into their original Python representations before serialization.</p>
+<p><strong>Key Concept: Custom JSON Encoding</strong></p>
+<p>When you serialize a <cite>JsonObject</cite>, <cite>JsonDict</cite>, <cite>JsonList</cite>, or <cite>JsonTuple</cite> using the <cite>json</cite> module, the <cite>JsonObjectEncoder</cite> is automatically invoked to convert these instances into their underlying native Python objects (like dictionaries, lists, and tuples). This ensures that the resulting JSON is a standard representation of the data, free from any Jsify-specific attributes or behaviors.</p>
+<p><strong>Basic Serialization Example:</strong></p>
+<p>To serialize a <cite>JsonObject</cite> to a JSON string, you can use the <cite>json.dumps</cite> function. This function will use <cite>JsonObjectEncoder</cite> to handle the conversion.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">Undefined</span>
+
+<span class="c1"># Example data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;undef&#39;</span><span class="p">:</span> <span class="n">Undefined</span>
+<span class="p">}</span>
+
+<span class="c1"># Convert to a jsified object</span>
+<span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Serialize the jsified object to a JSON string</span>
+<span class="n">json_string</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_obj</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json_string</span><span class="p">)</span>
+<span class="c1"># Outputs: {&quot;name&quot;: &quot;Alice&quot;, &quot;details&quot;: {&quot;age&quot;: 30, &quot;city&quot;: &quot;Wonderland&quot;}}</span>
+</pre></div>
+</div>
+<p><strong>Preserving Undefined Values:</strong></p>
+<p>By default, the <cite>dumps</cite> and <cite>dump</cite> functions omit any fields that have the value <cite>Undefined</cite>. You can control this
+behavior with the <cite>omit_undefined</cite> parameter. If omitting is disabled then Undefined values are replaced by <cite>null</cite>.</p>
+<p><strong>Example</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Serialize the jsified object to a JSON string preserving Undefined values</span>
+<span class="n">json_string</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json_string</span><span class="p">)</span>
+<span class="c1"># Outputs: {&quot;name&quot;: &quot;Alice&quot;, &quot;details&quot;: {&quot;age&quot;: 30, &quot;city&quot;: &quot;Wonderland&quot;}, &quot;undef&quot;: null}</span>
+</pre></div>
+</div>
+<section id="when-to-use-the-omit-undefined-feature">
+<span id="omit-undefined-usage"></span><h2>When to Use the <cite>omit_undefined</cite> Feature<a class="headerlink" href="#when-to-use-the-omit-undefined-feature" title="Link to this heading"></a></h2>
+<p>The <cite>omit_undefined</cite> feature in the Jsify library’s JSON serialization process is particularly useful in scenarios where you need to maintain clean and concise JSON outputs by excluding fields that are not explicitly defined or have no meaningful value. This feature allows you to control whether fields with the <cite>Undefined</cite> value should be included in the final JSON output or omitted entirely.</p>
+<p>Following are the sample scenarios for using <cite>omit_undefined</cite> feature:</p>
+<ol class="arabic">
+<li><p><strong>Interfacing with APIs:</strong></p>
+<p>When interacting with external APIs, it’s often important to only send fields that have been explicitly set. Including undefined or null-like fields can lead to unintended consequences, such as errors or misinterpretation by the receiving system. By omitting <cite>Undefined</cite> fields, you can ensure that your JSON payloads are lean and only include relevant data.</p>
+</li>
+<li><p><strong>Generating Clean Configuration Files:</strong></p>
+<p>When generating JSON-based configuration files, it’s often desirable to exclude fields that have not been explicitly set, leaving out unnecessary defaults. This results in a cleaner and more maintainable configuration file that only includes relevant settings.</p>
+</li>
+<li><p><strong>Reducing Data Storage and Transmission Costs:</strong></p>
+<p>In scenarios where data is stored or transmitted frequently, minimizing the size of the JSON output can lead to significant cost savings. By omitting undefined fields, you can reduce the payload size, leading to lower storage requirements and faster data transmission.</p>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="undefined_value.html" class="btn btn-neutral float-left" title="Undefined Value" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_assertions.html" class="btn btn-neutral float-right" title="Using Assertions in Jsify" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

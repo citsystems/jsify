@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jsify.jsify &mdash; jsify 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_dictionaries.html">Using Jsified Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_lists.html">Using Jsified Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_tuples.html">Using Jsified Tuples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../undefined_value.html"><cite>Undefined</cite> Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_assertions.html">Using Assertions in Jsify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Jsify’s manual reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jsify.jsify</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jsify.jsify</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The `jsify` module provides a set of classes and functions designed to wrap standard Python data structures</span>
+<span class="sd">(such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as `JsonObject`,</span>
+<span class="sd">`JsonDict`, `JsonList`, and `JsonTuple`, allow for attribute-style access, dynamic nesting, and additional</span>
+<span class="sd">functionality that is commonly required when working with JSON data.</span>
+<span class="sd">The core component of this module is the `JsonObject` class, which provides a flexible and dynamic interface for</span>
+<span class="sd">accessing and manipulating underlying data. The `JsonDict`, `JsonList`, and `JsonTuple` classes extend `JsonObject`</span>
+<span class="sd">to offer more specific behaviors for dictionaries, lists, and tuples, respectively.</span>
+<span class="sd">Additionally, the module offers a series of utility functions such as `jsify` for converting standard Python objects</span>
+<span class="sd">into their JSON-like counterparts, and `unjsify` for reversing this transformation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span><span class="p">,</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AnyError</span>
+<span class="kn">from</span> <span class="nn">.undefined</span> <span class="kn">import</span> <span class="n">Undefined</span>
+
+
+<div class="viewcode-block" id="JsonObject">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonObject">[docs]</a>
+<span class="k">class</span> <span class="nc">JsonObject</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The `JsonObject` class is designed to provide convenient access to object properties using dot notation instead of</span>
+<span class="sd">    square brackets, enhancing code readability and ease of use. It acts as a wrapper around original objects,</span>
+<span class="sd">    preserving their data without duplication or alteration. This wrapper supports nested access to properties,</span>
+<span class="sd">    allowing deeper navigation into the original data using dot notation. Essentially, `JsonObject` facilitates</span>
+<span class="sd">    intuitive and simplified interaction with JSON-like objects, while maintaining the integrity and structure of the</span>
+<span class="sd">    original data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the JsonObject with the given original object.</span>
+
+<span class="sd">        :param o: The original dictionary or object to wrap.</span>
+<span class="sd">        :type o: tuple or dict or list or object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;__orig__&quot;</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an item from the original object, returning Undefined if the item does not exist.</span>
+
+<span class="sd">        :param item: The item key to retrieve.</span>
+<span class="sd">        :type item: Any</span>
+<span class="sd">        :return: The value associated with the item key or Undefined if not present.</span>
+<span class="sd">        :rtype: Any or Undefined</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">,):</span>
+            <span class="k">return</span> <span class="n">Undefined</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set an item in the original object.</span>
+
+<span class="sd">        :param item: The item key to set.</span>
+<span class="sd">        :type item: str</span>
+<span class="sd">        :param value: The value to set.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an item from the original object.</span>
+
+<span class="sd">        :param item: The item key to delete.</span>
+<span class="sd">        :type item: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="fm">__getattr__</span> <span class="o">=</span> <span class="fm">__getitem__</span>  <span class="c1"># Set similar behaviour to following methods</span>
+    <span class="fm">__setattr__</span> <span class="o">=</span> <span class="fm">__setitem__</span>
+    <span class="fm">__delattr__</span> <span class="o">=</span> <span class="fm">__delitem__</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the string representation of the original object.</span>
+
+<span class="sd">        :return: The string representation of the original object.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the original object contains the given item.</span>
+
+<span class="sd">        :param item: The item key to check.</span>
+<span class="sd">        :type item: str</span>
+<span class="sd">        :return: True if the item is in the original object, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the length of the original object.</span>
+
+<span class="sd">        :return: The length of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the integer representation of the original object.</span>
+
+<span class="sd">        :return: The integer representation of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__int__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the float representation of the original object.</span>
+
+<span class="sd">        :return: The float representation of the original object.</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__float__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__complex__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the complex number representation of the original object.</span>
+
+<span class="sd">        :return: The complex number representation of the original object.</span>
+<span class="sd">        :rtype: complex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__complex__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__oct__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the octal string representation of the original object.</span>
+
+<span class="sd">        :return: The octal string representation of the original object.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__oct__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__hex__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the hexadecimal string representation of the original object.</span>
+
+<span class="sd">        :return: The hexadecimal string representation of the original object.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__hex__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__index__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the index representation of the original object.</span>
+
+<span class="sd">        :return: The index representation of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__index__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__trunc__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the truncated value of the original object.</span>
+
+<span class="sd">        :return: The truncated value of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__trunc__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the string representation of the original object.</span>
+
+<span class="sd">        :return: The string representation of the original object.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Unicode string representation of the original object.</span>
+
+<span class="sd">        :return: The Unicode string representation of the original object.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__unicode__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the formatted string representation of the original object.</span>
+
+<span class="sd">        :param format_string: The format string.</span>
+<span class="sd">        :type format_string: str</span>
+<span class="sd">        :return: The formatted string representation of the original object.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__format__</span><span class="p">(</span><span class="n">format_string</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the hash value of the original object.</span>
+
+<span class="sd">        :return: The hash value of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the boolean value of the original object.</span>
+
+<span class="sd">        :return: True if the original object is considered True, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__nonzero__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__sizeof__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the size of the original object in memory.</span>
+
+<span class="sd">        :return: The size of the original object in memory.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__sizeof__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the positive value of the original object.</span>
+
+<span class="sd">        :return: The positive value of the original object.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__pos__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the negative value of the original object.</span>
+
+<span class="sd">        :return: The negative value of the original object.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__neg__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the absolute value of the original object.</span>
+
+<span class="sd">        :return: The absolute value of the original object.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__abs__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the inverted value of the original object.</span>
+
+<span class="sd">        :return: The inverted value of the original object.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__invert__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__round__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the rounded value of the original object.</span>
+
+<span class="sd">        :return: The rounded value of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__round__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__floor__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the floored value of the original object.</span>
+
+<span class="sd">        :return: The floored value of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__floor__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__ceil__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the ceiling value of the original object.</span>
+
+<span class="sd">        :return: The ceiling value of the original object.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">__ceil__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a bitwise OR operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the bitwise OR operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a bitwise AND operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the bitwise AND operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__and__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform an addition operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the addition operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a subtraction operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the subtraction operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a multiplication operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the multiplication operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__floordiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a floor division operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the floor division operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__floordiv__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a true division operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the true division operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__truediv__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__mod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a modulus operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the modulus operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__mod__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a power operation with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to perform the operation with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the power operation.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__pow__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a less-than comparison with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to compare with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the less-than comparison.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__lt__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a less-than-or-equal-to comparison with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to compare with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the less-than-or-equal-to comparison.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__le__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform an equality comparison with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to compare with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the equality comparison.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform an inequality comparison with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to compare with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the inequality comparison.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__ne__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a greater-than-or-equal-to comparison with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to compare with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the greater-than-or-equal-to comparison.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__ge__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a greater-than comparison with the original object and another value.</span>
+
+<span class="sd">        :param other: The other value to compare with.</span>
+<span class="sd">        :type other: Any</span>
+<span class="sd">        :return: The result of the greater-than comparison.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__gt__</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the state of the JsonObject for serialization.</span>
+
+<span class="sd">        :return: The state of the JsonObject.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">__orig__</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the state of the JsonObject during deserialization.</span>
+
+<span class="sd">        :param state: The state to set.</span>
+<span class="sd">        :type state: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;__orig__&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;__orig__&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of attributes of the original object.</span>
+
+<span class="sd">        :return: The list of attributes of the original object.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__dict__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the dictionary representation of the original object.</span>
+
+<span class="sd">        :return: The dictionary representation of the original object.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">jsify</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an iterator for the JsonObject.</span>
+
+<span class="sd">        :return: An iterator for the JsonObject.</span>
+<span class="sd">        :rtype: iterator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">JsonIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memo</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="JsonTuple">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonTuple">[docs]</a>
+<span class="k">class</span> <span class="nc">JsonTuple</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A JSON-like tuple object that extends JsonObject and provides tuple-specific methods.</span>
+
+<span class="sd">    :param o: The original tuple or object to wrap.</span>
+<span class="sd">    :type o: tuple or object</span>
+<span class="sd">    :param args: Additional elements to include in the tuple.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the JsonTuple with the given original object and additional elements.</span>
+
+<span class="sd">        :param o: The original tuple or object to wrap.</span>
+<span class="sd">        :type o: tuple or object</span>
+<span class="sd">        :param args: Additional elements to include in the tuple.</span>
+<span class="sd">        :type args: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JsonTuple.count">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonTuple.count">[docs]</a>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of occurrences of value in the tuple.</span>
+
+<span class="sd">        :param value: The value to count in the tuple.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        :return: The number of occurrences of value.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an item from the tuple by index or slice, returning Undefined if the item does not exist.</span>
+
+<span class="sd">        :param item: The index or slice to retrieve.</span>
+<span class="sd">        :type item: int or slice</span>
+<span class="sd">        :return: The value at the specified index or slice, or Undefined if not present.</span>
+<span class="sd">        :rtype: Any or Undefined</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Undefined</span>
+
+    <span class="fm">__getattr__</span> <span class="o">=</span> <span class="fm">__getitem__</span>
+
+<div class="viewcode-block" id="JsonTuple.index">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonTuple.index">[docs]</a>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the first index of value in the tuple.</span>
+
+<span class="sd">        Raises ValueError if the value is not present.</span>
+
+<span class="sd">        :param value: The value to find in the tuple.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        :return: The first index of the value.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :raises ValueError: If the value is not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonTuple.copy">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonTuple.copy">[docs]</a>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a shallow or deep copy of the tuple.</span>
+
+<span class="sd">        :param deep: True if the object should be deep copied, False otherwise.</span>
+<span class="sd">        :type deep: bool</span>
+<span class="sd">        :return: A copy of the tuple.</span>
+<span class="sd">        :rtype: JsonTuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">deep</span> <span class="k">else</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">))</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__dict__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the dictionary representation of the tuple.</span>
+
+<span class="sd">        :return: The dictionary representation of the tuple.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">jsify</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if an index is within the bounds of the tuple.</span>
+
+<span class="sd">        :param item: The index to check.</span>
+<span class="sd">        :type item: int</span>
+<span class="sd">        :return: True if the index is within the bounds of the tuple, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="JsonList">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList">[docs]</a>
+<span class="k">class</span> <span class="nc">JsonList</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A JSON-like list object that extends JsonObject and provides list-specific methods.</span>
+
+<span class="sd">    :param o: The original list or object to wrap.</span>
+<span class="sd">    :type o: list or object</span>
+<span class="sd">    :param args: Additional elements to include in the list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the JsonList with the given original object and additional elements.</span>
+
+<span class="sd">        :param o: The original list or object to wrap.</span>
+<span class="sd">        :type o: list or object</span>
+<span class="sd">        :param args: Additional elements to include in the list.</span>
+<span class="sd">        :type args: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JsonList.append">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.append">[docs]</a>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Append an object to the list.</span>
+
+<span class="sd">        :param obj: The object to append.</span>
+<span class="sd">        :type obj: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.clear">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.clear">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear all elements from the list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an item from the list by index or slice, returning Undefined if the item does not exist.</span>
+
+<span class="sd">        :param item: The index or slice to retrieve.</span>
+<span class="sd">        :type item: int or slice</span>
+<span class="sd">        :return: The value at the specified index or slice, or Undefined if not present.</span>
+<span class="sd">        :rtype: Any or Undefined</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="ne">BaseException</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Undefined</span>
+
+    <span class="fm">__getattr__</span> <span class="o">=</span> <span class="fm">__getitem__</span>
+
+<div class="viewcode-block" id="JsonList.copy">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.copy">[docs]</a>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a shallow or deep copy of the list.</span>
+
+<span class="sd">        :param deep: True if the object should be deep copied, False otherwise.</span>
+<span class="sd">        :type deep: bool</span>
+<span class="sd">        :return: A copy of the list.</span>
+<span class="sd">        :rtype: JsonList</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">deep</span> <span class="k">else</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.count">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.count">[docs]</a>
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of occurrences of a value in the list.</span>
+
+<span class="sd">        :param value: The value to count.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        :return: The number of occurrences of the value.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.extend">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.extend">[docs]</a>
+    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extend the list by appending elements from the iterable.</span>
+
+<span class="sd">        :param obj: The iterable to extend the list with.</span>
+<span class="sd">        :type obj: Iterable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.index">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.index">[docs]</a>
+    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the first index of a value in the list.</span>
+
+<span class="sd">        :param value: The value to find.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        :return: The first index of the value.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :raises ValueError: If the value is not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.insert">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.insert">[docs]</a>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert an object at a specified index in the list.</span>
+
+<span class="sd">        :param index: The index to insert the object at.</span>
+<span class="sd">        :type index: int</span>
+<span class="sd">        :param obj: The object to insert.</span>
+<span class="sd">        :type obj: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.pop">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.pop">[docs]</a>
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove and return the item at the specified index in the list.</span>
+
+<span class="sd">        :param index: The index to remove the item from. Defaults to -1 (the last item).</span>
+<span class="sd">        :type index: int, optional</span>
+<span class="sd">        :return: The removed item.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.remove">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.remove">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the first occurrence of a value from the list.</span>
+
+<span class="sd">        :param value: The value to remove.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="JsonList.reverse">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.reverse">[docs]</a>
+    <span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverse the elements of the list in place.</span>
+
+<span class="sd">        :param args: Additional arguments.</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="JsonList.sort">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonList.sort">[docs]</a>
+    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sort the elements of the list in place.</span>
+
+<span class="sd">        :param args: Additional arguments.</span>
+<span class="sd">        :param kwargs: Additional keyword arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of attributes of the object.</span>
+
+<span class="sd">        :return: A list of attributes of the object.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">keys_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">keys_list</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__dict__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the dictionary representation of the list.</span>
+
+<span class="sd">        :return: The dictionary representation of the list.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">:</span><span class="s2">0</span><span class="si">{</span><span class="n">digits</span><span class="si">}}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">jsify</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if an index is within the bounds of the list.</span>
+
+<span class="sd">        :param item: The index to check.</span>
+<span class="sd">        :type item: int</span>
+<span class="sd">        :return: True if the index is within the bounds of the list, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="JsonDict">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonDict">[docs]</a>
+<span class="k">class</span> <span class="nc">JsonDict</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A JSON-like dictionary object that extends JsonObject and provides dictionary-specific methods.</span>
+
+<span class="sd">    :param o: The original dictionary or object to wrap.</span>
+<span class="sd">    :type o: dict or object</span>
+<span class="sd">    :param kwargs: Additional key-value pairs to include in the dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the JsonDict with the given original object and additional key-value pairs.</span>
+
+<span class="sd">        :param o: The original dictionary or object to wrap.</span>
+<span class="sd">        :type o: dict or object</span>
+<span class="sd">        :param kwargs: Additional key-value pairs to include in the dictionary.</span>
+<span class="sd">        :type kwargs: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a key is in the dictionary.</span>
+
+<span class="sd">        :param item: The key to check.</span>
+<span class="sd">        :type item: str</span>
+<span class="sd">        :return: True if the key is in the dictionary, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__orig__</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="p">,</span> <span class="n">default_class</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call the dictionary to get an item, creating it if it does not exist.</span>
+
+<span class="sd">        :param item_name: The key to retrieve or create.</span>
+<span class="sd">        :type item_name: str</span>
+<span class="sd">        :param default_class: The class to instantiate if the key does not exist.</span>
+<span class="sd">        :type default_class: type</span>
+<span class="sd">        :param args: Additional arguments to pass to the class constructor.</span>
+<span class="sd">        :type args: Any</span>
+<span class="sd">        :param kwargs: Additional keyword arguments to pass to the class constructor.</span>
+<span class="sd">        :type kwargs: Any</span>
+<span class="sd">        :return: The value associated with the key, or a new instance of the default class.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">item_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">item_name</span><span class="p">,</span> <span class="n">default_class</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="JsonIterator">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.JsonIterator">[docs]</a>
+<span class="k">class</span> <span class="nc">JsonIterator</span><span class="p">(</span><span class="n">Iterator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An iterator for JSON-like objects that supports conversion to and from JSON.</span>
+
+<span class="sd">    :param json_object: The JSON object to iterate over.</span>
+<span class="sd">    :type json_object: JsonObject</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_object</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the JsonIterator with the given JSON object.</span>
+
+<span class="sd">        :param json_object: The JSON object to iterate over.</span>
+<span class="sd">        :type json_object: JsonObject or Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">json_object</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the iterator itself.</span>
+
+<span class="sd">        :return: The iterator itself.</span>
+<span class="sd">        :rtype: JsonIterator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the next item from the iterator.</span>
+
+<span class="sd">        :return: The next item from the iterator.</span>
+<span class="sd">        :rtype: Any</span>
+<span class="sd">        :raises StopIteration: If there are no more items.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterator</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="unjsify">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.unjsify">[docs]</a>
+<span class="k">def</span> <span class="nf">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a JsonObject to its original representation.</span>
+
+<span class="sd">    :param obj: The object to convert.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :return: The original object if obj is a JsonObject, otherwise returns obj.</span>
+<span class="sd">    :rtype: Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">__orig__</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+
+<div class="viewcode-block" id="deep_unjsify">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.deep_unjsify">[docs]</a>
+<span class="k">def</span> <span class="nf">deep_unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a JsonObject to its original representation, performing a deep conversion.</span>
+
+<span class="sd">    :param obj: The object to convert.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :return: The original object if obj is a JsonObject, otherwise returns obj.</span>
+<span class="sd">    :rtype: Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">json_copy</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="json_copy">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_copy">[docs]</a>
+<span class="k">def</span> <span class="nf">json_copy</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a shallow or deep copy of the object.</span>
+
+<span class="sd">    :param obj: The object to copy.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param deep: True if the object should be deep copied, False otherwise.</span>
+<span class="sd">    :type deep: bool</span>
+<span class="sd">    :return: A copy of the object.</span>
+<span class="sd">    :rtype: JsonObject or Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="n">copy</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">deep</span> <span class="k">else</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="json_get">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_get">[docs]</a>
+<span class="k">def</span> <span class="nf">json_get</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get an item from the object, returning a default value if the item does not exist.</span>
+
+<span class="sd">    :param obj: The object to get the item from.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param item: The item to get.</span>
+<span class="sd">    :type item: Any</span>
+<span class="sd">    :param args: Additional arguments.</span>
+<span class="sd">    :param kwargs: Additional keyword arguments.</span>
+<span class="sd">    :return: The value of the item.</span>
+<span class="sd">    :rtype: JsonObject or Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_pop">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_pop">[docs]</a>
+<span class="k">def</span> <span class="nf">json_pop</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove the specified item from the object and return its value.</span>
+
+<span class="sd">    :param obj: The object to pop the item from.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param item: The item to pop.</span>
+<span class="sd">    :type item: Any</span>
+<span class="sd">    :param args: Additional arguments.</span>
+<span class="sd">    :param kwargs: Additional keyword arguments.</span>
+<span class="sd">    :return: The value of the popped item.</span>
+<span class="sd">    :rtype: JsonObject or Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_popitem">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_popitem">[docs]</a>
+<span class="k">def</span> <span class="nf">json_popitem</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove and return a (key, value) pair from the object.</span>
+
+<span class="sd">    :param obj: The object to pop the item from.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param args: Additional arguments.</span>
+<span class="sd">    :param kwargs: Additional keyword arguments.</span>
+<span class="sd">    :return: The popped (key, value) pair.</span>
+<span class="sd">    :rtype: tuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">popitem</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">popitem</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_setdefault">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_setdefault">[docs]</a>
+<span class="k">def</span> <span class="nf">json_setdefault</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insert a key with a default value if the key is not in the dictionary.</span>
+
+<span class="sd">    :param obj: The object to set the default value in.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param value: The key to set the default value for.</span>
+<span class="sd">    :type value: Any</span>
+<span class="sd">    :param default: The default value to set.</span>
+<span class="sd">    :type default: Any</span>
+<span class="sd">    :param args: Additional arguments.</span>
+<span class="sd">    :param kwargs: Additional keyword arguments.</span>
+<span class="sd">    :return: The value of the key.</span>
+<span class="sd">    :rtype: JsonObject or Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_update">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_update">[docs]</a>
+<span class="k">def</span> <span class="nf">json_update</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the dictionary with the key-value pairs from another dictionary.</span>
+
+<span class="sd">    :param obj: The object to update.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param value: The dictionary to update from.</span>
+<span class="sd">    :type value: dict</span>
+<span class="sd">    :param args: Additional arguments.</span>
+<span class="sd">    :param kwargs: Additional keyword arguments.</span>
+<span class="sd">    :return: The updated object.</span>
+<span class="sd">    :rtype: JsonObject or Any</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_values">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_values">[docs]</a>
+<span class="k">def</span> <span class="nf">json_values</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a new view of the dictionary&#39;s values.</span>
+
+<span class="sd">    :param obj: The object to get the values from.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :return: A view object displaying a list of the dictionary&#39;s values.</span>
+<span class="sd">    :rtype: JsonIterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">JsonIterator</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_keys">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_keys">[docs]</a>
+<span class="k">def</span> <span class="nf">json_keys</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a new view of the dictionary&#39;s keys.</span>
+
+<span class="sd">    :param obj: The object to get the keys from.</span>
+<span class="sd">    :type obj: JsonObject, JsonList, JsonTuple or Any</span>
+<span class="sd">    :return: A view object displaying a list of the object&#39;s keys (in case of list or tuple these would be the indexes</span>
+<span class="sd">    in string format).</span>
+<span class="sd">    :rtype: JsonIterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">JsonIterator</span><span class="p">(</span>
+        <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">JsonList</span><span class="p">,</span> <span class="n">JsonTuple</span><span class="p">))</span>
+        <span class="k">else</span> <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="json_items">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.json_items">[docs]</a>
+<span class="k">def</span> <span class="nf">json_items</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a new view of the dictionary&#39;s items (key, value pairs).</span>
+
+<span class="sd">    :param obj: The object to get the items from.</span>
+<span class="sd">    :type obj: JsonObject, JsonList, JsonTuple or Any</span>
+<span class="sd">    :return: A view object displaying a list of the objects&#39;s items (in case of list or tuple these would be values with</span>
+<span class="sd">     keys being their indexes in string format).</span>
+<span class="sd">    :rtype: JsonIterator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">JsonIterator</span><span class="p">(</span>
+        <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">JsonList</span><span class="p">,</span> <span class="n">JsonTuple</span><span class="p">))</span>
+        <span class="k">else</span> <span class="nb">super</span><span class="p">(</span><span class="n">JsonObject</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s2">&quot;__orig__&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PropertiesExistResult">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.PropertiesExistResult">[docs]</a>
+<span class="k">class</span> <span class="nc">PropertiesExistResult</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the result with an optional value.</span>
+
+<span class="sd">        :param value: The value to store.</span>
+<span class="sd">        :type value: Any</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jsified</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unjsified</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="properties_exist">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.properties_exist">[docs]</a>
+<span class="k">def</span> <span class="nf">properties_exist</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if a series of properties exist in the JSON object.</span>
+
+<span class="sd">    :param obj: The JSON object to check.</span>
+<span class="sd">    :type obj: JsonObject or Any</span>
+<span class="sd">    :param path: The sequence of properties to check.</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :return: True if the properties exist, False otherwise.</span>
+<span class="sd">    :rtype: bool or PropertiesExistResult</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">JsonObject</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="n">AnyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">PropertiesExistResult</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="jsify">
+<a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.jsify">[docs]</a>
+<span class="k">def</span> <span class="nf">jsify</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a dictionary, list, or tuple to its corresponding JsonObject.</span>
+
+<span class="sd">    :param o: The object to convert.</span>
+<span class="sd">    :type o: dict, list, tuple or Any</span>
+<span class="sd">    :param kwargs: Additional keyword arguments.</span>
+<span class="sd">    :return: The converted JsonObject.</span>
+<span class="sd">    :rtype: JsonObject, JsonDict, JsonList, or JsonTuple</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">JsonDict</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">JsonList</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">JsonTuple</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">o</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
