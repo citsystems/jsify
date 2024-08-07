@@ -6,13 +6,17 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="jsify",
-    version="0.9.0",  # Update the version as necessary
+    version="0.9.2",  # Update the version as necessary
     author="Zbigniew Rajewski",
     author_email="zbigniew.r@citsystems.pl",
-    description="Library designed to allow you to use Python objects in a manner you can use them in JavaScript "
-                "accessing properties using dot notation instead of square brackets.",
+    description="Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like "
+                "objects, offering seamless integration and manipulation of data in a JavaScript-like manner."
+                "With Jsify, you can effortlessly convert Python dictionaries, lists, and tuples into JSON-like "
+                "objects that support attribute-style access, automatic handling of undefined properties, "
+                "and easy serialization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    keywords="json javascript objects jsify dot attributes serialization",  # SEO keywords
     url="https://github.com/citsystems/jsify",  # Replace with the correct URL
     packages=find_packages(),
     classifiers=[
@@ -33,4 +37,9 @@ setup(
         ],
     },
     include_package_data=True,  # Include non-Python files specified in MANIFEST.in
+    project_urls={  # Optional: Additional URLs for the project
+        "Documentation": "https://citsystems.github.io/jsify",
+        "Source": "https://github.com/citsystems/jsify",
+        "Tracker": "https://github.com/citsystems/jsify/issues",
+    },
 )
