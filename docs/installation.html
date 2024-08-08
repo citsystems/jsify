@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to jsify’s documentation! &mdash; jsify 0.9.0 documentation</title>
+  <title>Installation &mdash; jsify 0.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -21,7 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction" href="intro.html" /> 
+    <link rel="next" title="Jsifying and unjsyfing objects" href="jsifying_unjsifying.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +33,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             jsify
           </a>
 <div role="search">
@@ -44,10 +45,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloading.html">Downloading from GitHub</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-pip">Using pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verifying-the-installation">Verifying the Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-jsify">Upgrading Jsify</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
@@ -69,17 +74,17 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">jsify</a>
+          <a href="index.html">jsify</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to jsify’s documentation!</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -87,44 +92,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-jsify-s-documentation">
-<h1>Welcome to jsify’s documentation!<a class="headerlink" href="#welcome-to-jsify-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloading.html">Downloading from GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
-</ul>
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>Jsify can be easily installed via pip from PyPI. Follow the instructions below to set up Jsify in your Python environment.</p>
+<section id="using-pip">
+<h2>Using pip<a class="headerlink" href="#using-pip" title="Link to this heading"></a></h2>
+<p>To install Jsify using pip, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>jsify
+</pre></div>
 </div>
+<p>This will install the latest version of Jsify and its dependencies.</p>
 </section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
+<section id="verifying-the-installation">
+<h2>Verifying the Installation<a class="headerlink" href="#verifying-the-installation" title="Link to this heading"></a></h2>
+<p>To verify that Jsify is installed correctly, you can run a simple Python script to import the library:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jsify</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jsify</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If Jsify is installed correctly, this script should output the version number of the installed package.</p>
+</section>
+<section id="upgrading-jsify">
+<h2>Upgrading Jsify<a class="headerlink" href="#upgrading-jsify" title="Link to this heading"></a></h2>
+<p>To upgrade Jsify to the latest version, you can use the following pip command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>jsify
+</pre></div>
+</div>
+<p>This command will upgrade Jsify to the most recent version available on PyPI.</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jsifying_unjsifying.html" class="btn btn-neutral float-right" title="Jsifying and unjsyfing objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
