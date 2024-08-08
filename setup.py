@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="jsify",
-    version="0.9.5",  # Update the version as necessary
+    version="0.9.6",  # Update the version as necessary
     author="Zbigniew Rajewski",
     author_email="zbigniew.r@citsystems.pl",
     description="Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like "
@@ -16,7 +16,7 @@ setup(
                 "properties, and easy serialization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords="json javascript objects jsify dot attributes serialization",  # SEO keywords
+    keywords="json javascript objects jsify dot notation attributes serialization",  # SEO keywords
     url="https://github.com/citsystems/jsify",  # Replace with the correct URL
     packages=find_packages(),
     classifiers=[
