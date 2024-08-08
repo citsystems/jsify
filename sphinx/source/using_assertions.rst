@@ -3,11 +3,11 @@
 Using Assertions in Jsify
 =========================
 
-The Jsify library includes a powerful assertion framework through the `JsonAssert` class, which allows you to verify the structure and content of JSON-like objects. This is particularly useful in testing scenarios where you need to ensure that your data matches expected formats or values.
+The Jsify library includes a powerful assertion framework through the `Assert` class, which allows you to verify the structure and content of JSON-like objects. This is particularly useful in testing scenarios where you need to ensure that your data matches expected formats or values.
 
-**Key Concept: JsonAssert**
+**Key Concept: Assert**
 
-The `JsonAssert` class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a `Object` match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.
+The `Assert` class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a `Object` match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.
 
 ### Basic Assertion Methods
 
@@ -27,7 +27,7 @@ The `IsIn` and `NotIn` assertions are used to verify the presence or absence of 
 
 .. code-block:: python
 
-    from jsify import jsify, JsonAssert
+    from jsify import jsify, Assert
 
     # Example data
     data = {
@@ -42,11 +42,11 @@ The `IsIn` and `NotIn` assertions are used to verify the presence or absence of 
     json_obj = jsify(data)
 
     # Using the IsIn assertion to check for key presence
-    assert_key_present = JsonAssert.IsIn()
+    assert_key_present = Assert.IsIn()
     assert_key_present.assertion(json_obj, 'name', 'root')  # No error
 
     # Using the NotIn assertion to check for key absence
-    assert_key_absent = JsonAssert.NotIn()
+    assert_key_absent = Assert.NotIn()
     assert_key_absent.assertion(json_obj, 'nonexistent', 'root')  # No error
 
     # This will raise an AssertionError because 'name' exists
@@ -74,7 +74,7 @@ The `values_equal` method allows you to perform deep comparisons between a `Obje
 
     # Using values_equal to assert that the values match
     try:
-        JsonAssert.values_equal(json_obj, expected_values)
+        Assert.values_equal(json_obj, expected_values)
         print("Assertion passed: Values match expected data.")
     except AssertionError as e:
         print(f"Assertion failed: {e}")
@@ -84,14 +84,14 @@ The `values_equal` method allows you to perform deep comparisons between a `Obje
 
     # This will raise an AssertionError because 'city' does not match
     try:
-        JsonAssert.values_equal(json_obj, expected_values)
+        Assert.values_equal(json_obj, expected_values)
     except AssertionError as e:
         print(f"Assertion failed: {e}")
         # Outputs: root.details.city not equal to Metropolis
 
 ### Handling Complex Assertions
 
-The `JsonAssert` class is designed to handle complex data structures, including nested dictionaries and lists. You can use the provided assertions to validate that every part of your JSON-like structure adheres to the expected format.
+The `Assert` class is designed to handle complex data structures, including nested dictionaries and lists. You can use the provided assertions to validate that every part of your JSON-like structure adheres to the expected format.
 
 **Example:**
 
@@ -129,7 +129,7 @@ The `JsonAssert` class is designed to handle complex data structures, including 
 
     # Using values_equal to assert the entire structure matches
     try:
-        JsonAssert.values_equal(json_obj, expected_structure)
+        Assert.values_equal(json_obj, expected_structure)
         print("Assertion passed: Complex structure matches expected data.")
     except AssertionError as e:
         print(f"Assertion failed: {e}")

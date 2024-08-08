@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="jsify",
-    version="0.9.3",  # Update the version as necessary
+    version="0.9.4",  # Update the version as necessary
     author="Zbigniew Rajewski",
     author_email="zbigniew.r@citsystems.pl",
     description="Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like "

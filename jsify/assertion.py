@@ -3,7 +3,7 @@ The `assertion` module provides a suite of tools for performing assertions on JS
 structure and content conform to expected criteria. This module is particularly useful in testing scenarios where you
 need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON
 structures.
-At the heart of this module is the `JsonAssert` class, which offers a range of assertion methods designed to work with
+At the heart of this module is the `Assert` class, which offers a range of assertion methods designed to work with
 instances of `Object`. These assertions enable you to verify that certain keys are either present or absent within
 a JSON object and that the values associated with those keys are as expected.
 """
@@ -11,7 +11,7 @@ a JSON object and that the values associated with those keys are as expected.
 from .jsify import Object
 
 
-class JsonAssert:
+class Assert:
     """
     A class providing assertions to verify the contents of JSON-like objects.
     """
@@ -110,14 +110,14 @@ class JsonAssert:
         else:
             iteration = enumerate(values)
         for key, attribute in iteration:
-            if isinstance(attribute, JsonAssert.Assertion):
+            if isinstance(attribute, Assert.Assertion):
                 attribute.assertion(json_object, key, path)
             else:
                 if key not in json_object:
                     raise AssertionError("{0}.{1} not in JTO object.".format(path, key))
                 jto_attribute_value = json_object[key]
                 if isinstance(jto_attribute_value, Object):
-                    JsonAssert.values_equal(
+                    Assert.values_equal(
                         jto_attribute_value, attribute, path + "." + str(key)
                     )
                 elif jto_attribute_value != attribute:

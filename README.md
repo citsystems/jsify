@@ -92,7 +92,7 @@ print(json_string)  # Outputs: {"name": "Alice", "details": {"age": 30, "nicknam
 Jsify includes an `assertions` module to help you validate the structure and contents of JSON-like objects:
 
 ```python
-from jsify import jsify, JsonAssert
+from jsify import jsify, Assert
 
 data = {
     'name': 'Alice',
@@ -105,11 +105,11 @@ data = {
 json_obj = jsify(data)
 
 # Assert that a key exists
-assert_key_present = JsonAssert.IsIn()
+assert_key_present = Assert.IsIn()
 assert_key_present.assertion(json_obj, 'name', 'root')  # No error
 
 # Assert that a key does not exist
-assert_key_absent = JsonAssert.NotIn()
+assert_key_absent = Assert.NotIn()
 assert_key_absent.assertion(json_obj, 'nonexistent', 'root')  # No error
 ```
 

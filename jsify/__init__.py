@@ -2,4 +2,4 @@ from .jsify import Object, Dict, Tuple, List, Iterator, jsify, unjsify, deep_unj
     jsified_get, jsified_update, jsified_keys, jsified_values, jsified_items
 from .undefined import Undefined
 from .encoder import ObjectEncoder
-from .assertion import JsonAssert
+from .assertion import Assert

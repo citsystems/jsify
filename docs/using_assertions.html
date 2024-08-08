@@ -88,9 +88,9 @@
              
   <section id="using-assertions-in-jsify">
 <span id="assertions-usage"></span><h1>Using Assertions in Jsify<a class="headerlink" href="#using-assertions-in-jsify" title="Link to this heading"></a></h1>
-<p>The Jsify library includes a powerful assertion framework through the <cite>JsonAssert</cite> class, which allows you to verify the structure and content of JSON-like objects. This is particularly useful in testing scenarios where you need to ensure that your data matches expected formats or values.</p>
-<p><strong>Key Concept: JsonAssert</strong></p>
-<p>The <cite>JsonAssert</cite> class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a <cite>Object</cite> match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.</p>
+<p>The Jsify library includes a powerful assertion framework through the <cite>Assert</cite> class, which allows you to verify the structure and content of JSON-like objects. This is particularly useful in testing scenarios where you need to ensure that your data matches expected formats or values.</p>
+<p><strong>Key Concept: Assert</strong></p>
+<p>The <cite>Assert</cite> class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a <cite>Object</cite> match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.</p>
 <p>### Basic Assertion Methods</p>
 <ol class="arabic simple">
 <li><p><strong>IsIn Assertion:</strong>
@@ -103,7 +103,7 @@
 <p>### Using <cite>IsIn</cite> and <cite>NotIn</cite> Assertions</p>
 <p>The <cite>IsIn</cite> and <cite>NotIn</cite> assertions are used to verify the presence or absence of keys in your JSON-like data structures.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">JsonAssert</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">Assert</span>
 
 <span class="c1"># Example data</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -118,11 +118,11 @@
 <span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <span class="c1"># Using the IsIn assertion to check for key presence</span>
-<span class="n">assert_key_present</span> <span class="o">=</span> <span class="n">JsonAssert</span><span class="o">.</span><span class="n">IsIn</span><span class="p">()</span>
+<span class="n">assert_key_present</span> <span class="o">=</span> <span class="n">Assert</span><span class="o">.</span><span class="n">IsIn</span><span class="p">()</span>
 <span class="n">assert_key_present</span><span class="o">.</span><span class="n">assertion</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">)</span>  <span class="c1"># No error</span>
 
 <span class="c1"># Using the NotIn assertion to check for key absence</span>
-<span class="n">assert_key_absent</span> <span class="o">=</span> <span class="n">JsonAssert</span><span class="o">.</span><span class="n">NotIn</span><span class="p">()</span>
+<span class="n">assert_key_absent</span> <span class="o">=</span> <span class="n">Assert</span><span class="o">.</span><span class="n">NotIn</span><span class="p">()</span>
 <span class="n">assert_key_absent</span><span class="o">.</span><span class="n">assertion</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="s1">&#39;nonexistent&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">)</span>  <span class="c1"># No error</span>
 
 <span class="c1"># This will raise an AssertionError because &#39;name&#39; exists</span>
@@ -146,7 +146,7 @@
 
 <span class="c1"># Using values_equal to assert that the values match</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">)</span>
+    <span class="n">Assert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assertion passed: Values match expected data.&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assertion failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -156,14 +156,14 @@
 
 <span class="c1"># This will raise an AssertionError because &#39;city&#39; does not match</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">)</span>
+    <span class="n">Assert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_values</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assertion failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="c1"># Outputs: root.details.city not equal to Metropolis</span>
 </pre></div>
 </div>
 <p>### Handling Complex Assertions</p>
-<p>The <cite>JsonAssert</cite> class is designed to handle complex data structures, including nested dictionaries and lists. You can use the provided assertions to validate that every part of your JSON-like structure adheres to the expected format.</p>
+<p>The <cite>Assert</cite> class is designed to handle complex data structures, including nested dictionaries and lists. You can use the provided assertions to validate that every part of your JSON-like structure adheres to the expected format.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Complex data structure</span>
 <span class="n">complex_data</span> <span class="o">=</span> <span class="p">{</span>
@@ -197,7 +197,7 @@
 
 <span class="c1"># Using values_equal to assert the entire structure matches</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_structure</span><span class="p">)</span>
+    <span class="n">Assert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span><span class="n">json_obj</span><span class="p">,</span> <span class="n">expected_structure</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Assertion passed: Complex structure matches expected data.&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Assertion failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

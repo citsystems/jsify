@@ -60,11 +60,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../properties_exist.html">Checking if Properties Path Exists</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Jsify’s manual reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Assertion module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.assertion.JsonAssert"><code class="docutils literal notranslate"><span class="pre">JsonAssert</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.Assertion"><code class="docutils literal notranslate"><span class="pre">JsonAssert.Assertion</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.IsIn"><code class="docutils literal notranslate"><span class="pre">JsonAssert.IsIn</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.NotIn"><code class="docutils literal notranslate"><span class="pre">JsonAssert.NotIn</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.JsonAssert.values_equal"><code class="docutils literal notranslate"><span class="pre">JsonAssert.values_equal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.assertion.Assert"><code class="docutils literal notranslate"><span class="pre">Assert</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.Assert.Assertion"><code class="docutils literal notranslate"><span class="pre">Assert.Assertion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.Assert.IsIn"><code class="docutils literal notranslate"><span class="pre">Assert.IsIn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.Assert.NotIn"><code class="docutils literal notranslate"><span class="pre">Assert.NotIn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.assertion.Assert.values_equal"><code class="docutils literal notranslate"><span class="pre">Assert.values_equal()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -111,22 +111,22 @@
 structure and content conform to expected criteria. This module is particularly useful in testing scenarios where you
 need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON
 structures.
-At the heart of this module is the <cite>JsonAssert</cite> class, which offers a range of assertion methods designed to work with
+At the heart of this module is the <cite>Assert</cite> class, which offers a range of assertion methods designed to work with
 instances of <cite>Object</cite>. These assertions enable you to verify that certain keys are either present or absent within
 a JSON object and that the values associated with those keys are as expected.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.assertion.</span></span><span class="sig-name descname"><span class="pre">JsonAssert</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.assertion.Assert">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.assertion.</span></span><span class="sig-name descname"><span class="pre">Assert</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class providing assertions to verify the contents of JSON-like objects.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.Assertion">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Assertion</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.Assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.Assertion" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.Assertion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Assertion</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.Assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.Assertion" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for assertions on JSON objects.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.Assertion.assertion">
-<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.Assertion.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.Assertion.assertion" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.Assertion.assertion">
+<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.Assertion.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.Assertion.assertion" title="Link to this definition"></a></dt>
 <dd><p>Perform an assertion on a JSON object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -142,13 +142,13 @@ a JSON object and that the values associated with those keys are as expected.</p
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.IsIn">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsIn</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.IsIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.IsIn" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jsify.assertion.JsonAssert.Assertion" title="jsify.assertion.JsonAssert.Assertion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assertion</span></code></a></p>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.IsIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IsIn</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.IsIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.IsIn" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.assertion.Assert.Assertion" title="jsify.assertion.Assert.Assertion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assertion</span></code></a></p>
 <p>Assertion to check that a key is in the JSON object.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.IsIn.assertion">
-<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.IsIn.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.IsIn.assertion" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.IsIn.assertion">
+<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.IsIn.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.IsIn.assertion" title="Link to this definition"></a></dt>
 <dd><p>Assert that a key is in the JSON object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -167,13 +167,13 @@ a JSON object and that the values associated with those keys are as expected.</p
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.NotIn">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NotIn</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.NotIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.NotIn" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jsify.assertion.JsonAssert.Assertion" title="jsify.assertion.JsonAssert.Assertion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assertion</span></code></a></p>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.NotIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NotIn</span></span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.NotIn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.NotIn" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.assertion.Assert.Assertion" title="jsify.assertion.Assert.Assertion"><code class="xref py py-class docutils literal notranslate"><span class="pre">Assertion</span></code></a></p>
 <p>Assertion to check that a key is not in the JSON object.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.NotIn.assertion">
-<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.NotIn.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.NotIn.assertion" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.NotIn.assertion">
+<span class="sig-name descname"><span class="pre">assertion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.NotIn.assertion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.NotIn.assertion" title="Link to this definition"></a></dt>
 <dd><p>Assert that a key is not in the JSON object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -192,8 +192,8 @@ a JSON object and that the values associated with those keys are as expected.</p
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.assertion.JsonAssert.values_equal">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#JsonAssert.values_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.JsonAssert.values_equal" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.assertion.Assert.values_equal">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/assertion.html#Assert.values_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.assertion.Assert.values_equal" title="Link to this definition"></a></dt>
 <dd><p>Assert that the values in a JSON object match the expected values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
