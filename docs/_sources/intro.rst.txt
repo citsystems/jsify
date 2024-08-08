@@ -3,7 +3,7 @@
 Introduction
 =============
 
-The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the `Object` class, which allows for attribute-style access and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.
+The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the `Object` class, which allows for attribute-style access (using dot notation) and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.
 
 **Key Concept: Wrapping the Original Object**
 

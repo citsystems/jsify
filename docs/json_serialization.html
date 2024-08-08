@@ -47,6 +47,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
@@ -89,8 +90,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="serializing-Object-instances-with-json">
-<span id="json-serialization"></span><h1>Serializing <cite>Object</cite> Instances with JSON<a class="headerlink" href="#serializing-Object-instances-with-json" title="Link to this heading"></a></h1>
+  <section id="serializing-object-instances-with-json">
+<span id="json-serialization"></span><h1>Serializing <cite>Object</cite> Instances with JSON<a class="headerlink" href="#serializing-object-instances-with-json" title="Link to this heading"></a></h1>
 <p>The Jsify library provides seamless integration with Python’s built-in <cite>json</cite> module, allowing you to serialize <cite>Object</cite> instances and other jsified structures into JSON format. This is achieved through the use of the <cite>ObjectEncoder</cite>, a custom JSON encoder that ensures <cite>Object</cite> instances are correctly converted back into their original Python representations before serialization.</p>
 <p><strong>Key Concept: Custom JSON Encoding</strong></p>
 <p>When you serialize a <cite>Object</cite>, <cite>Dict</cite>, <cite>List</cite>, or <cite>Tuple</cite> using the <cite>json</cite> module, the <cite>ObjectEncoder</cite> is automatically invoked to convert these instances into their underlying native Python objects (like dictionaries, lists, and tuples). This ensures that the resulting JSON is a standard representation of the data, free from any Jsify-specific attributes or behaviors.</p>

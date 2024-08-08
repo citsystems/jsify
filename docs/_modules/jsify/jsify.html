@@ -44,6 +44,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_dictionaries.html">Using Jsified Dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_lists.html">Using Jsified Lists</a></li>
@@ -96,10 +97,12 @@
 <span class="sd">into their JSON-like counterparts, and `unjsify` for reversing this transformation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span><span class="p">,</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span> <span class="k">as</span> <span class="n">TypeIterable</span><span class="p">,</span> <span class="n">Iterator</span> <span class="k">as</span> <span class="n">TypeIterator</span>
 
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">AnyError</span>
 <span class="kn">from</span> <span class="nn">.undefined</span> <span class="kn">import</span> <span class="n">Undefined</span>
+
+<span class="n">_literals</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="Object">
@@ -133,7 +136,17 @@
 <span class="sd">        :rtype: Any or Undefined</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">jsify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__jsify_orig__</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+            <span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__jsify_orig__</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">_literals</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">o</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Dict</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">List</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Tuple</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">o</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">Exception</span><span class="p">,):</span>
             <span class="k">return</span> <span class="n">Undefined</span>
 
@@ -795,7 +808,7 @@
 
 <div class="viewcode-block" id="List.extend">
 <a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.List.extend">[docs]</a>
-    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">TypeIterable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extend the list by appending elements from the iterable.</span>
 
@@ -955,46 +968,31 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__jsify_orig__</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_name</span><span class="p">,</span> <span class="n">default_class</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Call the dictionary to get an item, creating it if it does not exist.</span>
-
-<span class="sd">        :param item_name: The key to retrieve or create.</span>
-<span class="sd">        :type item_name: str</span>
-<span class="sd">        :param default_class: The class to instantiate if the key does not exist.</span>
-<span class="sd">        :type default_class: type</span>
-<span class="sd">        :param args: Additional arguments to pass to the class constructor.</span>
-<span class="sd">        :type args: Any</span>
-<span class="sd">        :param kwargs: Additional keyword arguments to pass to the class constructor.</span>
-<span class="sd">        :type kwargs: Any</span>
-<span class="sd">        :return: The value associated with the key, or a new instance of the default class.</span>
-<span class="sd">        :rtype: Any</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">item_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">item_name</span><span class="p">,</span> <span class="n">default_class</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">item_name</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">start</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="Iterator">
 <a class="viewcode-back" href="../../reference/jsify.html#jsify.jsify.Iterator">[docs]</a>
-<span class="k">class</span> <span class="nc">Iterator</span><span class="p">(</span><span class="n">Iterator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Iterator</span><span class="p">(</span><span class="n">TypeIterator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    An iterator for JSON-like objects that supports conversion to and from JSON.</span>
-
-<span class="sd">    :param json_object: The JSON object to iterate over.</span>
-<span class="sd">    :type json_object: Object</span>
+<span class="sd">    An iterator for objects that supports jsifying and unjsifying.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the Iterator with the given JSON object.</span>
+<span class="sd">        Initialize the Iterator with the given object.</span>
 
-<span class="sd">        :param json_object: The JSON object to iterate over.</span>
-<span class="sd">        :type json_object: Object or Any</span>
+<span class="sd">        :param obj: The object to iterate over.</span>
+<span class="sd">        :type obj: Iterable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">json_object</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
