@@ -1,5 +1,5 @@
-from .jsify import JsonObject, JsonDict, JsonTuple, JsonList, JsonIterator, jsify, unjsify, deep_unjsify, json_copy, \
-    json_get, json_update, json_keys, json_values, json_items
+from .jsify import Object, Dict, Tuple, List, Iterator, jsify, unjsify, deep_unjsify, jsified_copy, \
+    jsified_get, jsified_update, jsified_keys, jsified_values, jsified_items
 from .undefined import Undefined
-from .encoder import JsonObjectEncoder
+from .encoder import ObjectEncoder
 from .assertion import JsonAssert

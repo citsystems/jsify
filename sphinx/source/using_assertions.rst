@@ -7,16 +7,16 @@ The Jsify library includes a powerful assertion framework through the `JsonAsser
 
 **Key Concept: JsonAssert**
 
-The `JsonAssert` class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a `JsonObject` match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.
+The `JsonAssert` class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a `Object` match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.
 
 ### Basic Assertion Methods
 
 1. **IsIn Assertion:**
-   - Checks whether a specific key exists in a `JsonObject`.
+   - Checks whether a specific key exists in a `Object`.
    - Raises an `AssertionError` if the key is not found.
 
 2. **NotIn Assertion:**
-   - Checks whether a specific key does not exist in a `JsonObject`.
+   - Checks whether a specific key does not exist in a `Object`.
    - Raises an `AssertionError` if the key is found.
 
 ### Using `IsIn` and `NotIn` Assertions
@@ -57,7 +57,7 @@ The `IsIn` and `NotIn` assertions are used to verify the presence or absence of 
 
 ### Asserting Values with `values_equal`
 
-The `values_equal` method allows you to perform deep comparisons between a `JsonObject` and a dictionary or list of expected values. It ensures that the structure and content of the `JsonObject` match the expected format.
+The `values_equal` method allows you to perform deep comparisons between a `Object` and a dictionary or list of expected values. It ensures that the structure and content of the `Object` match the expected format.
 
 **Example:**
 

@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../camelized_functions.html">Creating Camelized Functions</a></li>
@@ -112,7 +112,7 @@ structure and content conform to expected criteria. This module is particularly 
 need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON
 structures.
 At the heart of this module is the <cite>JsonAssert</cite> class, which offers a range of assertion methods designed to work with
-instances of <cite>JsonObject</cite>. These assertions enable you to verify that certain keys are either present or absent within
+instances of <cite>Object</cite>. These assertions enable you to verify that certain keys are either present or absent within
 a JSON object and that the values associated with those keys are as expected.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="jsify.assertion.JsonAssert">
@@ -131,7 +131,7 @@ a JSON object and that the values associated with those keys are as expected.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to perform the assertion on.</p></li>
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a>) – The JSON object to perform the assertion on.</p></li>
 <li><p><strong>key</strong> (<em>str</em><em> or </em><em>int</em>) – The key to check in the JSON object.</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object.</p></li>
 </ul>
@@ -153,7 +153,7 @@ a JSON object and that the values associated with those keys are as expected.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to perform the assertion on.</p></li>
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a>) – The JSON object to perform the assertion on.</p></li>
 <li><p><strong>key</strong> (<em>str</em>) – The key to check in the JSON object.</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object.</p></li>
 </ul>
@@ -178,7 +178,7 @@ a JSON object and that the values associated with those keys are as expected.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to perform the assertion on.</p></li>
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a>) – The JSON object to perform the assertion on.</p></li>
 <li><p><strong>key</strong> (<em>str</em>) – The key to check in the JSON object.</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object.</p></li>
 </ul>
@@ -198,7 +198,7 @@ a JSON object and that the values associated with those keys are as expected.</p
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to check.</p></li>
+<li><p><strong>json_object</strong> (<a class="reference internal" href="jsify.html#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a>) – The JSON object to check.</p></li>
 <li><p><strong>values</strong> (<em>dict</em><em> or </em><em>list</em>) – The expected values to match against the JSON object.</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – The current path in the JSON object (used for error messages).</p></li>
 </ul>

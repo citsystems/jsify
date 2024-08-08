@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Serializing JsonObject Instances with JSON &mdash; jsify 0.9.0 documentation</title>
+  <title>Serializing Object Instances with JSON &mdash; jsify 0.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Serializing <cite>JsonObject</cite> Instances with JSON</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Serializing <cite>Object</cite> Instances with JSON</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#when-to-use-the-omit-undefined-feature">When to Use the <cite>omit_undefined</cite> Feature</a></li>
 </ul>
 </li>
@@ -79,7 +79,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Serializing <cite>JsonObject</cite> Instances with JSON</li>
+      <li class="breadcrumb-item active">Serializing <cite>Object</cite> Instances with JSON</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/json_serialization.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -89,13 +89,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="serializing-jsonobject-instances-with-json">
-<span id="json-serialization"></span><h1>Serializing <cite>JsonObject</cite> Instances with JSON<a class="headerlink" href="#serializing-jsonobject-instances-with-json" title="Link to this heading"></a></h1>
-<p>The Jsify library provides seamless integration with Python’s built-in <cite>json</cite> module, allowing you to serialize <cite>JsonObject</cite> instances and other jsified structures into JSON format. This is achieved through the use of the <cite>JsonObjectEncoder</cite>, a custom JSON encoder that ensures <cite>JsonObject</cite> instances are correctly converted back into their original Python representations before serialization.</p>
+  <section id="serializing-Object-instances-with-json">
+<span id="json-serialization"></span><h1>Serializing <cite>Object</cite> Instances with JSON<a class="headerlink" href="#serializing-Object-instances-with-json" title="Link to this heading"></a></h1>
+<p>The Jsify library provides seamless integration with Python’s built-in <cite>json</cite> module, allowing you to serialize <cite>Object</cite> instances and other jsified structures into JSON format. This is achieved through the use of the <cite>ObjectEncoder</cite>, a custom JSON encoder that ensures <cite>Object</cite> instances are correctly converted back into their original Python representations before serialization.</p>
 <p><strong>Key Concept: Custom JSON Encoding</strong></p>
-<p>When you serialize a <cite>JsonObject</cite>, <cite>JsonDict</cite>, <cite>JsonList</cite>, or <cite>JsonTuple</cite> using the <cite>json</cite> module, the <cite>JsonObjectEncoder</cite> is automatically invoked to convert these instances into their underlying native Python objects (like dictionaries, lists, and tuples). This ensures that the resulting JSON is a standard representation of the data, free from any Jsify-specific attributes or behaviors.</p>
+<p>When you serialize a <cite>Object</cite>, <cite>Dict</cite>, <cite>List</cite>, or <cite>Tuple</cite> using the <cite>json</cite> module, the <cite>ObjectEncoder</cite> is automatically invoked to convert these instances into their underlying native Python objects (like dictionaries, lists, and tuples). This ensures that the resulting JSON is a standard representation of the data, free from any Jsify-specific attributes or behaviors.</p>
 <p><strong>Basic Serialization Example:</strong></p>
-<p>To serialize a <cite>JsonObject</cite> to a JSON string, you can use the <cite>json.dumps</cite> function. This function will use <cite>JsonObjectEncoder</cite> to handle the conversion.</p>
+<p>To serialize a <cite>Object</cite> to a JSON string, you can use the <cite>json.dumps</cite> function. This function will use <cite>ObjectEncoder</cite> to handle the conversion.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">Undefined</span>
 

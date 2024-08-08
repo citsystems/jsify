@@ -3,7 +3,7 @@
 Checking if Properties Path Exists
 ==================================
 
-The `properties_exist` function in the Jsify library is a utility designed to check if a series of properties exist within a JSON-like object (`JsonObject`). This function is particularly useful for validating the presence of nested properties in complex data structures, ensuring that your code can safely access deeply nested data without encountering errors.
+The `properties_exist` function in the Jsify library is a utility designed to check if a series of properties exist within a JSON-like object (`Object`). This function is particularly useful for validating the presence of nested properties in complex data structures, ensuring that your code can safely access deeply nested data without encountering errors.
 
 
 The `properties_exist` function is a valuable tool for validating the presence of properties in JSON-like data structures, particularly when working with deeply nested objects. By using this function, you can avoid errors that might arise from accessing non-existent properties, making your code more reliable and easier to maintain. This utility is especially useful in scenarios where data structures are dynamic or partially defined, providing a simple and effective way to ensure the integrity of your data access patterns.
@@ -11,7 +11,7 @@ The `properties_exist` function is a valuable tool for validating the presence o
 Usage of `properties_exist`
 ---------------------------
 
-The `properties_exist` function allows you to verify the existence of a sequence of nested properties within a `JsonObject`. If all the properties in the given path exist, the function returns `True`; otherwise, it returns `False`.
+The `properties_exist` function allows you to verify the existence of a sequence of nested properties within a `Object`. If all the properties in the given path exist, the function returns `True`; otherwise, it returns `False`.
 
 **Example:**
 

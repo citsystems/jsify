@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
@@ -88,20 +88,20 @@
              
   <section id="creating-jsified-functions">
 <span id="jsified-functions"></span><h1>Creating Jsified Functions<a class="headerlink" href="#creating-jsified-functions" title="Link to this heading"></a></h1>
-<p>The Jsify library provides decorators and utilities in the <cite>calls</cite> module that help you automatically convert function arguments to <cite>JsonObject</cite> instances, as well as process the results of these functions based on specific criteria. This module is particularly useful when you need to ensure that your functions can handle JSON-like data seamlessly, providing a consistent and predictable interface.</p>
-<p>The primary utility provided by the <cite>calls</cite> module is the <cite>jsified_function</cite> decorator. This decorator automatically converts function arguments that are dictionaries, lists, or tuples into their corresponding jsified objects (<cite>JsonDict</cite>, <cite>JsonList</cite>, <cite>JsonTuple</cite>). Additionally, it offers options to control how the function’s result is processed, either by returning the original object, deeply unjsified data, or a jsified version.</p>
+<p>The Jsify library provides decorators and utilities in the <cite>calls</cite> module that help you automatically convert function arguments to <cite>Object</cite> instances, as well as process the results of these functions based on specific criteria. This module is particularly useful when you need to ensure that your functions can handle JSON-like data seamlessly, providing a consistent and predictable interface.</p>
+<p>The primary utility provided by the <cite>calls</cite> module is the <cite>jsified_function</cite> decorator. This decorator automatically converts function arguments that are dictionaries, lists, or tuples into their corresponding jsified objects (<cite>Dict</cite>, <cite>List</cite>, <cite>Tuple</cite>). Additionally, it offers options to control how the function’s result is processed, either by returning the original object, deeply unjsified data, or a jsified version.</p>
 <p><strong>Decorator Signature:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">jsified_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">result_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">result_deep_original</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><strong>`result_original` (bool, optional):</strong> If set to <cite>True</cite>, the function’s result will be unjsified using <cite>unjsify</cite>. This means that any <cite>JsonObject</cite> instances in the result will be converted back to their original Python forms (e.g., dictionaries, lists, tuples).</p></li>
-<li><p><strong>`result_deep_original` (bool, optional):</strong> If set to <cite>True</cite>, the function’s result will be deeply unjsified using <cite>deep_unjsify</cite>. This recursively converts all nested <cite>JsonObject</cite> instances within the result back to their original Python forms.</p></li>
+<li><p><strong>`result_original` (bool, optional):</strong> If set to <cite>True</cite>, the function’s result will be unjsified using <cite>unjsify</cite>. This means that any <cite>Object</cite> instances in the result will be converted back to their original Python forms (e.g., dictionaries, lists, tuples).</p></li>
+<li><p><strong>`result_deep_original` (bool, optional):</strong> If set to <cite>True</cite>, the function’s result will be deeply unjsified using <cite>deep_unjsify</cite>. This recursively converts all nested <cite>Object</cite> instances within the result back to their original Python forms.</p></li>
 </ul>
 <p><strong>Basic Usage of `jsified_function`</strong></p>
 <p>To use <cite>jsified_function</cite>, simply apply the decorator to your function. When the function is called, any arguments that are dictionaries, lists, or tuples will be automatically converted to their jsified counterparts.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">JsonObject</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">Object</span>
 <span class="kn">from</span> <span class="nn">jsify.calls</span> <span class="kn">import</span> <span class="n">jsified_function</span>
 
 <span class="nd">@jsified_function</span>
@@ -117,7 +117,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># Outputs: 30</span>
 </pre></div>
 </div>
-<p>In this example, the <cite>process_data</cite> function receives a dictionary as input. The <cite>jsified_function</cite> decorator converts this dictionary into a <cite>JsonDict</cite>, allowing you to access the keys using attribute-style access.</p>
+<p>In this example, the <cite>process_data</cite> function receives a dictionary as input. The <cite>jsified_function</cite> decorator converts this dictionary into a <cite>Dict</cite>, allowing you to access the keys using attribute-style access.</p>
 <p><strong>Customizing the Function’s Return Value</strong></p>
 <p>You can control how the function’s return value is processed by using the <cite>result_original</cite> and <cite>result_deep_original</cite> parameters.</p>
 <p><strong>Example:</strong></p>
@@ -137,7 +137,7 @@
 <span class="c1"># Outputs: {&#39;outer&#39;: {&#39;inner&#39;: {&#39;key&#39;: &#39;value&#39;}}} (deeply unjsified)</span>
 </pre></div>
 </div>
-<p>In the first example, <cite>result_original=True</cite> ensures that the function returns the original dictionary instead of a <cite>JsonDict</cite>. In the second example, <cite>result_deep_original=True</cite> ensures that the entire nested structure is deeply unjsified, converting all <cite>JsonObject</cite> instances back to their original forms.</p>
+<p>In the first example, <cite>result_original=True</cite> ensures that the function returns the original dictionary instead of a <cite>Dict</cite>. In the second example, <cite>result_deep_original=True</cite> ensures that the entire nested structure is deeply unjsified, converting all <cite>Object</cite> instances back to their original forms.</p>
 </section>
 
 

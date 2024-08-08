@@ -53,7 +53,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
@@ -88,9 +88,9 @@
              
   <section id="using-jsified-tuples">
 <span id="using-tuples"></span><h1>Using Jsified Tuples<a class="headerlink" href="#using-jsified-tuples" title="Link to this heading"></a></h1>
-<p>In the Jsify library, tuples can be converted into <cite>JsonTuple</cite> instances, which are enhanced versions of standard Python tuples with JSON-like behavior. These jsified tuples allow for more intuitive manipulation of tuple data, including attribute-style access to elements, dynamic nesting, and integration with the broader <cite>JsonObject</cite> ecosystem.</p>
+<p>In the Jsify library, tuples can be converted into <cite>Tuple</cite> instances, which are enhanced versions of standard Python tuples with JSON-like behavior. These jsified tuples allow for more intuitive manipulation of tuple data, including attribute-style access to elements, dynamic nesting, and integration with the broader <cite>Object</cite> ecosystem.</p>
 <p><strong>Creating and Using Jsified Tuples:</strong></p>
-<p>To create a jsified tuple, you can use the <cite>jsify</cite> function, which converts a standard Python tuple into a <cite>JsonTuple</cite>. This allows you to interact with tuple elements using JSON-like methods, while still preserving the immutable characteristics of tuples.</p>
+<p>To create a jsified tuple, you can use the <cite>jsify</cite> function, which converts a standard Python tuple into a <cite>Tuple</cite>. This allows you to interact with tuple elements using JSON-like methods, while still preserving the immutable characteristics of tuples.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span>
 
@@ -117,25 +117,25 @@
     <span class="c1"># Charlie is 35 years old</span>
 </pre></div>
 </div>
-<p><strong>Using `json_keys` with Jsified Tuples:</strong></p>
-<p>The <cite>json_keys</cite> function can be used with <cite>JsonTuple</cite> to retrieve the indices of the tuple elements as keys, represented in string format.</p>
+<p><strong>Using `jsified_keys` with Jsified Tuples:</strong></p>
+<p>The <cite>jsified_keys</cite> function can be used with <cite>Tuple</cite> to retrieve the indices of the tuple elements as keys, represented in string format.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">json_keys</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsified_keys</span>
 
 <span class="c1"># Get a view of the indices as keys</span>
-<span class="n">keys_view</span> <span class="o">=</span> <span class="n">json_keys</span><span class="p">(</span><span class="n">json_tuple</span><span class="p">)</span>
+<span class="n">keys_view</span> <span class="o">=</span> <span class="n">jsified_keys</span><span class="p">(</span><span class="n">json_tuple</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys_view</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="c1"># Outputs: &#39;0&#39;, &#39;1&#39;, &#39;2&#39;</span>
 </pre></div>
 </div>
-<p><strong>Using `json_items` with Jsified Tuples:</strong></p>
-<p>The <cite>json_items</cite> function allows you to retrieve the elements of a <cite>JsonTuple</cite> as key-value pairs, where the keys are the indices of the elements in string format.</p>
+<p><strong>Using `jsified_items` with Jsified Tuples:</strong></p>
+<p>The <cite>jsified_items</cite> function allows you to retrieve the elements of a <cite>Tuple</cite> as key-value pairs, where the keys are the indices of the elements in string format.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">json_items</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsified_items</span>
 
 <span class="c1"># Get a view of the items with indices as keys</span>
-<span class="n">items_view</span> <span class="o">=</span> <span class="n">json_items</span><span class="p">(</span><span class="n">json_tuple</span><span class="p">)</span>
+<span class="n">items_view</span> <span class="o">=</span> <span class="n">jsified_items</span><span class="p">(</span><span class="n">json_tuple</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">items_view</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="c1"># Outputs:</span>
@@ -158,8 +158,8 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">json_nested_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">city</span><span class="p">)</span>  <span class="c1"># Outputs: Wonderland</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json_nested_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>   <span class="c1"># Outputs: 25</span>
 
-<span class="c1"># Using json_items with nested data</span>
-<span class="n">items_view</span> <span class="o">=</span> <span class="n">json_items</span><span class="p">(</span><span class="n">json_nested_tuple</span><span class="p">)</span>
+<span class="c1"># Using jsified_items with nested data</span>
+<span class="n">items_view</span> <span class="o">=</span> <span class="n">jsified_items</span><span class="p">(</span><span class="n">json_nested_tuple</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">items_view</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="c1"># Outputs:</span>
@@ -167,7 +167,7 @@
     <span class="c1"># 1: Metropolis</span>
 </pre></div>
 </div>
-<p>By using jsified tuples and the <cite>json_keys</cite> and <cite>json_items</cite> functions, you can gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python’s immutable tuples. This makes <cite>JsonTuple</cite> an excellent choice for working with complex and nested tuple data in a more intuitive and accessible way.</p>
+<p>By using jsified tuples and the <cite>jsified_keys</cite> and <cite>jsified_items</cite> functions, you can gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python’s immutable tuples. This makes <cite>Tuple</cite> an excellent choice for working with complex and nested tuple data in a more intuitive and accessible way.</p>
 </section>
 
 

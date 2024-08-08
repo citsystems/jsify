@@ -4,7 +4,7 @@ Jsify is a Python library designed to bridge the gap between Python's data struc
 
 ## Features
 
-- **Jsified Objects**: Convert Python dictionaries, lists, and tuples into `JsonObject`, `JsonDict`, `JsonList`, and `JsonTuple` objects that allow attribute-style access.
+- **Jsified Objects**: Convert Python dictionaries, lists, and tuples into `Object`, `Dict`, `List`, and `Tuple` objects that allow attribute-style access.
 - **Custom JSON Serialization**: Seamlessly serialize jsified objects to JSON format, with options to handle undefined values.
 - **Flexible Data Manipulation**: Access and manipulate data using JavaScript-like syntax in Python.
 - **Assertion Utilities**: Validate the structure and contents of JSON-like objects using built-in assertions.

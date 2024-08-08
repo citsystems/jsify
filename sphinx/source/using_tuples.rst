@@ -3,11 +3,11 @@
 Using Jsified Tuples
 ====================
 
-In the Jsify library, tuples can be converted into `JsonTuple` instances, which are enhanced versions of standard Python tuples with JSON-like behavior. These jsified tuples allow for more intuitive manipulation of tuple data, including attribute-style access to elements, dynamic nesting, and integration with the broader `JsonObject` ecosystem.
+In the Jsify library, tuples can be converted into `Tuple` instances, which are enhanced versions of standard Python tuples with JSON-like behavior. These jsified tuples allow for more intuitive manipulation of tuple data, including attribute-style access to elements, dynamic nesting, and integration with the broader `Object` ecosystem.
 
 **Creating and Using Jsified Tuples:**
 
-To create a jsified tuple, you can use the `jsify` function, which converts a standard Python tuple into a `JsonTuple`. This allows you to interact with tuple elements using JSON-like methods, while still preserving the immutable characteristics of tuples.
+To create a jsified tuple, you can use the `jsify` function, which converts a standard Python tuple into a `Tuple`. This allows you to interact with tuple elements using JSON-like methods, while still preserving the immutable characteristics of tuples.
 
 **Example:**
 
@@ -37,34 +37,34 @@ To create a jsified tuple, you can use the `jsify` function, which converts a st
         # Bob is 25 years old
         # Charlie is 35 years old
 
-**Using `json_keys` with Jsified Tuples:**
+**Using `jsified_keys` with Jsified Tuples:**
 
-The `json_keys` function can be used with `JsonTuple` to retrieve the indices of the tuple elements as keys, represented in string format.
+The `jsified_keys` function can be used with `Tuple` to retrieve the indices of the tuple elements as keys, represented in string format.
 
 **Example:**
 
 .. code-block:: python
 
-    from jsify import json_keys
+    from jsify import jsified_keys
 
     # Get a view of the indices as keys
-    keys_view = json_keys(json_tuple)
+    keys_view = jsified_keys(json_tuple)
     for key in keys_view:
         print(key)
         # Outputs: '0', '1', '2'
 
-**Using `json_items` with Jsified Tuples:**
+**Using `jsified_items` with Jsified Tuples:**
 
-The `json_items` function allows you to retrieve the elements of a `JsonTuple` as key-value pairs, where the keys are the indices of the elements in string format.
+The `jsified_items` function allows you to retrieve the elements of a `Tuple` as key-value pairs, where the keys are the indices of the elements in string format.
 
 **Example:**
 
 .. code-block:: python
 
-    from jsify import json_items
+    from jsify import jsified_items
 
     # Get a view of the items with indices as keys
-    items_view = json_items(json_tuple)
+    items_view = jsified_items(json_tuple)
     for key, value in items_view:
         print(f"{key}: {value.name}, {value.age}")
         # Outputs:
@@ -91,12 +91,12 @@ Jsified tuples support nesting, which allows you to work with deeply nested data
     print(json_nested_tuple[0].details.city)  # Outputs: Wonderland
     print(json_nested_tuple[1].details.age)   # Outputs: 25
 
-    # Using json_items with nested data
-    items_view = json_items(json_nested_tuple)
+    # Using jsified_items with nested data
+    items_view = jsified_items(json_nested_tuple)
     for key, value in items_view:
         print(f"{key}: {value.details.city}")
         # Outputs:
         # 0: Wonderland
         # 1: Metropolis
 
-By using jsified tuples and the `json_keys` and `json_items` functions, you can gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's immutable tuples. This makes `JsonTuple` an excellent choice for working with complex and nested tuple data in a more intuitive and accessible way.
+By using jsified tuples and the `jsified_keys` and `jsified_items` functions, you can gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's immutable tuples. This makes `Tuple` an excellent choice for working with complex and nested tuple data in a more intuitive and accessible way.

@@ -1,39 +1,41 @@
 """
 The `jsify` module provides a set of classes and functions designed to wrap standard Python data structures
-(such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as `JsonObject`,
-`JsonDict`, `JsonList`, and `JsonTuple`, allow for attribute-style access, dynamic nesting, and additional
+(such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as `Object`,
+`Dict`, `List`, and `Tuple`, allow for attribute-style access, dynamic nesting, and additional
 functionality that is commonly required when working with JSON data.
-The core component of this module is the `JsonObject` class, which provides a flexible and dynamic interface for
-accessing and manipulating underlying data. The `JsonDict`, `JsonList`, and `JsonTuple` classes extend `JsonObject`
+The core component of this module is the `Object` class, which provides a flexible and dynamic interface for
+accessing and manipulating underlying data. The `Dict`, `List`, and `Tuple` classes extend `Object`
 to offer more specific behaviors for dictionaries, lists, and tuples, respectively.
 Additionally, the module offers a series of utility functions such as `jsify` for converting standard Python objects
 into their JSON-like counterparts, and `unjsify` for reversing this transformation.
 """
 from copy import copy, deepcopy
-from typing import Iterable, Iterator
+from typing import Iterable as TypeIterable, Iterator as TypeIterator
 
 from .exceptions import AnyError
 from .undefined import Undefined
 
+_literals = (int, float, complex, str, bool, type(None))
 
-class JsonObject:
+
+class Object:
     """
-    The `JsonObject` class is designed to provide convenient access to object properties using dot notation instead of
+    The `Object` class is designed to provide convenient access to object properties using dot notation instead of
     square brackets, enhancing code readability and ease of use. It acts as a wrapper around original objects,
     preserving their data without duplication or alteration. This wrapper supports nested access to properties,
-    allowing deeper navigation into the original data using dot notation. Essentially, `JsonObject` facilitates
+    allowing deeper navigation into the original data using dot notation. Essentially, `Object` facilitates
     intuitive and simplified interaction with JSON-like objects, while maintaining the integrity and structure of the
     original data.
     """
 
     def __init__(self, o):
         """
-        Initialize the JsonObject with the given original object.
+        Initialize the Object with the given original object.
 
         :param o: The original dictionary or object to wrap.
         :type o: tuple or dict or list or object
         """
-        object.__setattr__(self, "__orig__", o)
+        object.__setattr__(self, "__jsify_orig__", o)
 
     def __getitem__(self, item):
         """
@@ -45,7 +47,17 @@ class JsonObject:
         :rtype: Any or Undefined
         """
         try:
-            return jsify(self.__orig__.__getitem__(item))
+            o = self.__jsify_orig__[item]
+            if isinstance(o, _literals):
+                return o
+            elif isinstance(o, dict):
+                return Dict(o)
+            elif isinstance(o, list):
+                return List(o)
+            elif isinstance(o, tuple):
+                return Tuple(o)
+            else:
+                return o
         except (Exception,):
             return Undefined
 
@@ -58,7 +70,7 @@ class JsonObject:
         :param value: The value to set.
         :type value: Any
         """
-        self.__orig__.__setitem__(item, value)
+        self.__jsify_orig__.__setitem__(item, value)
 
     def __delitem__(self, item):
         """
@@ -67,7 +79,7 @@ class JsonObject:
         :param item: The item key to delete.
         :type item: str
         """
-        self.__orig__.__delitem__(item)
+        self.__jsify_orig__.__delitem__(item)
 
     __getattr__ = __getitem__  # Set similar behaviour to following methods
     __setattr__ = __setitem__
@@ -80,7 +92,7 @@ class JsonObject:
         :return: The string representation of the original object.
         :rtype: str
         """
-        return self.__orig__.__repr__()
+        return self.__jsify_orig__.__repr__()
 
     def __contains__(self, item):
         """
@@ -91,7 +103,7 @@ class JsonObject:
         :return: True if the item is in the original object, False otherwise.
         :rtype: bool
         """
-        return self.__orig__.__contains__(unjsify(item))
+        return self.__jsify_orig__.__contains__(unjsify(item))
 
     def __len__(self):
         """
@@ -100,7 +112,7 @@ class JsonObject:
         :return: The length of the original object.
         :rtype: int
         """
-        return self.__orig__.__len__()
+        return self.__jsify_orig__.__len__()
 
     def __int__(self):
         """
@@ -109,7 +121,7 @@ class JsonObject:
         :return: The integer representation of the original object.
         :rtype: int
         """
-        return self.__orig__.__int__()
+        return self.__jsify_orig__.__int__()
 
     def __float__(self):
         """
@@ -118,7 +130,7 @@ class JsonObject:
         :return: The float representation of the original object.
         :rtype: float
         """
-        return self.__orig__.__float__()
+        return self.__jsify_orig__.__float__()
 
     def __complex__(self):
         """
@@ -127,7 +139,7 @@ class JsonObject:
         :return: The complex number representation of the original object.
         :rtype: complex
         """
-        return self.__orig__.__complex__()
+        return self.__jsify_orig__.__complex__()
 
     def __oct__(self):
         """
@@ -136,7 +148,7 @@ class JsonObject:
         :return: The octal string representation of the original object.
         :rtype: str
         """
-        return self.__orig__.__oct__()
+        return self.__jsify_orig__.__oct__()
 
     def __hex__(self):
         """
@@ -145,7 +157,7 @@ class JsonObject:
         :return: The hexadecimal string representation of the original object.
         :rtype: str
         """
-        return self.__orig__.__hex__()
+        return self.__jsify_orig__.__hex__()
 
     def __index__(self):
         """
@@ -154,7 +166,7 @@ class JsonObject:
         :return: The index representation of the original object.
         :rtype: int
         """
-        return self.__orig__.__index__()
+        return self.__jsify_orig__.__index__()
 
     def __trunc__(self):
         """
@@ -163,7 +175,7 @@ class JsonObject:
         :return: The truncated value of the original object.
         :rtype: int
         """
-        return self.__orig__.__trunc__()
+        return self.__jsify_orig__.__trunc__()
 
     def __str__(self):
         """
@@ -172,7 +184,7 @@ class JsonObject:
         :return: The string representation of the original object.
         :rtype: str
         """
-        return self.__orig__.__str__()
+        return self.__jsify_orig__.__str__()
 
     def __unicode__(self):
         """
@@ -181,7 +193,7 @@ class JsonObject:
         :return: The Unicode string representation of the original object.
         :rtype: str
         """
-        return self.__orig__.__unicode__()
+        return self.__jsify_orig__.__unicode__()
 
     def __format__(self, format_string):
         """
@@ -192,7 +204,7 @@ class JsonObject:
         :return: The formatted string representation of the original object.
         :rtype: str
         """
-        return self.__orig__.__format__(format_string)
+        return self.__jsify_orig__.__format__(format_string)
 
     def __hash__(self):
         """
@@ -201,7 +213,7 @@ class JsonObject:
         :return: The hash value of the original object.
         :rtype: int
         """
-        return self.__orig__.__hash__()
+        return self.__jsify_orig__.__hash__()
 
     def __nonzero__(self):
         """
@@ -210,7 +222,7 @@ class JsonObject:
         :return: True if the original object is considered True, False otherwise.
         :rtype: bool
         """
-        return self.__orig__.__nonzero__()
+        return self.__jsify_orig__.__nonzero__()
 
     def __sizeof__(self):
         """
@@ -219,7 +231,7 @@ class JsonObject:
         :return: The size of the original object in memory.
         :rtype: int
         """
-        return self.__orig__.__sizeof__()
+        return self.__jsify_orig__.__sizeof__()
 
     def __pos__(self):
         """
@@ -228,7 +240,7 @@ class JsonObject:
         :return: The positive value of the original object.
         :rtype: Any
         """
-        return self.__orig__.__pos__()
+        return self.__jsify_orig__.__pos__()
 
     def __neg__(self):
         """
@@ -237,7 +249,7 @@ class JsonObject:
         :return: The negative value of the original object.
         :rtype: Any
         """
-        return self.__orig__.__neg__()
+        return self.__jsify_orig__.__neg__()
 
     def __abs__(self):
         """
@@ -246,7 +258,7 @@ class JsonObject:
         :return: The absolute value of the original object.
         :rtype: Any
         """
-        return self.__orig__.__abs__()
+        return self.__jsify_orig__.__abs__()
 
     def __invert__(self):
         """
@@ -255,7 +267,7 @@ class JsonObject:
         :return: The inverted value of the original object.
         :rtype: Any
         """
-        return self.__orig__.__invert__()
+        return self.__jsify_orig__.__invert__()
 
     def __round__(self):
         """
@@ -264,7 +276,7 @@ class JsonObject:
         :return: The rounded value of the original object.
         :rtype: int
         """
-        return self.__orig__.__round__()
+        return self.__jsify_orig__.__round__()
 
     def __floor__(self):
         """
@@ -273,7 +285,7 @@ class JsonObject:
         :return: The floored value of the original object.
         :rtype: int
         """
-        return self.__orig__.__floor__()
+        return self.__jsify_orig__.__floor__()
 
     def __ceil__(self):
         """
@@ -282,7 +294,7 @@ class JsonObject:
         :return: The ceiling value of the original object.
         :rtype: int
         """
-        return self.__orig__.__ceil__()
+        return self.__jsify_orig__.__ceil__()
 
     def __or__(self, other):
         """
@@ -293,7 +305,7 @@ class JsonObject:
         :return: The result of the bitwise OR operation.
         :rtype: Any
         """
-        return self.__orig__.__or__(unjsify(other))
+        return self.__jsify_orig__.__or__(unjsify(other))
 
     def __and__(self, other):
         """
@@ -304,7 +316,7 @@ class JsonObject:
         :return: The result of the bitwise AND operation.
         :rtype: Any
         """
-        return self.__orig__.__and__(unjsify(other))
+        return self.__jsify_orig__.__and__(unjsify(other))
 
     def __add__(self, other):
         """
@@ -315,7 +327,7 @@ class JsonObject:
         :return: The result of the addition operation.
         :rtype: Any
         """
-        return self.__orig__.__add__(unjsify(other))
+        return self.__jsify_orig__.__add__(unjsify(other))
 
     def __sub__(self, other):
         """
@@ -326,7 +338,7 @@ class JsonObject:
         :return: The result of the subtraction operation.
         :rtype: Any
         """
-        return self.__orig__.__sub__(unjsify(other))
+        return self.__jsify_orig__.__sub__(unjsify(other))
 
     def __mul__(self, other):
         """
@@ -337,7 +349,7 @@ class JsonObject:
         :return: The result of the multiplication operation.
         :rtype: Any
         """
-        return self.__orig__.__mul__(unjsify(other))
+        return self.__jsify_orig__.__mul__(unjsify(other))
 
     def __floordiv__(self, other):
         """
@@ -348,7 +360,7 @@ class JsonObject:
         :return: The result of the floor division operation.
         :rtype: Any
         """
-        return self.__orig__.__floordiv__(unjsify(other))
+        return self.__jsify_orig__.__floordiv__(unjsify(other))
 
     def __truediv__(self, other):
         """
@@ -359,7 +371,7 @@ class JsonObject:
         :return: The result of the true division operation.
         :rtype: Any
         """
-        return self.__orig__.__truediv__(unjsify(other))
+        return self.__jsify_orig__.__truediv__(unjsify(other))
 
     def __mod__(self, other):
         """
@@ -370,7 +382,7 @@ class JsonObject:
         :return: The result of the modulus operation.
         :rtype: Any
         """
-        return self.__orig__.__mod__(unjsify(other))
+        return self.__jsify_orig__.__mod__(unjsify(other))
 
     def __pow__(self, other):
         """
@@ -381,7 +393,7 @@ class JsonObject:
         :return: The result of the power operation.
         :rtype: Any
         """
-        return self.__orig__.__pow__(unjsify(other))
+        return self.__jsify_orig__.__pow__(unjsify(other))
 
     def __lt__(self, other):
         """
@@ -392,7 +404,7 @@ class JsonObject:
         :return: The result of the less-than comparison.
         :rtype: bool
         """
-        return self.__orig__.__lt__(unjsify(other))
+        return self.__jsify_orig__.__lt__(unjsify(other))
 
     def __le__(self, other):
         """
@@ -403,7 +415,7 @@ class JsonObject:
         :return: The result of the less-than-or-equal-to comparison.
         :rtype: bool
         """
-        return self.__orig__.__le__(unjsify(other))
+        return self.__jsify_orig__.__le__(unjsify(other))
 
     def __eq__(self, other):
         """
@@ -414,7 +426,7 @@ class JsonObject:
         :return: The result of the equality comparison.
         :rtype: bool
         """
-        return self.__orig__.__eq__(unjsify(other))
+        return self.__jsify_orig__.__eq__(unjsify(other))
 
     def __ne__(self, other):
         """
@@ -425,7 +437,7 @@ class JsonObject:
         :return: The result of the inequality comparison.
         :rtype: bool
         """
-        return self.__orig__.__ne__(unjsify(other))
+        return self.__jsify_orig__.__ne__(unjsify(other))
 
     def __ge__(self, other):
         """
@@ -436,7 +448,7 @@ class JsonObject:
         :return: The result of the greater-than-or-equal-to comparison.
         :rtype: bool
         """
-        return self.__orig__.__ge__(unjsify(other))
+        return self.__jsify_orig__.__ge__(unjsify(other))
 
     def __gt__(self, other):
         """
@@ -447,25 +459,25 @@ class JsonObject:
         :return: The result of the greater-than comparison.
         :rtype: bool
         """
-        return self.__orig__.__gt__(unjsify(other))
+        return self.__jsify_orig__.__gt__(unjsify(other))
 
     def __getstate__(self):
         """
-        Get the state of the JsonObject for serialization.
+        Get the state of the Object for serialization.
 
-        :return: The state of the JsonObject.
+        :return: The state of the Object.
         :rtype: dict
         """
-        return dict(__orig__=self.__orig__)
+        return dict(__jsify_orig__=self.__jsify_orig__)
 
     def __setstate__(self, state):
         """
-        Set the state of the JsonObject during deserialization.
+        Set the state of the Object during deserialization.
 
         :param state: The state to set.
         :type state: dict
         """
-        object.__setattr__(self, "__orig__", state["__orig__"])
+        object.__setattr__(self, "__jsify_orig__", state["__jsify_orig__"])
 
     def __dir__(self):
         """
@@ -474,7 +486,7 @@ class JsonObject:
         :return: The list of attributes of the original object.
         :rtype: list
         """
-        return self.__orig__
+        return self.__jsify_orig__
 
     @property
     def __dict__(self):
@@ -484,24 +496,24 @@ class JsonObject:
         :return: The dictionary representation of the original object.
         :rtype: dict
         """
-        return {key: jsify(value) for key, value in self.__orig__.items()}
+        return {key: jsify(value) for key, value in self.__jsify_orig__.items()}
 
     def __iter__(self):
         """
-        Return an iterator for the JsonObject.
+        Return an iterator for the Object.
 
-        :return: An iterator for the JsonObject.
+        :return: An iterator for the Object.
         :rtype: iterator
         """
-        return JsonIterator(self)
+        return Iterator(self)
 
     def __deepcopy__(self, memo):
-        return deepcopy(self.__orig__, memo=memo)
+        return deepcopy(self.__jsify_orig__, memo=memo)
 
 
-class JsonTuple(JsonObject):
+class Tuple(Object):
     """
-    A JSON-like tuple object that extends JsonObject and provides tuple-specific methods.
+    A JSON-like tuple object that extends Object and provides tuple-specific methods.
 
     :param o: The original tuple or object to wrap.
     :type o: tuple or object
@@ -510,7 +522,7 @@ class JsonTuple(JsonObject):
 
     def __init__(self, o, *args):
         """
-        Initialize the JsonTuple with the given original object and additional elements.
+        Initialize the Tuple with the given original object and additional elements.
 
         :param o: The original tuple or object to wrap.
         :type o: tuple or object
@@ -530,7 +542,7 @@ class JsonTuple(JsonObject):
         :return: The number of occurrences of value.
         :rtype: int
         """
-        return self.__orig__.count(unjsify(value))
+        return self.__jsify_orig__.count(unjsify(value))
 
     def __getitem__(self, item, *args, **kwargs):
         """
@@ -543,7 +555,7 @@ class JsonTuple(JsonObject):
         """
         try:
             return jsify(
-                self.__orig__.__getitem__(
+                self.__jsify_orig__.__getitem__(
                     int(item) if not isinstance(item, slice) else item, *args, **kwargs
                 )
             )
@@ -564,7 +576,7 @@ class JsonTuple(JsonObject):
         :rtype: int
         :raises ValueError: If the value is not present.
         """
-        return self.__orig__.index(unjsify(value))
+        return self.__jsify_orig__.index(unjsify(value))
 
     def copy(self, deep=False):
         """
@@ -573,9 +585,9 @@ class JsonTuple(JsonObject):
         :param deep: True if the object should be deep copied, False otherwise.
         :type deep: bool
         :return: A copy of the tuple.
-        :rtype: JsonTuple
+        :rtype: Tuple
         """
-        return jsify(copy(self.__orig__) if not deep else deepcopy(self.__orig__))
+        return jsify(copy(self.__jsify_orig__) if not deep else deepcopy(self.__jsify_orig__))
 
     @property
     def __dict__(self):
@@ -585,7 +597,7 @@ class JsonTuple(JsonObject):
         :return: The dictionary representation of the tuple.
         :rtype: dict
         """
-        return {f"{key}": jsify(value) for key, value in enumerate(self.__orig__)}
+        return {f"{key}": jsify(value) for key, value in enumerate(self.__jsify_orig__)}
 
     def __contains__(self, item):
         """
@@ -596,12 +608,12 @@ class JsonTuple(JsonObject):
         :return: True if the index is within the bounds of the tuple, False otherwise.
         :rtype: bool
         """
-        return int(item) < len(self.__orig__)
+        return int(item) < len(self.__jsify_orig__)
 
 
-class JsonList(JsonObject):
+class List(Object):
     """
-    A JSON-like list object that extends JsonObject and provides list-specific methods.
+    A JSON-like list object that extends Object and provides list-specific methods.
 
     :param o: The original list or object to wrap.
     :type o: list or object
@@ -610,7 +622,7 @@ class JsonList(JsonObject):
 
     def __init__(self, o, *args):
         """
-        Initialize the JsonList with the given original object and additional elements.
+        Initialize the List with the given original object and additional elements.
 
         :param o: The original list or object to wrap.
         :type o: list or object
@@ -628,13 +640,13 @@ class JsonList(JsonObject):
         :param obj: The object to append.
         :type obj: Any
         """
-        self.__orig__.append(unjsify(obj))
+        self.__jsify_orig__.append(unjsify(obj))
 
     def clear(self):
         """
         Clear all elements from the list.
         """
-        self.__orig__.clear()
+        self.__jsify_orig__.clear()
 
     def __getitem__(self, item, *args, **kwargs):
         """
@@ -647,7 +659,7 @@ class JsonList(JsonObject):
         """
         try:
             return jsify(
-                self.__orig__.__getitem__(
+                self.__jsify_orig__.__getitem__(
                     int(item) if not isinstance(item, slice) else item, *args, **kwargs
                 )
             )
@@ -663,9 +675,9 @@ class JsonList(JsonObject):
         :param deep: True if the object should be deep copied, False otherwise.
         :type deep: bool
         :return: A copy of the list.
-        :rtype: JsonList
+        :rtype: List
         """
-        return jsify(copy(self.__orig__) if not deep else deepcopy(self.__orig__))
+        return jsify(copy(self.__jsify_orig__) if not deep else deepcopy(self.__jsify_orig__))
 
     def count(self, value):
         """
@@ -676,16 +688,16 @@ class JsonList(JsonObject):
         :return: The number of occurrences of the value.
         :rtype: int
         """
-        return self.__orig__.count(unjsify(value))
+        return self.__jsify_orig__.count(unjsify(value))
 
-    def extend(self, obj: Iterable):
+    def extend(self, obj: TypeIterable):
         """
         Extend the list by appending elements from the iterable.
 
         :param obj: The iterable to extend the list with.
         :type obj: Iterable
         """
-        self.__orig__.extend(unjsify(obj))
+        self.__jsify_orig__.extend(unjsify(obj))
 
     def index(self, value):
         """
@@ -697,7 +709,7 @@ class JsonList(JsonObject):
         :rtype: int
         :raises ValueError: If the value is not present.
         """
-        return self.__orig__.index(unjsify(value))
+        return self.__jsify_orig__.index(unjsify(value))
 
     def insert(self, index, obj):
         """
@@ -708,7 +720,7 @@ class JsonList(JsonObject):
         :param obj: The object to insert.
         :type obj: Any
         """
-        self.__orig__.insert(index, unjsify(obj))
+        self.__jsify_orig__.insert(index, unjsify(obj))
 
     def pop(self, index=-1):
         """
@@ -719,7 +731,7 @@ class JsonList(JsonObject):
         :return: The removed item.
         :rtype: Any
         """
-        return jsify(self.__orig__.pop(index))
+        return jsify(self.__jsify_orig__.pop(index))
 
     def remove(self, value):
         """
@@ -728,7 +740,7 @@ class JsonList(JsonObject):
         :param value: The value to remove.
         :type value: Any
         """
-        self.__orig__.remove(unjsify(value))
+        self.__jsify_orig__.remove(unjsify(value))
 
     def reverse(self, *args, **kwargs):
         """
@@ -737,7 +749,7 @@ class JsonList(JsonObject):
         :param args: Additional arguments.
         :param kwargs: Additional keyword arguments.
         """
-        self.__orig__.reverse(*args, **kwargs)
+        self.__jsify_orig__.reverse(*args, **kwargs)
 
     def sort(self, *args, **kwargs):
         """
@@ -746,7 +758,7 @@ class JsonList(JsonObject):
         :param args: Additional arguments.
         :param kwargs: Additional keyword arguments.
         """
-        return self.__orig__.sort(*args, **kwargs)
+        return self.__jsify_orig__.sort(*args, **kwargs)
 
     def __dir__(self):
         """
@@ -766,9 +778,9 @@ class JsonList(JsonObject):
         :return: The dictionary representation of the list.
         :rtype: dict
         """
-        digits = len(str(len(self.__orig__)))
+        digits = len(str(len(self.__jsify_orig__)))
         return {
-            f"{key:0{digits}}": jsify(value) for key, value in enumerate(self.__orig__)
+            f"{key:0{digits}}": jsify(value) for key, value in enumerate(self.__jsify_orig__)
         }
 
     def __contains__(self, item):
@@ -780,12 +792,12 @@ class JsonList(JsonObject):
         :return: True if the index is within the bounds of the list, False otherwise.
         :rtype: bool
         """
-        return int(item) < len(self.__orig__)
+        return int(item) < len(self.__jsify_orig__)
 
 
-class JsonDict(JsonObject):
+class Dict(Object):
     """
-    A JSON-like dictionary object that extends JsonObject and provides dictionary-specific methods.
+    A JSON-like dictionary object that extends Object and provides dictionary-specific methods.
 
     :param o: The original dictionary or object to wrap.
     :type o: dict or object
@@ -794,7 +806,7 @@ class JsonDict(JsonObject):
 
     def __init__(self, o, **kwargs):
         """
-        Initialize the JsonDict with the given original object and additional key-value pairs.
+        Initialize the Dict with the given original object and additional key-value pairs.
 
         :param o: The original dictionary or object to wrap.
         :type o: dict or object
@@ -803,7 +815,7 @@ class JsonDict(JsonObject):
         """
         super().__init__(o)
         for key, value in kwargs.items():
-            self.__orig__[key] = value
+            self.__jsify_orig__[key] = value
 
     def __contains__(self, item):
         """
@@ -814,52 +826,37 @@ class JsonDict(JsonObject):
         :return: True if the key is in the dictionary, False otherwise.
         :rtype: bool
         """
-        return item in self.__orig__
+        return item in self.__jsify_orig__
 
-    def __call__(self, item_name, default_class, *args, **kwargs):
-        """
-        Call the dictionary to get an item, creating it if it does not exist.
-
-        :param item_name: The key to retrieve or create.
-        :type item_name: str
-        :param default_class: The class to instantiate if the key does not exist.
-        :type default_class: type
-        :param args: Additional arguments to pass to the class constructor.
-        :type args: Any
-        :param kwargs: Additional keyword arguments to pass to the class constructor.
-        :type kwargs: Any
-        :return: The value associated with the key, or a new instance of the default class.
-        :rtype: Any
-        """
-        if item_name in self:
-            return self.__getitem__(item_name)
-        self.__setattr__(item_name, default_class(*args, **kwargs))
-        return self.__getattr__(item_name)
+    def __getitem__(self, item):
+        if isinstance(item, slice):
+            if item.start not in self:
+                self.__setattr__(item.start, item.stop())
+            return self.__getitem__(item.start)
+        else:
+            return super().__getitem__(item)
 
 
-class JsonIterator(Iterator):
+class Iterator(TypeIterator):
     """
-    An iterator for JSON-like objects that supports conversion to and from JSON.
-
-    :param json_object: The JSON object to iterate over.
-    :type json_object: JsonObject
+    An iterator for objects that supports jsifying and unjsifying.
     """
 
-    def __init__(self, json_object):
+    def __init__(self, obj):
         """
-        Initialize the JsonIterator with the given JSON object.
+        Initialize the Iterator with the given object.
 
-        :param json_object: The JSON object to iterate over.
-        :type json_object: JsonObject or Any
+        :param obj: The object to iterate over.
+        :type obj: Iterable
         """
-        self.iterator = iter(unjsify(json_object))
+        self.iterator = iter(unjsify(obj))
 
     def __iter__(self):
         """
         Return the iterator itself.
 
         :return: The iterator itself.
-        :rtype: JsonIterator
+        :rtype: Iterator
         """
         return self
 
@@ -876,109 +873,109 @@ class JsonIterator(Iterator):
 
 def unjsify(obj):
     """
-    Convert a JsonObject to its original representation.
+    Convert a Object to its original representation.
 
     :param obj: The object to convert.
-    :type obj: JsonObject or Any
-    :return: The original object if obj is a JsonObject, otherwise returns obj.
+    :type obj: Object or Any
+    :return: The original object if obj is a Object, otherwise returns obj.
     :rtype: Any
     """
-    if isinstance(obj, JsonObject):
-        return obj.__orig__
+    if isinstance(obj, Object):
+        return obj.__jsify_orig__
     else:
         return obj
 
 
 def deep_unjsify(obj):
     """
-    Convert a JsonObject to its original representation, performing a deep conversion.
+    Convert a Object to its original representation, performing a deep conversion.
 
     :param obj: The object to convert.
-    :type obj: JsonObject or Any
-    :return: The original object if obj is a JsonObject, otherwise returns obj.
+    :type obj: Object or Any
+    :return: The original object if obj is a Object, otherwise returns obj.
     :rtype: Any
     """
-    return unjsify(json_copy(obj, deep=True))
+    return unjsify(jsified_copy(obj, deep=True))
 
 
-def json_copy(obj, deep=True):
+def jsified_copy(obj, deep=True):
     """
     Create a shallow or deep copy of the object.
 
     :param obj: The object to copy.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param deep: True if the object should be deep copied, False otherwise.
     :type deep: bool
     :return: A copy of the object.
-    :rtype: JsonObject or Any
+    :rtype: Object or Any
     """
     return jsify(copy(obj) if not deep else deepcopy(obj))
 
 
-def json_get(obj, item, *args, **kwargs):
+def jsified_get(obj, item, *args, **kwargs):
     """
     Get an item from the object, returning a default value if the item does not exist.
 
     :param obj: The object to get the item from.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param item: The item to get.
     :type item: Any
     :param args: Additional arguments.
     :param kwargs: Additional keyword arguments.
     :return: The value of the item.
-    :rtype: JsonObject or Any
+    :rtype: Object or Any
     """
     return jsify(
-        super(JsonObject, obj).__getattribute__("__orig__").get(item, *args, **kwargs)
-        if isinstance(obj, JsonObject)
+        super(Object, obj).__getattribute__("__jsify_orig__").get(item, *args, **kwargs)
+        if isinstance(obj, Object)
         else obj.get(item, *args, **kwargs)
     )
 
 
-def json_pop(obj, item, *args, **kwargs):
+def jsified_pop(obj, item, *args, **kwargs):
     """
     Remove the specified item from the object and return its value.
 
     :param obj: The object to pop the item from.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param item: The item to pop.
     :type item: Any
     :param args: Additional arguments.
     :param kwargs: Additional keyword arguments.
     :return: The value of the popped item.
-    :rtype: JsonObject or Any
+    :rtype: Object or Any
     """
     return jsify(
-        super(JsonObject, obj).__getattribute__("__orig__").pop(item, *args, **kwargs)
-        if isinstance(obj, JsonObject)
+        super(Object, obj).__getattribute__("__jsify_orig__").pop(item, *args, **kwargs)
+        if isinstance(obj, Object)
         else obj.pop(item, *args, **kwargs)
     )
 
 
-def json_popitem(obj, *args, **kwargs):
+def jsified_popitem(obj, *args, **kwargs):
     """
     Remove and return a (key, value) pair from the object.
 
     :param obj: The object to pop the item from.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param args: Additional arguments.
     :param kwargs: Additional keyword arguments.
     :return: The popped (key, value) pair.
     :rtype: tuple
     """
     return jsify(
-        super(JsonObject, obj).__getattribute__("__orig__").popitem(*args, **kwargs)
-        if isinstance(obj, JsonObject)
+        super(Object, obj).__getattribute__("__jsify_orig__").popitem(*args, **kwargs)
+        if isinstance(obj, Object)
         else obj.popitem(*args, **kwargs)
     )
 
 
-def json_setdefault(obj, value, default, *args, **kwargs):
+def jsified_setdefault(obj, value, default, *args, **kwargs):
     """
     Insert a key with a default value if the key is not in the dictionary.
 
     :param obj: The object to set the default value in.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param value: The key to set the default value for.
     :type value: Any
     :param default: The default value to set.
@@ -986,89 +983,89 @@ def json_setdefault(obj, value, default, *args, **kwargs):
     :param args: Additional arguments.
     :param kwargs: Additional keyword arguments.
     :return: The value of the key.
-    :rtype: JsonObject or Any
+    :rtype: Object or Any
     """
     return jsify(
-        super(JsonObject, obj)
-        .__getattribute__("__orig__")
+        super(Object, obj)
+        .__getattribute__("__jsify_orig__")
         .setdefault(value, default, *args, **kwargs)
-        if isinstance(obj, JsonObject)
+        if isinstance(obj, Object)
         else obj.setdefault(value, default, *args, **kwargs)
     )
 
 
-def json_update(obj, value, *args, **kwargs):
+def jsified_update(obj, value, *args, **kwargs):
     """
     Update the dictionary with the key-value pairs from another dictionary.
 
     :param obj: The object to update.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param value: The dictionary to update from.
     :type value: dict
     :param args: Additional arguments.
     :param kwargs: Additional keyword arguments.
     :return: The updated object.
-    :rtype: JsonObject or Any
+    :rtype: Object or Any
     """
     return jsify(
-        super(JsonObject, obj)
-        .__getattribute__("__orig__")
+        super(Object, obj)
+        .__getattribute__("__jsify_orig__")
         .update(value, *args, **kwargs)
-        if isinstance(obj, JsonObject)
+        if isinstance(obj, Object)
         else obj.update(value, *args, **kwargs)
     )
 
 
-def json_values(obj):
+def jsified_values(obj):
     """
     Return a new view of the dictionary's values.
 
     :param obj: The object to get the values from.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :return: A view object displaying a list of the dictionary's values.
-    :rtype: JsonIterator
+    :rtype: Iterator
     """
-    return JsonIterator(
-        super(JsonObject, obj).__getattribute__("__orig__").values()
-        if isinstance(obj, JsonObject)
+    return Iterator(
+        super(Object, obj).__getattribute__("__jsify_orig__").values()
+        if isinstance(obj, Object)
         else obj.values()
     )
 
 
-def json_keys(obj):
+def jsified_keys(obj):
     """
     Return a new view of the dictionary's keys.
 
     :param obj: The object to get the keys from.
-    :type obj: JsonObject, JsonList, JsonTuple or Any
+    :type obj: Object, List, Tuple or Any
     :return: A view object displaying a list of the object's keys (in case of list or tuple these would be the indexes
     in string format).
-    :rtype: JsonIterator
+    :rtype: Iterator
     """
-    return JsonIterator(
+    return Iterator(
         obj.__dict__.keys()
-        if isinstance(obj, (JsonList, JsonTuple))
-        else super(JsonObject, obj).__getattribute__("__orig__").keys()
-        if isinstance(obj, JsonObject)
+        if isinstance(obj, (List, Tuple))
+        else super(Object, obj).__getattribute__("__jsify_orig__").keys()
+        if isinstance(obj, Object)
         else obj.keys()
     )
 
 
-def json_items(obj):
+def jsified_items(obj):
     """
     Return a new view of the dictionary's items (key, value pairs).
 
     :param obj: The object to get the items from.
-    :type obj: JsonObject, JsonList, JsonTuple or Any
+    :type obj: Object, List, Tuple or Any
     :return: A view object displaying a list of the objects's items (in case of list or tuple these would be values with
      keys being their indexes in string format).
-    :rtype: JsonIterator
+    :rtype: Iterator
     """
-    return JsonIterator(
+    return Iterator(
         obj.__dict__.items()
-        if isinstance(obj, (JsonList, JsonTuple))
-        else super(JsonObject, obj).__getattribute__("__orig__").items()
-        if isinstance(obj, JsonObject)
+        if isinstance(obj, (List, Tuple))
+        else super(Object, obj).__getattribute__("__jsify_orig__").items()
+        if isinstance(obj, Object)
         else obj.items()
     )
 
@@ -1093,14 +1090,14 @@ def properties_exist(obj, *path):
     Check if a series of properties exist in the JSON object.
 
     :param obj: The JSON object to check.
-    :type obj: JsonObject or Any
+    :type obj: Object or Any
     :param path: The sequence of properties to check.
     :type path: str
     :return: True if the properties exist, False otherwise.
     :rtype: bool or PropertiesExistResult
     """
 
-    obj = JsonObject(obj)
+    obj = Object(obj)
     try:
         for node in path:
             obj = obj[node]
@@ -1113,19 +1110,19 @@ def properties_exist(obj, *path):
 
 def jsify(o, **kwargs):
     """
-    Convert a dictionary, list, or tuple to its corresponding JsonObject.
+    Convert a dictionary, list, or tuple to its corresponding Object.
 
     :param o: The object to convert.
     :type o: dict, list, tuple or Any
     :param kwargs: Additional keyword arguments.
-    :return: The converted JsonObject.
-    :rtype: JsonObject, JsonDict, JsonList, or JsonTuple
+    :return: The converted Object.
+    :rtype: Object, Dict, List, or Tuple
     """
     if isinstance(o, dict):
-        return JsonDict(o, **kwargs)
+        return Dict(o, **kwargs)
     elif isinstance(o, list):
-        return JsonList(o)
+        return List(o)
     elif isinstance(o, tuple):
-        return JsonTuple(o)
+        return Tuple(o)
     else:
         return o

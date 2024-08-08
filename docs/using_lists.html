@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
@@ -88,9 +88,9 @@
              
   <section id="using-jsified-lists">
 <span id="using-lists"></span><h1>Using Jsified Lists<a class="headerlink" href="#using-jsified-lists" title="Link to this heading"></a></h1>
-<p>In the Jsify library, lists can be converted into <cite>JsonList</cite> instances, which are enhanced versions of standard Python lists with JSON-like behavior. These jsified lists allow for more intuitive manipulation of list data, including attribute-style access to elements, dynamic nesting, and integration with the broader <cite>JsonObject</cite> ecosystem.</p>
+<p>In the Jsify library, lists can be converted into <cite>List</cite> instances, which are enhanced versions of standard Python lists with JSON-like behavior. These jsified lists allow for more intuitive manipulation of list data, including attribute-style access to elements, dynamic nesting, and integration with the broader <cite>Object</cite> ecosystem.</p>
 <p><strong>Creating and Using Jsified Lists:</strong></p>
-<p>To create a jsified list, you can use the <cite>jsify</cite> function, which converts a standard Python list into a <cite>JsonList</cite>. This allows you to interact with list elements using JSON-like methods, while still preserving the familiar list operations.</p>
+<p>To create a jsified list, you can use the <cite>jsify</cite> function, which converts a standard Python list into a <cite>List</cite>. This allows you to interact with list elements using JSON-like methods, while still preserving the familiar list operations.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span>
 
@@ -118,7 +118,7 @@
 </pre></div>
 </div>
 <p><strong>Manipulating Jsified Lists:</strong></p>
-<p>Jsified lists behave similarly to regular Python lists, with the added benefit of JSON-like access to their elements. You can still perform standard list operations like appending, inserting, or removing elements, while also taking advantage of the dynamic behavior offered by <cite>JsonObject</cite>.</p>
+<p>Jsified lists behave similarly to regular Python lists, with the added benefit of JSON-like access to their elements. You can still perform standard list operations like appending, inserting, or removing elements, while also taking advantage of the dynamic behavior offered by <cite>Object</cite>.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Appending a new element to the jsified list</span>
 <span class="n">json_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;David&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">})</span>
@@ -184,10 +184,10 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">json_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># Outputs: Eve</span>
 </pre></div>
 </div>
-<p><strong>Using `json_keys` with Jsified Lists:</strong></p>
-<p>The <cite>json_keys</cite> function can be used with <cite>JsonList</cite> to retrieve the indices of the list elements as keys, represented in string format.</p>
+<p><strong>Using `jsified_keys` with Jsified Lists:</strong></p>
+<p>The <cite>jsified_keys</cite> function can be used with <cite>List</cite> to retrieve the indices of the list elements as keys, represented in string format.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">json_keys</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsified_keys</span>
 
 <span class="n">json_list</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">([</span>
     <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Wonderland&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}},</span>
@@ -196,19 +196,19 @@
 <span class="p">])</span>
 
 <span class="c1"># Get a view of the indices as keys</span>
-<span class="n">keys_view</span> <span class="o">=</span> <span class="n">json_keys</span><span class="p">(</span><span class="n">json_list</span><span class="p">)</span>
+<span class="n">keys_view</span> <span class="o">=</span> <span class="n">jsified_keys</span><span class="p">(</span><span class="n">json_list</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys_view</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 <span class="c1"># Outputs: &#39;0&#39;, &#39;1&#39;, &#39;2&#39;</span>
 </pre></div>
 </div>
-<p><strong>Using `json_items` with Jsified Lists:</strong></p>
-<p>The <cite>json_items</cite> function allows you to retrieve the elements of a <cite>JsonList</cite> as key-value pairs, where the keys are the indices of the elements in string format.</p>
+<p><strong>Using `jsified_items` with Jsified Lists:</strong></p>
+<p>The <cite>jsified_items</cite> function allows you to retrieve the elements of a <cite>List</cite> as key-value pairs, where the keys are the indices of the elements in string format.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">json_items</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsified_items</span>
 
 <span class="c1"># Get a view of the items with indices as keys</span>
-<span class="n">items_view</span> <span class="o">=</span> <span class="n">json_items</span><span class="p">(</span><span class="n">json_list</span><span class="p">)</span>
+<span class="n">items_view</span> <span class="o">=</span> <span class="n">jsified_items</span><span class="p">(</span><span class="n">json_list</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">items_view</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="c1"># Outputs:</span>
@@ -217,7 +217,7 @@
 <span class="c1"># 2: Charlie, 35</span>
 </pre></div>
 </div>
-<p>By using jsified lists, you gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python’s list operations. This makes <cite>JsonList</cite> an excellent choice for working with complex and nested list data in a more intuitive and accessible way.</p>
+<p>By using jsified lists, you gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python’s list operations. This makes <cite>List</cite> an excellent choice for working with complex and nested list data in a more intuitive and accessible way.</p>
 </section>
 
 

@@ -3,12 +3,12 @@
 Jsifying and unjsyfing objects
 ===========================
 
-The `jsify` and `unjsify` functions are key utilities for converting between standard Python data structures and `JsonObject` instances within the library. These functions enable smooth integration of Python's native types with the JSON-like behavior provided by `JsonObject`, allowing for flexible and dynamic data manipulation.
+The `jsify` and `unjsify` functions are key utilities for converting between standard Python data structures and `Object` instances within the library. These functions enable smooth integration of Python's native types with the JSON-like behavior provided by `Object`, allowing for flexible and dynamic data manipulation.
 
 `jsify`
 -------
 
-The `jsify` function converts standard Python objects such as dictionaries, lists, and tuples into their corresponding `JsonObject` representations. This conversion enables attribute-style access and other JSON-like features, making it easier to work with complex nested data structures.
+The `jsify` function converts standard Python objects such as dictionaries, lists, and tuples into their corresponding `Object` representations. This conversion enables attribute-style access and other JSON-like features, making it easier to work with complex nested data structures.
 
 **Usage Example:**
 
@@ -16,7 +16,7 @@ The `jsify` function converts standard Python objects such as dictionaries, list
 
     from jsify import jsify
 
-    # Convert a dictionary into a JsonObject
+    # Convert a dictionary into a Object
     data = {'key1': 'value1', 'key2': {'nestedKey': 'nestedValue'}}
     json_obj = jsify(data)
 
@@ -30,12 +30,12 @@ The `jsify` function converts standard Python objects such as dictionaries, list
 
 **Returns:**
 
-- A `JsonObject`, `JsonDict`, `JsonList`, or `JsonTuple`, depending on the type of the input object.
+- A `Object`, `Dict`, `List`, or `Tuple`, depending on the type of the input object.
 
 `unjsify` and `deep_unjsify`
 ---------
 
-The `unjsify` function converts a `JsonObject` back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.
+The `unjsify` function converts a `Object` back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.
 
 **Usage Example:**
 
@@ -43,7 +43,7 @@ The `unjsify` function converts a `JsonObject` back into its original Python rep
 
     from jsify import unjsify
 
-    # Assuming json_obj is a JsonObject
+    # Assuming json_obj is a Object
     original_data = unjsify(json_obj)
 
     # The original_data is now a standard Python dictionary
@@ -51,15 +51,15 @@ The `unjsify` function converts a `JsonObject` back into its original Python rep
 
 **Parameters:**
 
-- ``obj`` : The `JsonObject` to convert back into its original form.
+- ``obj`` : The `Object` to convert back into its original form.
 
 **Returns:**
 
-- The original object if ``obj`` is a `JsonObject`, otherwise returns the object unchanged.
+- The original object if ``obj`` is a `Object`, otherwise returns the object unchanged.
 
 **Deep unjsifying:**
 
-In scenarios where you have nested `JsonObject` instances and want to deeply convert them back to their original Python structures, the `deep_unjsify` function can be used. It performs a recursive unjsification, ensuring that all nested `JsonObject` instances are properly converted.
+In scenarios where you have nested `Object` instances and want to deeply convert them back to their original Python structures, the `deep_unjsify` function can be used. It performs a recursive unjsification, ensuring that all nested `Object` instances are properly converted.
 This function is particularly useful in scenarios where you have complex, deeply nested JSON-like objects that need to be converted back to standard Python types, such as dictionaries, lists, and tuples, for further processing or serialization.
 
 
@@ -86,7 +86,7 @@ This function is particularly useful in scenarios where you have complex, deeply
     print(json_obj.level1.level2.level3)  # Outputs: value
     print(json_obj.level1.level2_list[0].nested_key)  # Outputs: nested_value
 
-    # Now, deeply unjsify the JsonObject back to its original form
+    # Now, deeply unjsify the Object back to its original form
     original_data = deep_unjsify(json_obj)
 
     # Verify the structure

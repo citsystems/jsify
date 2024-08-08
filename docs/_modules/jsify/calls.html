@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
@@ -87,14 +87,14 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The `calls` module provides a decorator that facilitates the handling of JSON-like data structures within Python</span>
 <span class="sd">functions. This module is particularly useful for developers working with data in the form of dictionaries, lists,</span>
-<span class="sd">and tuples, as it simplifies the conversion of these data structures into `JsonObject` instances, enabling</span>
+<span class="sd">and tuples, as it simplifies the conversion of these data structures into `Object` instances, enabling</span>
 <span class="sd">attribute-style access and other JSON-like behaviors.</span>
 <span class="sd">At the heart of this module is the `jsified_function` decorator, which automatically converts function arguments into</span>
-<span class="sd">`JsonObject` instances. Additionally, the decorator offers options to process the function&#39;s return value, allowing it</span>
+<span class="sd">`Object` instances. Additionally, the decorator offers options to process the function&#39;s return value, allowing it</span>
 <span class="sd">to be returned in its original form or as a deeply unjsified structure, depending on the specified flags.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">.jsify</span> <span class="kn">import</span> <span class="n">unjsify</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">,</span> <span class="n">deep_unjsify</span>
+<span class="kn">from</span> <span class="nn">.jsify</span> <span class="kn">import</span> <span class="n">unjsify</span><span class="p">,</span> <span class="n">Object</span><span class="p">,</span> <span class="n">deep_unjsify</span>
 <span class="kn">from</span> <span class="nn">.stringcase</span> <span class="kn">import</span> <span class="n">json_camel_to_snake</span>
 
 
@@ -102,10 +102,10 @@
 <a class="viewcode-back" href="../../reference/calls.html#jsify.calls.jsified_function">[docs]</a>
 <span class="k">def</span> <span class="nf">jsified_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">result_original</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">result_deep_original</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A decorator to convert function arguments to `JsonObject` and process the results accordingly.</span>
+<span class="sd">    A decorator to convert function arguments to `Object` and process the results accordingly.</span>
 
 <span class="sd">    This decorator can be applied to a function to ensure that its arguments are automatically</span>
-<span class="sd">    converted to `JsonObject` instances if they are of types `dict`, `list`, or `tuple`. It also</span>
+<span class="sd">    converted to `Object` instances if they are of types `dict`, `list`, or `tuple`. It also</span>
 <span class="sd">    processes the function&#39;s result based on the provided flags.</span>
 
 <span class="sd">    Parameters</span>
@@ -120,19 +120,19 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    function</span>
-<span class="sd">        The decorated function with arguments converted to `JsonObject` and results processed based on the flags.</span>
+<span class="sd">        The decorated function with arguments converted to `Object` and results processed based on the flags.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">create_decorator</span><span class="p">():</span>
         <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
             <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">wrapper_args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="k">def</span> <span class="nf">conditional_json_object</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="n">JsonObject</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="k">else</span> <span class="n">o</span>
+                    <span class="k">return</span> <span class="n">Object</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="k">else</span> <span class="n">o</span>
                 <span class="n">json_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">conditional_json_object</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">wrapper_args</span><span class="p">))</span>
                 <span class="n">json_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">conditional_json_object</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">json_args</span><span class="p">,</span> <span class="o">**</span><span class="n">json_kwargs</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">deep_unjsify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="n">result_deep_original</span> \
                     <span class="k">else</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="n">result_original</span> \
-                    <span class="k">else</span> <span class="n">JsonObject</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="n">Object</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">wrapper</span>
         <span class="k">return</span> <span class="n">decorator</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>

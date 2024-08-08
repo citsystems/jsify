@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../camelized_functions.html">Creating Camelized Functions</a></li>
@@ -62,11 +62,11 @@
 <li class="toctree-l2"><a class="reference internal" href="assertion.html">Assertion module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="calls.html">Calls module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Encoder module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.encoder.JsonObjectEncoder"><code class="docutils literal notranslate"><span class="pre">JsonObjectEncoder</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.JsonObjectEncoder.iterencode"><code class="docutils literal notranslate"><span class="pre">JsonObjectEncoder.iterencode()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.JsonObjectEncoder.default"><code class="docutils literal notranslate"><span class="pre">JsonObjectEncoder.default()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">JsonObjectEncoder.default()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">JsonObjectEncoder.iterencode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.encoder.ObjectEncoder"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.ObjectEncoder.iterencode"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.iterencode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.ObjectEncoder.default"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.default()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.default()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.iterencode()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.encoder.dump"><code class="docutils literal notranslate"><span class="pre">dump()</span></code></a></li>
@@ -109,19 +109,19 @@
              
   <section id="encoder-module">
 <h1>Encoder module<a class="headerlink" href="#encoder-module" title="Link to this heading"></a></h1>
-<p id="module-jsify.encoder">The <cite>encoder</cite> module provides custom JSON serialization functionality specifically designed to handle <cite>JsonObject</cite>
-instances. This module extends Python’s built-in <cite>json</cite> module to ensure that <cite>JsonObject</cite> instances are correctly
+<p id="module-jsify.encoder">The <cite>encoder</cite> module provides custom JSON serialization functionality specifically designed to handle <cite>Object</cite>
+instances. This module extends Python’s built-in <cite>json</cite> module to ensure that <cite>Object</cite> instances are correctly
 converted into their original dictionary representation during the serialization process.</p>
-<p>The module features the <cite>JsonObjectEncoder</cite> class, which overrides the default JSON encoding behavior to accommodate
-<cite>JsonObject</cite> instances. Additionally, it provides custom <cite>dump</cite> and <cite>dumps</cite> functions that leverage this encoder,
+<p>The module features the <cite>ObjectEncoder</cite> class, which overrides the default JSON encoding behavior to accommodate
+<cite>Object</cite> instances. Additionally, it provides custom <cite>dump</cite> and <cite>dumps</cite> functions that leverage this encoder,
 allowing seamless integration with standard JSON serialization workflows.</p>
 <p>You must import this module if you want to use serialization done by the <cite>json</cite> module.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.encoder.JsonObjectEncoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">JsonObjectEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#JsonObjectEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.JsonObjectEncoder" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">ObjectEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONEncoder</span></code></p>
-<p>Custom JSON encoder for <cite>JsonObject</cite> instances.</p>
-<p>This encoder converts <cite>JsonObject</cite> instances to their original dictionary representation
+<p>Custom JSON encoder for <cite>Object</cite> instances.</p>
+<p>This encoder converts <cite>Object</cite> instances to their original dictionary representation
 for JSON serialization. It also provides an option to omit fields with the <cite>Undefined</cite> value
 during serialization.</p>
 <dl class="field-list simple">
@@ -134,22 +134,22 @@ during serialization.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.encoder.JsonObjectEncoder.iterencode">
-<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/jsify/encoder.html#JsonObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.JsonObjectEncoder.iterencode" title="Link to this definition"></a></dt>
-<dd><p>Encodes the object into a JSON string, applying custom logic to handle <cite>JsonObject</cite>
+<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder.iterencode">
+<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder.iterencode" title="Link to this definition"></a></dt>
+<dd><p>Encodes the object into a JSON string, applying custom logic to handle <cite>Object</cite>
 instances and optionally omitting <cite>Undefined</cite> values.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.encoder.JsonObjectEncoder.default">
-<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/jsify/encoder.html#JsonObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.JsonObjectEncoder.default" title="Link to this definition"></a></dt>
-<dd><p>Overrides the default method of <cite>JSONEncoder</cite> to handle <cite>JsonObject</cite> instances and
+<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Overrides the default method of <cite>JSONEncoder</cite> to handle <cite>Object</cite> instances and
 <cite>Undefined</cite> values.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#JsonObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
@@ -159,7 +159,7 @@ instances and optionally omitting <cite>Undefined</cite> values.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#JsonObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
 <dd><p>Encode the given object and yield each string
 representation as available.</p>
 <p>For example:</p>
@@ -174,8 +174,8 @@ representation as available.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.encoder.dump">
 <span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.dump" title="Link to this definition"></a></dt>
-<dd><p>Serialize <cite>o</cite> as a JSON formatted stream to <cite>fp</cite> using <cite>JsonObjectEncoder</cite>.</p>
-<p>This function wraps <cite>json.dump</cite>, providing custom serialization for <cite>JsonObject</cite> instances
+<dd><p>Serialize <cite>o</cite> as a JSON formatted stream to <cite>fp</cite> using <cite>ObjectEncoder</cite>.</p>
+<p>This function wraps <cite>json.dump</cite>, providing custom serialization for <cite>Object</cite> instances
 and optionally omitting fields with the <cite>Undefined</cite> value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -195,8 +195,8 @@ and optionally omitting fields with the <cite>Undefined</cite> value.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.encoder.dumps">
 <span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">dumps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#dumps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.dumps" title="Link to this definition"></a></dt>
-<dd><p>Serialize <cite>o</cite> to a JSON formatted <cite>str</cite> using <cite>JsonObjectEncoder</cite>.</p>
-<p>This function wraps <cite>json.dumps</cite>, providing custom serialization for <cite>JsonObject</cite> instances
+<dd><p>Serialize <cite>o</cite> to a JSON formatted <cite>str</cite> using <cite>ObjectEncoder</cite>.</p>
+<p>This function wraps <cite>json.dumps</cite>, providing custom serialization for <cite>Object</cite> instances
 and optionally omitting fields with the <cite>Undefined</cite> value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

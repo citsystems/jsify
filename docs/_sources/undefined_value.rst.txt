@@ -176,7 +176,7 @@ When working with JSON-like data structures, `Undefined` can be used to represen
 
 **Serialization Considerations**
 
-When serializing `JsonObject` instances that contain `Undefined`, the `Undefined` value is typically ignored.
+When serializing `Object` instances that contain `Undefined`, the `Undefined` value is typically ignored.
 
 **Example:**
 

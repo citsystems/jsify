@@ -57,7 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
@@ -92,14 +92,14 @@
              
   <section id="jsifying-and-unjsyfing-objects">
 <span id="jsify"></span><h1>Jsifying and unjsyfing objects<a class="headerlink" href="#jsifying-and-unjsyfing-objects" title="Link to this heading"></a></h1>
-<p>The <cite>jsify</cite> and <cite>unjsify</cite> functions are key utilities for converting between standard Python data structures and <cite>JsonObject</cite> instances within the library. These functions enable smooth integration of Python’s native types with the JSON-like behavior provided by <cite>JsonObject</cite>, allowing for flexible and dynamic data manipulation.</p>
+<p>The <cite>jsify</cite> and <cite>unjsify</cite> functions are key utilities for converting between standard Python data structures and <cite>Object</cite> instances within the library. These functions enable smooth integration of Python’s native types with the JSON-like behavior provided by <cite>Object</cite>, allowing for flexible and dynamic data manipulation.</p>
 <section id="id1">
 <h2><cite>jsify</cite><a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>The <cite>jsify</cite> function converts standard Python objects such as dictionaries, lists, and tuples into their corresponding <cite>JsonObject</cite> representations. This conversion enables attribute-style access and other JSON-like features, making it easier to work with complex nested data structures.</p>
+<p>The <cite>jsify</cite> function converts standard Python objects such as dictionaries, lists, and tuples into their corresponding <cite>Object</cite> representations. This conversion enables attribute-style access and other JSON-like features, making it easier to work with complex nested data structures.</p>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span>
 
-<span class="c1"># Convert a dictionary into a JsonObject</span>
+<span class="c1"># Convert a dictionary into a Object</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;key1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;key2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;nestedKey&#39;</span><span class="p">:</span> <span class="s1">&#39;nestedValue&#39;</span><span class="p">}}</span>
 <span class="n">json_obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -114,16 +114,16 @@
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p>A <cite>JsonObject</cite>, <cite>JsonDict</cite>, <cite>JsonList</cite>, or <cite>JsonTuple</cite>, depending on the type of the input object.</p></li>
+<li><p>A <cite>Object</cite>, <cite>Dict</cite>, <cite>List</cite>, or <cite>Tuple</cite>, depending on the type of the input object.</p></li>
 </ul>
 </section>
 <section id="unjsify-and-deep-unjsify">
 <h2><cite>unjsify</cite> and <cite>deep_unjsify</cite><a class="headerlink" href="#unjsify-and-deep-unjsify" title="Link to this heading"></a></h2>
-<p>The <cite>unjsify</cite> function converts a <cite>JsonObject</cite> back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.</p>
+<p>The <cite>unjsify</cite> function converts a <cite>Object</cite> back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.</p>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">unjsify</span>
 
-<span class="c1"># Assuming json_obj is a JsonObject</span>
+<span class="c1"># Assuming json_obj is a Object</span>
 <span class="n">original_data</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">json_obj</span><span class="p">)</span>
 
 <span class="c1"># The original_data is now a standard Python dictionary</span>
@@ -132,14 +132,14 @@
 </div>
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">obj</span></code> : The <cite>JsonObject</cite> to convert back into its original form.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">obj</span></code> : The <cite>Object</cite> to convert back into its original form.</p></li>
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p>The original object if <code class="docutils literal notranslate"><span class="pre">obj</span></code> is a <cite>JsonObject</cite>, otherwise returns the object unchanged.</p></li>
+<li><p>The original object if <code class="docutils literal notranslate"><span class="pre">obj</span></code> is a <cite>Object</cite>, otherwise returns the object unchanged.</p></li>
 </ul>
 <p><strong>Deep unjsifying:</strong></p>
-<p>In scenarios where you have nested <cite>JsonObject</cite> instances and want to deeply convert them back to their original Python structures, the <cite>deep_unjsify</cite> function can be used. It performs a recursive unjsification, ensuring that all nested <cite>JsonObject</cite> instances are properly converted.
+<p>In scenarios where you have nested <cite>Object</cite> instances and want to deeply convert them back to their original Python structures, the <cite>deep_unjsify</cite> function can be used. It performs a recursive unjsification, ensuring that all nested <cite>Object</cite> instances are properly converted.
 This function is particularly useful in scenarios where you have complex, deeply nested JSON-like objects that need to be converted back to standard Python types, such as dictionaries, lists, and tuples, for further processing or serialization.</p>
 <p><strong>Using `deep_unjsify`:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">deep_unjsify</span>
@@ -161,7 +161,7 @@ This function is particularly useful in scenarios where you have complex, deeply
 <span class="nb">print</span><span class="p">(</span><span class="n">json_obj</span><span class="o">.</span><span class="n">level1</span><span class="o">.</span><span class="n">level2</span><span class="o">.</span><span class="n">level3</span><span class="p">)</span>  <span class="c1"># Outputs: value</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json_obj</span><span class="o">.</span><span class="n">level1</span><span class="o">.</span><span class="n">level2_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nested_key</span><span class="p">)</span>  <span class="c1"># Outputs: nested_value</span>
 
-<span class="c1"># Now, deeply unjsify the JsonObject back to its original form</span>
+<span class="c1"># Now, deeply unjsify the Object back to its original form</span>
 <span class="n">original_data</span> <span class="o">=</span> <span class="n">deep_unjsify</span><span class="p">(</span><span class="n">json_obj</span><span class="p">)</span>
 
 <span class="c1"># Verify the structure</span>

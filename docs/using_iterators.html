@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
@@ -88,9 +88,9 @@
              
   <section id="jsified-iteration-over-native-python-objects">
 <span id="using-iterators"></span><h1>Jsified Iteration Over Native Python Objects<a class="headerlink" href="#jsified-iteration-over-native-python-objects" title="Link to this heading"></a></h1>
-<p>The <cite>JsonIterator</cite> class in the Jsify library is a powerful tool that can be used not only with jsified data structures but also with native Python objects like dictionaries, lists, and tuples. When iterating over native Python objects using <cite>JsonIterator</cite>, the elements returned are automatically converted into jsified objects (<cite>JsonObject</cite>, <cite>JsonDict</cite>, <cite>JsonList</cite>, <cite>JsonTuple</cite>). This means that you can take advantage of property-style access and other JSON-like behaviors even when starting with standard Python types.</p>
+<p>The <cite>Iterator</cite> class in the Jsify library is a powerful tool that can be used not only with jsified data structures but also with native Python objects like dictionaries, lists, and tuples. When iterating over native Python objects using <cite>Iterator</cite>, the elements returned are automatically converted into jsified objects (<cite>Object</cite>, <cite>Dict</cite>, <cite>List</cite>, <cite>Tuple</cite>). This means that you can take advantage of property-style access and other JSON-like behaviors even when starting with standard Python types.</p>
 <p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">JsonIterator</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jsify</span> <span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">Iterator</span>
 
 <span class="c1"># Native Python dictionary</span>
 <span class="n">native_list</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">([</span>
@@ -111,7 +111,7 @@
 <span class="p">])</span>
 
 <span class="c1"># Accessing nested values during iteration</span>
-<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">JsonIterator</span><span class="p">(</span><span class="n">native_list</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Iterator</span><span class="p">(</span><span class="n">native_list</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> of age </span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">details</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="c1"># Outputs: &#39;Bob of age 25&#39;, &#39;Alice of age 30&#39;</span>
 </pre></div>

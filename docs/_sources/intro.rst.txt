@@ -3,35 +3,35 @@
 Introduction
 =============
 
-The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the `JsonObject` class, which allows for attribute-style access and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.
+The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the `Object` class, which allows for attribute-style access and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.
 
 **Key Concept: Wrapping the Original Object**
 
-One of the key features of the `JsonObject` class is that it wraps the original Python object rather than deeply copying or transforming it. This means that `JsonObject` provides a dynamic interface for interacting with the data while maintaining a reference to the original object.
+One of the key features of the `Object` class is that it wraps the original Python object rather than deeply copying or transforming it. This means that `Object` provides a dynamic interface for interacting with the data while maintaining a reference to the original object.
 
 **Advantages of Wrapping the Original Object:**
 
-- **Performance Efficiency:** Since `JsonObject` does not create deep copies of the original data, it minimizes memory usage and processing time. This is particularly advantageous when working with large or complex data structures.
+- **Performance Efficiency:** Since `Object` does not create deep copies of the original data, it minimizes memory usage and processing time. This is particularly advantageous when working with large or complex data structures.
 
-- **Data Integrity:** By wrapping the original object, `JsonObject` ensures that changes made through the `JsonObject` interface are reflected in the original data structure and vice versa. This bidirectional linkage helps maintain consistency across your data.
+- **Data Integrity:** By wrapping the original object, `Object` ensures that changes made through the `Object` interface are reflected in the original data structure and vice versa. This bidirectional linkage helps maintain consistency across your data.
 
-- **Seamless Integration:** Wrapping the original object allows for a seamless integration of `JsonObject` into existing codebases. You can easily add JSON-like behavior to existing data structures without disrupting their core functionality.
+- **Seamless Integration:** Wrapping the original object allows for a seamless integration of `Object` into existing codebases. You can easily add JSON-like behavior to existing data structures without disrupting their core functionality.
 
-- **Flexibility:** The approach of wrapping allows you to selectively apply `JsonObject` features only where needed, providing flexibility in how you structure and manipulate your data.
+- **Flexibility:** The approach of wrapping allows you to selectively apply `Object` features only where needed, providing flexibility in how you structure and manipulate your data.
 
 
-In addition to `JsonObject`, the library includes a range of utilities for converting between standard Python data structures (like dictionaries, lists, and tuples) and their `JsonObject` counterparts. This includes functions like `jsify`, which wraps native Python objects in `JsonObject` instances, and `unjsify`, which reverts them back to their original forms. The library also supports deep conversions with `deep_unjsify`, ensuring that even complex, nested data structures can be easily managed.
+In addition to `Object`, the library includes a range of utilities for converting between standard Python data structures (like dictionaries, lists, and tuples) and their `Object` counterparts. This includes functions like `jsify`, which wraps native Python objects in `Object` instances, and `unjsify`, which reverts them back to their original forms. The library also supports deep conversions with `deep_unjsify`, ensuring that even complex, nested data structures can be easily managed.
 
 Key Components:
 ---------------
 
-- **JsonObject Class:** The cornerstone of the library, enabling JavaScript-like interaction with Python data structures. It supports dynamic attribute access, automatic nesting, and enhanced functionality for handling JSON-like data.
+- **Object Class:** The cornerstone of the library, enabling JavaScript-like interaction with Python data structures. It supports dynamic attribute access, automatic nesting, and enhanced functionality for handling JSON-like data.
 
-- **JsonDict, JsonList, JsonTuple:** Specialized subclasses of `JsonObject` tailored to work with dictionaries, lists, and tuples, respectively. These classes extend the functionality of `JsonObject` to provide additional methods specific to each data type.
+- **Dict, List, Tuple:** Specialized subclasses of `Object` tailored to work with dictionaries, lists, and tuples, respectively. These classes extend the functionality of `Object` to provide additional methods specific to each data type.
 
-- **jsify and unjsify Functions:** Essential utilities for converting between native Python types and `JsonObject` instances, allowing for seamless integration of JSON-like behavior in Python applications.
+- **jsify and unjsify Functions:** Essential utilities for converting between native Python types and `Object` instances, allowing for seamless integration of JSON-like behavior in Python applications.
 
-- **Decorators and Encoders:** The library includes decorators like `jsified_function` to automatically manage JSON data within functions, and custom JSON encoders like `JsonObjectEncoder` to handle serialization of `JsonObject` instances.
+- **Decorators and Encoders:** The library includes decorators like `jsified_function` to automatically manage JSON data within functions, and custom JSON encoders like `ObjectEncoder` to handle serialization of `Object` instances.
 
 - **Exception Handling:** A general-purpose `AnyError` exception is provided to facilitate robust error handling across the library’s functionalities.
 
@@ -53,6 +53,6 @@ The Jsify library is particularly valuable in the following scenarios:
 Getting Started:
 ----------------
 
-To get started with Jsify, begin by installing the library and exploring its core components. The `JsonObject` class and its associated utilities provide a strong foundation for managing JSON-like data in Python. Review the detailed documentation for each module to understand how to leverage the full potential of the library in your projects.
+To get started with Jsify, begin by installing the library and exploring its core components. The `Object` class and its associated utilities provide a strong foundation for managing JSON-like data in Python. Review the detailed documentation for each module to understand how to leverage the full potential of the library in your projects.
 
 The Jsify library is designed to be developer-friendly, providing intuitive interfaces and robust functionality to streamline the handling of JSON data in Python. Whether you are developing complex APIs, processing large datasets, or simply need a more dynamic way to work with data, Jsify is an essential tool in your Python toolkit.

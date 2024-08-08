@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Creating Jsified Functions" href="jsified_functions.html" />
-    <link rel="prev" title="Serializing JsonObject Instances with JSON" href="json_serialization.html" /> 
+    <link rel="prev" title="Serializing Object Instances with JSON" href="json_serialization.html" />
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
@@ -90,14 +90,14 @@
 <span id="assertions-usage"></span><h1>Using Assertions in Jsify<a class="headerlink" href="#using-assertions-in-jsify" title="Link to this heading"></a></h1>
 <p>The Jsify library includes a powerful assertion framework through the <cite>JsonAssert</cite> class, which allows you to verify the structure and content of JSON-like objects. This is particularly useful in testing scenarios where you need to ensure that your data matches expected formats or values.</p>
 <p><strong>Key Concept: JsonAssert</strong></p>
-<p>The <cite>JsonAssert</cite> class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a <cite>JsonObject</cite> match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.</p>
+<p>The <cite>JsonAssert</cite> class provides various assertion methods to check the presence or absence of keys, as well as to verify that values within a <cite>Object</cite> match expected values. These assertions help ensure data integrity and correctness, especially when working with complex or nested data structures.</p>
 <p>### Basic Assertion Methods</p>
 <ol class="arabic simple">
 <li><p><strong>IsIn Assertion:</strong>
-- Checks whether a specific key exists in a <cite>JsonObject</cite>.
+- Checks whether a specific key exists in a <cite>Object</cite>.
 - Raises an <cite>AssertionError</cite> if the key is not found.</p></li>
 <li><p><strong>NotIn Assertion:</strong>
-- Checks whether a specific key does not exist in a <cite>JsonObject</cite>.
+- Checks whether a specific key does not exist in a <cite>Object</cite>.
 - Raises an <cite>AssertionError</cite> if the key is found.</p></li>
 </ol>
 <p>### Using <cite>IsIn</cite> and <cite>NotIn</cite> Assertions</p>
@@ -133,7 +133,7 @@
 </pre></div>
 </div>
 <p>### Asserting Values with <cite>values_equal</cite></p>
-<p>The <cite>values_equal</cite> method allows you to perform deep comparisons between a <cite>JsonObject</cite> and a dictionary or list of expected values. It ensures that the structure and content of the <cite>JsonObject</cite> match the expected format.</p>
+<p>The <cite>values_equal</cite> method allows you to perform deep comparisons between a <cite>Object</cite> and a dictionary or list of expected values. It ensures that the structure and content of the <cite>Object</cite> match the expected format.</p>
 <p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Expected values</span>
 <span class="n">expected_values</span> <span class="o">=</span> <span class="p">{</span>
@@ -209,7 +209,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="json_serialization.html" class="btn btn-neutral float-left" title="Serializing JsonObject Instances with JSON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="json_serialization.html" class="btn btn-neutral float-left" title="Serializing Object Instances with JSON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="jsified_functions.html" class="btn btn-neutral float-right" title="Creating Jsified Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

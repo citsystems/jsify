@@ -53,7 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../camelized_functions.html">Creating Camelized Functions</a></li>
@@ -64,41 +64,41 @@
 <li class="toctree-l2"><a class="reference internal" href="encoder.html">Encoder module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Jsify module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.JsonDict"><code class="docutils literal notranslate"><span class="pre">JsonDict</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.JsonIterator"><code class="docutils literal notranslate"><span class="pre">JsonIterator</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.JsonList"><code class="docutils literal notranslate"><span class="pre">JsonList</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.append"><code class="docutils literal notranslate"><span class="pre">JsonList.append()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.clear"><code class="docutils literal notranslate"><span class="pre">JsonList.clear()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.copy"><code class="docutils literal notranslate"><span class="pre">JsonList.copy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.count"><code class="docutils literal notranslate"><span class="pre">JsonList.count()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.extend"><code class="docutils literal notranslate"><span class="pre">JsonList.extend()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.index"><code class="docutils literal notranslate"><span class="pre">JsonList.index()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.insert"><code class="docutils literal notranslate"><span class="pre">JsonList.insert()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.pop"><code class="docutils literal notranslate"><span class="pre">JsonList.pop()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.remove"><code class="docutils literal notranslate"><span class="pre">JsonList.remove()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.reverse"><code class="docutils literal notranslate"><span class="pre">JsonList.reverse()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonList.sort"><code class="docutils literal notranslate"><span class="pre">JsonList.sort()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.Dict"><code class="docutils literal notranslate"><span class="pre">Dict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.Iterator"><code class="docutils literal notranslate"><span class="pre">Iterator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.List"><code class="docutils literal notranslate"><span class="pre">List</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.append"><code class="docutils literal notranslate"><span class="pre">List.append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.clear"><code class="docutils literal notranslate"><span class="pre">List.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.copy"><code class="docutils literal notranslate"><span class="pre">List.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.count"><code class="docutils literal notranslate"><span class="pre">List.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.extend"><code class="docutils literal notranslate"><span class="pre">List.extend()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.index"><code class="docutils literal notranslate"><span class="pre">List.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.insert"><code class="docutils literal notranslate"><span class="pre">List.insert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.pop"><code class="docutils literal notranslate"><span class="pre">List.pop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.remove"><code class="docutils literal notranslate"><span class="pre">List.remove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.reverse"><code class="docutils literal notranslate"><span class="pre">List.reverse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.List.sort"><code class="docutils literal notranslate"><span class="pre">List.sort()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.JsonObject"><code class="docutils literal notranslate"><span class="pre">JsonObject</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.JsonTuple"><code class="docutils literal notranslate"><span class="pre">JsonTuple</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonTuple.copy"><code class="docutils literal notranslate"><span class="pre">JsonTuple.copy()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonTuple.count"><code class="docutils literal notranslate"><span class="pre">JsonTuple.count()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.JsonTuple.index"><code class="docutils literal notranslate"><span class="pre">JsonTuple.index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.Object"><code class="docutils literal notranslate"><span class="pre">Object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.Tuple"><code class="docutils literal notranslate"><span class="pre">Tuple</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.Tuple.copy"><code class="docutils literal notranslate"><span class="pre">Tuple.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.Tuple.count"><code class="docutils literal notranslate"><span class="pre">Tuple.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.jsify.Tuple.index"><code class="docutils literal notranslate"><span class="pre">Tuple.index()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.PropertiesExistResult"><code class="docutils literal notranslate"><span class="pre">PropertiesExistResult</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.deep_unjsify"><code class="docutils literal notranslate"><span class="pre">deep_unjsify()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsify"><code class="docutils literal notranslate"><span class="pre">jsify()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_copy"><code class="docutils literal notranslate"><span class="pre">json_copy()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_get"><code class="docutils literal notranslate"><span class="pre">json_get()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_items"><code class="docutils literal notranslate"><span class="pre">json_items()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_keys"><code class="docutils literal notranslate"><span class="pre">json_keys()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_pop"><code class="docutils literal notranslate"><span class="pre">json_pop()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_popitem"><code class="docutils literal notranslate"><span class="pre">json_popitem()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_setdefault"><code class="docutils literal notranslate"><span class="pre">json_setdefault()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_update"><code class="docutils literal notranslate"><span class="pre">json_update()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.json_values"><code class="docutils literal notranslate"><span class="pre">json_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_copy"><code class="docutils literal notranslate"><span class="pre">jsified_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_get"><code class="docutils literal notranslate"><span class="pre">jsified_get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_items"><code class="docutils literal notranslate"><span class="pre">jsified_items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_keys"><code class="docutils literal notranslate"><span class="pre">jsified_keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_pop"><code class="docutils literal notranslate"><span class="pre">jsified_pop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_popitem"><code class="docutils literal notranslate"><span class="pre">jsified_popitem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_setdefault"><code class="docutils literal notranslate"><span class="pre">jsified_setdefault()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_update"><code class="docutils literal notranslate"><span class="pre">jsified_update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.jsified_values"><code class="docutils literal notranslate"><span class="pre">jsified_values()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.properties_exist"><code class="docutils literal notranslate"><span class="pre">properties_exist()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.unjsify"><code class="docutils literal notranslate"><span class="pre">unjsify()</span></code></a></li>
 </ul>
@@ -138,19 +138,19 @@
   <section id="jsify-module">
 <h1>Jsify module<a class="headerlink" href="#jsify-module" title="Link to this heading"></a></h1>
 <p id="module-jsify.jsify">The <cite>jsify</cite> module provides a set of classes and functions designed to wrap standard Python data structures
-(such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as <cite>JsonObject</cite>,
-<cite>JsonDict</cite>, <cite>JsonList</cite>, and <cite>JsonTuple</cite>, allow for attribute-style access, dynamic nesting, and additional
+(such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as <cite>Object</cite>,
+<cite>Dict</cite>, <cite>List</cite>, and <cite>Tuple</cite>, allow for attribute-style access, dynamic nesting, and additional
 functionality that is commonly required when working with JSON data.
-The core component of this module is the <cite>JsonObject</cite> class, which provides a flexible and dynamic interface for
-accessing and manipulating underlying data. The <cite>JsonDict</cite>, <cite>JsonList</cite>, and <cite>JsonTuple</cite> classes extend <cite>JsonObject</cite>
+The core component of this module is the <cite>Object</cite> class, which provides a flexible and dynamic interface for
+accessing and manipulating underlying data. The <cite>Dict</cite>, <cite>List</cite>, and <cite>Tuple</cite> classes extend <cite>Object</cite>
 to offer more specific behaviors for dictionaries, lists, and tuples, respectively.
 Additionally, the module offers a series of utility functions such as <cite>jsify</cite> for converting standard Python objects
 into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this transformation.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.jsify.JsonDict">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">JsonDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonDict" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonObject</span></code></a></p>
-<p>A JSON-like dictionary object that extends JsonObject and provides dictionary-specific methods.</p>
+<dt class="sig sig-object py" id="jsify.jsify.Dict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">Dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Dict" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a></p>
+<p>A JSON-like dictionary object that extends Object and provides dictionary-specific methods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -162,22 +162,22 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.jsify.JsonIterator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">JsonIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonIterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonIterator" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.Iterator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">Iterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Iterator" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></p>
 <p>An iterator for JSON-like objects that supports conversion to and from JSON.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>json_object</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a>) – The JSON object to iterate over.</p>
+<dd class="field-odd"><p><strong>json_object</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a>) – The JSON object to iterate over.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">JsonList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonObject</span></code></a></p>
-<p>A JSON-like list object that extends JsonObject and provides list-specific methods.</p>
+<dt class="sig sig-object py" id="jsify.jsify.List">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">List</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a></p>
+<p>A JSON-like list object that extends Object and provides list-specific methods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -187,8 +187,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.append">
-<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.append" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.append" title="Link to this definition"></a></dt>
 <dd><p>Append an object to the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -198,14 +198,14 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.clear">
-<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.clear" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.clear" title="Link to this definition"></a></dt>
 <dd><p>Clear all elements from the list.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.copy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.copy" title="Link to this definition"></a></dt>
 <dd><p>Create a shallow or deep copy of the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -215,14 +215,14 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 <dd class="field-even"><p>A copy of the list.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonList" title="jsify.jsify.JsonList">JsonList</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.List" title="jsify.jsify.List">List</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.count" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.count" title="Link to this definition"></a></dt>
 <dd><p>Return the number of occurrences of a value in the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -238,8 +238,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.extend">
-<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.extend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.extend" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.extend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.extend" title="Link to this definition"></a></dt>
 <dd><p>Extend the list by appending elements from the iterable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -249,8 +249,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.index">
-<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.index" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.index" title="Link to this definition"></a></dt>
 <dd><p>Return the first index of a value in the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -269,8 +269,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.insert">
-<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.insert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.insert" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.insert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.insert" title="Link to this definition"></a></dt>
 <dd><p>Insert an object at a specified index in the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -283,8 +283,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.pop">
-<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.pop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.pop" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.pop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.pop" title="Link to this definition"></a></dt>
 <dd><p>Remove and return the item at the specified index in the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -300,8 +300,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.remove">
-<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.remove" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.remove" title="Link to this definition"></a></dt>
 <dd><p>Remove the first occurrence of a value from the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -311,8 +311,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.reverse">
-<span class="sig-name descname"><span class="pre">reverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.reverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.reverse" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.reverse">
+<span class="sig-name descname"><span class="pre">reverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.reverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.reverse" title="Link to this definition"></a></dt>
 <dd><p>Reverse the elements of the list in place.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -325,8 +325,8 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonList.sort">
-<span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonList.sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonList.sort" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.List.sort">
+<span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#List.sort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.List.sort" title="Link to this definition"></a></dt>
 <dd><p>Sort the elements of the list in place.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -341,22 +341,22 @@ into their JSON-like counterparts, and <cite>unjsify</cite> for reversing this t
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.jsify.JsonObject">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">JsonObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonObject" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.Object">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">Object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Object" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>The <cite>JsonObject</cite> class is designed to provide convenient access to object properties using dot notation instead of
+<p>The <cite>Object</cite> class is designed to provide convenient access to object properties using dot notation instead of
 square brackets, enhancing code readability and ease of use. It acts as a wrapper around original objects,
 preserving their data without duplication or alteration. This wrapper supports nested access to properties,
-allowing deeper navigation into the original data using dot notation. Essentially, <cite>JsonObject</cite> facilitates
+allowing deeper navigation into the original data using dot notation. Essentially, <cite>Object</cite> facilitates
 intuitive and simplified interaction with JSON-like objects, while maintaining the integrity and structure of the
 original data.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="jsify.jsify.JsonTuple">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">JsonTuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonTuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonTuple" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonObject</span></code></a></p>
-<p>A JSON-like tuple object that extends JsonObject and provides tuple-specific methods.</p>
+<dt class="sig sig-object py" id="jsify.jsify.Tuple">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">Tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Tuple" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">Object</span></code></a></p>
+<p>A JSON-like tuple object that extends Object and provides tuple-specific methods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -366,8 +366,8 @@ original data.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonTuple.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonTuple.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonTuple.copy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.Tuple.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Tuple.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Tuple.copy" title="Link to this definition"></a></dt>
 <dd><p>Create a shallow or deep copy of the tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -377,14 +377,14 @@ original data.</p>
 <dd class="field-even"><p>A copy of the tuple.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonTuple" title="jsify.jsify.JsonTuple">JsonTuple</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Tuple" title="jsify.jsify.Tuple">Tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonTuple.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonTuple.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonTuple.count" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.Tuple.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Tuple.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Tuple.count" title="Link to this definition"></a></dt>
 <dd><p>Return the number of occurrences of value in the tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -400,8 +400,8 @@ original data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="jsify.jsify.JsonTuple.index">
-<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#JsonTuple.index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.JsonTuple.index" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.Tuple.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#Tuple.index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.Tuple.index" title="Link to this definition"></a></dt>
 <dd><p>Return the first index of value in the tuple.</p>
 <p>Raises ValueError if the value is not present.</p>
 <dl class="field-list simple">
@@ -431,13 +431,13 @@ original data.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.jsify.deep_unjsify">
 <span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">deep_unjsify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#deep_unjsify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.deep_unjsify" title="Link to this definition"></a></dt>
-<dd><p>Convert a JsonObject to its original representation, performing a deep conversion.</p>
+<dd><p>Convert a Object to its original representation, performing a deep conversion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to convert.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to convert.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The original object if obj is a JsonObject, otherwise returns obj.</p>
+<dd class="field-even"><p>The original object if obj is a Object, otherwise returns obj.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Any</p>
@@ -448,7 +448,7 @@ original data.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.jsify.jsify">
 <span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsify" title="Link to this definition"></a></dt>
-<dd><p>Convert a dictionary, list, or tuple to its corresponding JsonObject.</p>
+<dd><p>Convert a dictionary, list, or tuple to its corresponding Object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -457,22 +457,22 @@ original data.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The converted JsonObject.</p>
+<dd class="field-even"><p>The converted Object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject">JsonObject</a>, <a class="reference internal" href="#jsify.jsify.JsonDict" title="jsify.jsify.JsonDict">JsonDict</a>, <a class="reference internal" href="#jsify.jsify.JsonList" title="jsify.jsify.JsonList">JsonList</a>, or <a class="reference internal" href="#jsify.jsify.JsonTuple" title="jsify.jsify.JsonTuple">JsonTuple</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object">Object</a>, <a class="reference internal" href="#jsify.jsify.Dict" title="jsify.jsify.Dict">Dict</a>, <a class="reference internal" href="#jsify.jsify.List" title="jsify.jsify.List">List</a>, or <a class="reference internal" href="#jsify.jsify.Tuple" title="jsify.jsify.Tuple">Tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_copy">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_copy" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_copy">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_copy" title="Link to this definition"></a></dt>
 <dd><p>Create a shallow or deep copy of the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to copy.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to copy.</p></li>
 <li><p><strong>deep</strong> (<em>bool</em>) – True if the object should be deep copied, False otherwise.</p></li>
 </ul>
 </dd>
@@ -480,19 +480,19 @@ original data.</p>
 <dd class="field-even"><p>A copy of the object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject">JsonObject</a> or Any</p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object">Object</a> or Any</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_get">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_get" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_get">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_get" title="Link to this definition"></a></dt>
 <dd><p>Get an item from the object, returning a default value if the item does not exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to get the item from.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to get the item from.</p></li>
 <li><p><strong>item</strong> (<em>Any</em>) – The item to get.</p></li>
 <li><p><strong>args</strong> – Additional arguments.</p></li>
 <li><p><strong>kwargs</strong> – Additional keyword arguments.</p></li>
@@ -502,53 +502,53 @@ original data.</p>
 <dd class="field-even"><p>The value of the item.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject">JsonObject</a> or Any</p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object">Object</a> or Any</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_items">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_items" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_items">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_items" title="Link to this definition"></a></dt>
 <dd><p>Return a new view of the dictionary’s items (key, value pairs).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.JsonList" title="jsify.jsify.JsonList"><em>JsonList</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.JsonTuple" title="jsify.jsify.JsonTuple"><em>JsonTuple</em></a><em> or </em><em>Any</em>) – The object to get the items from.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.List" title="jsify.jsify.List"><em>List</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.Tuple" title="jsify.jsify.Tuple"><em>Tuple</em></a><em> or </em><em>Any</em>) – The object to get the items from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A view object displaying a list of the objects’s items (in case of list or tuple these would be values with
 keys being their indexes in string format).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonIterator" title="jsify.jsify.JsonIterator">JsonIterator</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Iterator" title="jsify.jsify.Iterator">Iterator</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_keys">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_keys" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_keys">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_keys" title="Link to this definition"></a></dt>
 <dd><p>Return a new view of the dictionary’s keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.JsonList" title="jsify.jsify.JsonList"><em>JsonList</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.JsonTuple" title="jsify.jsify.JsonTuple"><em>JsonTuple</em></a><em> or </em><em>Any</em>) – The object to get the keys from.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.List" title="jsify.jsify.List"><em>List</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.Tuple" title="jsify.jsify.Tuple"><em>Tuple</em></a><em> or </em><em>Any</em>) – The object to get the keys from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A view object displaying a list of the object’s keys (in case of list or tuple these would be the indexes</p>
 </dd>
 </dl>
 <p>in string format).
-:rtype: JsonIterator</p>
+:rtype: Iterator</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_pop">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_pop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_pop" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_pop">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_pop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_pop" title="Link to this definition"></a></dt>
 <dd><p>Remove the specified item from the object and return its value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to pop the item from.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to pop the item from.</p></li>
 <li><p><strong>item</strong> (<em>Any</em>) – The item to pop.</p></li>
 <li><p><strong>args</strong> – Additional arguments.</p></li>
 <li><p><strong>kwargs</strong> – Additional keyword arguments.</p></li>
@@ -558,19 +558,19 @@ keys being their indexes in string format).</p>
 <dd class="field-even"><p>The value of the popped item.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject">JsonObject</a> or Any</p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object">Object</a> or Any</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_popitem">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_popitem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_popitem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_popitem" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_popitem">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_popitem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_popitem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_popitem" title="Link to this definition"></a></dt>
 <dd><p>Remove and return a (key, value) pair from the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to pop the item from.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to pop the item from.</p></li>
 <li><p><strong>args</strong> – Additional arguments.</p></li>
 <li><p><strong>kwargs</strong> – Additional keyword arguments.</p></li>
 </ul>
@@ -585,13 +585,13 @@ keys being their indexes in string format).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_setdefault">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_setdefault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_setdefault" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_setdefault">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_setdefault"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_setdefault" title="Link to this definition"></a></dt>
 <dd><p>Insert a key with a default value if the key is not in the dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to set the default value in.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to set the default value in.</p></li>
 <li><p><strong>value</strong> (<em>Any</em>) – The key to set the default value for.</p></li>
 <li><p><strong>default</strong> (<em>Any</em>) – The default value to set.</p></li>
 <li><p><strong>args</strong> – Additional arguments.</p></li>
@@ -602,19 +602,19 @@ keys being their indexes in string format).</p>
 <dd class="field-even"><p>The value of the key.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject">JsonObject</a> or Any</p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object">Object</a> or Any</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_update">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_update" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_update">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_update" title="Link to this definition"></a></dt>
 <dd><p>Update the dictionary with the key-value pairs from another dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to update.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to update.</p></li>
 <li><p><strong>value</strong> (<em>dict</em>) – The dictionary to update from.</p></li>
 <li><p><strong>args</strong> – Additional arguments.</p></li>
 <li><p><strong>kwargs</strong> – Additional keyword arguments.</p></li>
@@ -624,24 +624,24 @@ keys being their indexes in string format).</p>
 <dd class="field-even"><p>The updated object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject">JsonObject</a> or Any</p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object">Object</a> or Any</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jsify.jsify.json_values">
-<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">json_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#json_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.json_values" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="jsify.jsify.jsified_values">
+<span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">jsified_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#jsified_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.jsified_values" title="Link to this definition"></a></dt>
 <dd><p>Return a new view of the dictionary’s values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to get the values from.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to get the values from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A view object displaying a list of the dictionary’s values.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.JsonIterator" title="jsify.jsify.JsonIterator">JsonIterator</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Iterator" title="jsify.jsify.Iterator">Iterator</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -653,7 +653,7 @@ keys being their indexes in string format).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The JSON object to check.</p></li>
+<li><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The JSON object to check.</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – The sequence of properties to check.</p></li>
 </ul>
 </dd>
@@ -669,13 +669,13 @@ keys being their indexes in string format).</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.jsify.unjsify">
 <span class="sig-prename descclassname"><span class="pre">jsify.jsify.</span></span><span class="sig-name descname"><span class="pre">unjsify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/jsify.html#unjsify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.jsify.unjsify" title="Link to this definition"></a></dt>
-<dd><p>Convert a JsonObject to its original representation.</p>
+<dd><p>Convert a Object to its original representation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.JsonObject" title="jsify.jsify.JsonObject"><em>JsonObject</em></a><em> or </em><em>Any</em>) – The object to convert.</p>
+<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em> or </em><em>Any</em>) – The object to convert.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The original object if obj is a JsonObject, otherwise returns obj.</p>
+<dd class="field-even"><p>The original object if obj is a Object, otherwise returns obj.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Any</p>

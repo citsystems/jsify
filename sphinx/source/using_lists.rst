@@ -3,11 +3,11 @@
 Using Jsified Lists
 ===================
 
-In the Jsify library, lists can be converted into `JsonList` instances, which are enhanced versions of standard Python lists with JSON-like behavior. These jsified lists allow for more intuitive manipulation of list data, including attribute-style access to elements, dynamic nesting, and integration with the broader `JsonObject` ecosystem.
+In the Jsify library, lists can be converted into `List` instances, which are enhanced versions of standard Python lists with JSON-like behavior. These jsified lists allow for more intuitive manipulation of list data, including attribute-style access to elements, dynamic nesting, and integration with the broader `Object` ecosystem.
 
 **Creating and Using Jsified Lists:**
 
-To create a jsified list, you can use the `jsify` function, which converts a standard Python list into a `JsonList`. This allows you to interact with list elements using JSON-like methods, while still preserving the familiar list operations.
+To create a jsified list, you can use the `jsify` function, which converts a standard Python list into a `List`. This allows you to interact with list elements using JSON-like methods, while still preserving the familiar list operations.
 
 **Example:**
 
@@ -39,7 +39,7 @@ To create a jsified list, you can use the `jsify` function, which converts a sta
 
 **Manipulating Jsified Lists:**
 
-Jsified lists behave similarly to regular Python lists, with the added benefit of JSON-like access to their elements. You can still perform standard list operations like appending, inserting, or removing elements, while also taking advantage of the dynamic behavior offered by `JsonObject`.
+Jsified lists behave similarly to regular Python lists, with the added benefit of JSON-like access to their elements. You can still perform standard list operations like appending, inserting, or removing elements, while also taking advantage of the dynamic behavior offered by `Object`.
 
 **Example:**
 
@@ -116,15 +116,15 @@ Jsified lists retain all the native Python list methods, such as `append`, `remo
     json_list.insert(1, {'name': 'Eve', 'age': 28})
     print(json_list[1].name)  # Outputs: Eve
 
-**Using `json_keys` with Jsified Lists:**
+**Using `jsified_keys` with Jsified Lists:**
 
-The `json_keys` function can be used with `JsonList` to retrieve the indices of the list elements as keys, represented in string format.
+The `jsified_keys` function can be used with `List` to retrieve the indices of the list elements as keys, represented in string format.
 
 **Example:**
 
 .. code-block:: python
 
-    from jsify import json_keys
+    from jsify import jsified_keys
 
     json_list = jsify([
         {'name': 'Alice', 'details': {'city': 'Wonderland', 'age': 30}},
@@ -133,23 +133,23 @@ The `json_keys` function can be used with `JsonList` to retrieve the indices of 
     ])
 
     # Get a view of the indices as keys
-    keys_view = json_keys(json_list)
+    keys_view = jsified_keys(json_list)
     for key in keys_view:
         print(key)
     # Outputs: '0', '1', '2'
 
-**Using `json_items` with Jsified Lists:**
+**Using `jsified_items` with Jsified Lists:**
 
-The `json_items` function allows you to retrieve the elements of a `JsonList` as key-value pairs, where the keys are the indices of the elements in string format.
+The `jsified_items` function allows you to retrieve the elements of a `List` as key-value pairs, where the keys are the indices of the elements in string format.
 
 **Example:**
 
 .. code-block:: python
 
-    from jsify import json_items
+    from jsify import jsified_items
 
     # Get a view of the items with indices as keys
-    items_view = json_items(json_list)
+    items_view = jsified_items(json_list)
     for key, value in items_view:
         print(f"{key}: {value.name}, {value.details.age}")
     # Outputs:
@@ -157,4 +157,4 @@ The `json_items` function allows you to retrieve the elements of a `JsonList` as
     # 1: Bob, 25
     # 2: Charlie, 35
 
-By using jsified lists, you gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's list operations. This makes `JsonList` an excellent choice for working with complex and nested list data in a more intuitive and accessible way.
+By using jsified lists, you gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's list operations. This makes `List` an excellent choice for working with complex and nested list data in a more intuitive and accessible way.

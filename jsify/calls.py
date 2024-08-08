@@ -1,23 +1,23 @@
 """
 The `calls` module provides a decorator that facilitates the handling of JSON-like data structures within Python
 functions. This module is particularly useful for developers working with data in the form of dictionaries, lists,
-and tuples, as it simplifies the conversion of these data structures into `JsonObject` instances, enabling
+and tuples, as it simplifies the conversion of these data structures into `Object` instances, enabling
 attribute-style access and other JSON-like behaviors.
 At the heart of this module is the `jsified_function` decorator, which automatically converts function arguments into
-`JsonObject` instances. Additionally, the decorator offers options to process the function's return value, allowing it
+`Object` instances. Additionally, the decorator offers options to process the function's return value, allowing it
 to be returned in its original form or as a deeply unjsified structure, depending on the specified flags.
 """
 
-from .jsify import unjsify, JsonObject, deep_unjsify
+from .jsify import unjsify, Object, deep_unjsify
 from .stringcase import json_camel_to_snake
 
 
 def jsified_function(*args, result_original=False, result_deep_original=False):
     """
-    A decorator to convert function arguments to `JsonObject` and process the results accordingly.
+    A decorator to convert function arguments to `Object` and process the results accordingly.
 
     This decorator can be applied to a function to ensure that its arguments are automatically
-    converted to `JsonObject` instances if they are of types `dict`, `list`, or `tuple`. It also
+    converted to `Object` instances if they are of types `dict`, `list`, or `tuple`. It also
     processes the function's result based on the provided flags.
 
     Parameters
@@ -32,19 +32,19 @@ def jsified_function(*args, result_original=False, result_deep_original=False):
     Returns
     -------
     function
-        The decorated function with arguments converted to `JsonObject` and results processed based on the flags.
+        The decorated function with arguments converted to `Object` and results processed based on the flags.
     """
     def create_decorator():
         def decorator(function):
             def wrapper(*wrapper_args, **kwargs):
                 def conditional_json_object(o):
-                    return JsonObject(o) if isinstance(o, (dict, list, tuple)) else o
+                    return Object(o) if isinstance(o, (dict, list, tuple)) else o
                 json_args = list(map(lambda a: conditional_json_object(a), wrapper_args))
                 json_kwargs = dict(map(lambda item: (item[0], conditional_json_object(item[1])), kwargs.items()))
                 result = function(*json_args, **json_kwargs)
                 return deep_unjsify(result) if result_deep_original \
                     else unjsify(result) if result_original \
-                    else JsonObject(result)
+                    else Object(result)
             return wrapper
         return decorator
     if len(args):

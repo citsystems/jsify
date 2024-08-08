@@ -50,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../using_tuples.html">Using Jsified Tuples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>JsonObject</cite> Instances with JSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_assertions.html">Using Assertions in Jsify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
@@ -90,11 +90,11 @@
 <span class="sd">need to validate the presence or absence of specific keys, as well as the correctness of values within nested JSON</span>
 <span class="sd">structures.</span>
 <span class="sd">At the heart of this module is the `JsonAssert` class, which offers a range of assertion methods designed to work with</span>
-<span class="sd">instances of `JsonObject`. These assertions enable you to verify that certain keys are either present or absent within</span>
+<span class="sd">instances of `Object`. These assertions enable you to verify that certain keys are either present or absent within</span>
 <span class="sd">a JSON object and that the values associated with those keys are as expected.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">.jsify</span> <span class="kn">import</span> <span class="n">JsonObject</span>
+<span class="kn">from</span> <span class="nn">.jsify</span> <span class="kn">import</span> <span class="n">Object</span>
 
 
 <div class="viewcode-block" id="JsonAssert">
@@ -118,7 +118,7 @@
 <span class="sd">            Perform an assertion on a JSON object.</span>
 
 <span class="sd">            :param json_object: The JSON object to perform the assertion on.</span>
-<span class="sd">            :type json_object: JsonObject</span>
+<span class="sd">            :type json_object: Object</span>
 <span class="sd">            :param key: The key to check in the JSON object.</span>
 <span class="sd">            :type key: str or int</span>
 <span class="sd">            :param path: The current path in the JSON object.</span>
@@ -148,7 +148,7 @@
 <span class="sd">            Assert that a key is not in the JSON object.</span>
 
 <span class="sd">            :param json_object: The JSON object to perform the assertion on.</span>
-<span class="sd">            :type json_object: JsonObject</span>
+<span class="sd">            :type json_object: Object</span>
 <span class="sd">            :param key: The key to check in the JSON object.</span>
 <span class="sd">            :type key: str</span>
 <span class="sd">            :param path: The current path in the JSON object.</span>
@@ -182,7 +182,7 @@
 <span class="sd">            Assert that a key is in the JSON object.</span>
 
 <span class="sd">            :param json_object: The JSON object to perform the assertion on.</span>
-<span class="sd">            :type json_object: JsonObject</span>
+<span class="sd">            :type json_object: Object</span>
 <span class="sd">            :param key: The key to check in the JSON object.</span>
 <span class="sd">            :type key: str</span>
 <span class="sd">            :param path: The current path in the JSON object.</span>
@@ -204,7 +204,7 @@
 <span class="sd">        Assert that the values in a JSON object match the expected values.</span>
 
 <span class="sd">        :param json_object: The JSON object to check.</span>
-<span class="sd">        :type json_object: JsonObject</span>
+<span class="sd">        :type json_object: Object</span>
 <span class="sd">        :param values: The expected values to match against the JSON object.</span>
 <span class="sd">        :type values: dict or list</span>
 <span class="sd">        :param path: The current path in the JSON object (used for error messages).</span>
@@ -224,7 +224,7 @@
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">json_object</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2"> not in JTO object.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
                 <span class="n">jto_attribute_value</span> <span class="o">=</span> <span class="n">json_object</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">jto_attribute_value</span><span class="p">,</span> <span class="n">JsonObject</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">jto_attribute_value</span><span class="p">,</span> <span class="n">Object</span><span class="p">):</span>
                     <span class="n">JsonAssert</span><span class="o">.</span><span class="n">values_equal</span><span class="p">(</span>
                         <span class="n">jto_attribute_value</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
                     <span class="p">)</span>

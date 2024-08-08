@@ -2,16 +2,16 @@ import pickle
 from unittest import TestCase
 
 from jsify.calls import jsified_function, camelized_function
-from jsify.jsify import JsonDict, jsify, json_copy, json_get, json_pop, json_popitem, json_setdefault, json_update, \
-    json_values, json_keys, json_items, unjsify, JsonIterator, properties_exist, PropertiesExistResult
-from jsify.jsify import JsonObject
+from jsify.jsify import Dict, jsify, jsified_copy, jsified_get, jsified_pop, jsified_popitem, jsified_setdefault, jsified_update, \
+    jsified_values, jsified_keys, jsified_items, unjsify, Iterator, properties_exist, PropertiesExistResult
+from jsify.jsify import Object
 
 from jsify.encoder import dumps
 
 from jsify.undefined import Undefined
 
 
-class TestJsonObject(TestCase):
+class TestObject(TestCase):
     test_dict = dict(a=1, b=dict(a=1, b=2, c=3), c=3)
     test_merge = dict(d=1, e=dict(a=1, b=2, c=3), f=3)
     test_list = [1, 2, 3, 4, 5, 6, 7, test_dict, test_merge]
@@ -30,12 +30,12 @@ class TestJsonObject(TestCase):
 
     def test_create_from_dict(self):
         json_object = jsify(self.test_dict)
-        self.assertIsInstance(json_object, JsonDict)
+        self.assertIsInstance(json_object, Dict)
         self.assertDictEqual(unjsify(json_object), self.test_dict)
 
     def test_create_from_dict_with_merge(self):
         json_object = jsify(self.test_dict, **self.test_merge)
-        self.assertIsInstance(json_object, JsonDict)
+        self.assertIsInstance(json_object, Dict)
         self.assertDictEqual(unjsify(json_object), self.test_dict | self.test_merge)
 
     def test_create_from_list(self):
@@ -46,32 +46,32 @@ class TestJsonObject(TestCase):
 
     def test_get_from_dict(self):
         json_object = jsify(self.test_types_dict)
-        self.assertNotIsInstance(json_object.literal, JsonObject)
+        self.assertNotIsInstance(json_object.literal, Object)
         self.assertEqual(json_object.literal, self.test_literal)
-        self.assertIsInstance(json_object.dict, JsonObject)
+        self.assertIsInstance(json_object.dict, Object)
         self.assertDictEqual(unjsify(json_object.dict), self.test_dict)
-        self.assertIsInstance(json_object.list, JsonObject)
+        self.assertIsInstance(json_object.list, Object)
         self.assertListEqual(unjsify(json_object.list), self.test_list)
-        self.assertIsInstance(json_object.tuple, JsonObject)
+        self.assertIsInstance(json_object.tuple, Object)
         self.assertTupleEqual(unjsify(json_object.tuple), self.test_tuple)
 
-        self.assertNotIsInstance(json_object['literal'], JsonObject)
+        self.assertNotIsInstance(json_object['literal'], Object)
         self.assertEqual(json_object['literal'], self.test_literal)
-        self.assertIsInstance(json_object['dict'], JsonObject)
+        self.assertIsInstance(json_object['dict'], Object)
         self.assertDictEqual(unjsify(json_object['dict']), self.test_dict)
-        self.assertIsInstance(json_object['list'], JsonObject)
+        self.assertIsInstance(json_object['list'], Object)
         self.assertListEqual(unjsify(json_object['list']), self.test_list)
-        self.assertIsInstance(json_object['tuple'], JsonObject)
+        self.assertIsInstance(json_object['tuple'], Object)
         self.assertTupleEqual(unjsify(json_object['tuple']), self.test_tuple)
 
     def macro_test_get_from_list_or_tuple(self, json_object):
-        self.assertIsInstance(json_object[0], JsonObject)
+        self.assertIsInstance(json_object[0], Object)
         self.assertListEqual(unjsify(json_object[0]), self.test_list)
-        self.assertIsInstance(json_object[1], JsonObject)
+        self.assertIsInstance(json_object[1], Object)
         self.assertDictEqual(unjsify(json_object[1]), self.test_dict)
-        self.assertIsInstance(json_object[2], JsonObject)
+        self.assertIsInstance(json_object[2], Object)
         self.assertTupleEqual(unjsify(json_object[2]), self.test_tuple)
-        self.assertNotIsInstance(json_object[3], JsonObject)
+        self.assertNotIsInstance(json_object[3], Object)
         self.assertEqual(json_object[3], self.test_literal)
 
     def test_get_from_list(self):
@@ -91,7 +91,7 @@ class TestJsonObject(TestCase):
 
         additional_json_object = jsify(self.test_dict)
         json_object.additional_json = additional_json_object
-        self.assertNotIsInstance(unjsify(json_object.additional_json), JsonObject)
+        self.assertNotIsInstance(unjsify(json_object.additional_json), Object)
 
         json_object = jsify(self.test_dict.copy())
         json_object['new_literal'] = self.test_literal
@@ -103,7 +103,7 @@ class TestJsonObject(TestCase):
 
         additional_json_object = jsify(self.test_dict)
         json_object['additional_json'] = additional_json_object
-        self.assertNotIsInstance(unjsify(json_object['additional_json']), JsonObject)
+        self.assertNotIsInstance(unjsify(json_object['additional_json']), Object)
 
     def test_create_elements_in_list(self):
         json_object = jsify(self.test_list.copy())
@@ -116,7 +116,7 @@ class TestJsonObject(TestCase):
 
         additional_json_object = jsify(self.test_dict)
         json_object.append(additional_json_object)
-        self.assertNotIsInstance(unjsify(json_object[-1]), JsonObject)
+        self.assertNotIsInstance(unjsify(json_object[-1]), Object)
 
     def test_vars(self):
         class MyClass:
@@ -137,14 +137,14 @@ class TestJsonObject(TestCase):
 
     def test_contains(self):
         json_object = jsify(self.test_dict)
-        self.assertIn(list(json_keys(self.test_dict))[0], json_object)
-        self.assertIn(list(json_keys(self.test_dict))[0], json_keys(json_object))
-        self.assertIn(list(json_values(self.test_dict))[0], json_values(json_object))
-        self.assertIn(list(json_items(self.test_dict))[0], json_items(json_object))
+        self.assertIn(list(jsified_keys(self.test_dict))[0], json_object)
+        self.assertIn(list(jsified_keys(self.test_dict))[0], jsified_keys(json_object))
+        self.assertIn(list(jsified_values(self.test_dict))[0], jsified_values(json_object))
+        self.assertIn(list(jsified_items(self.test_dict))[0], jsified_items(json_object))
         self.assertNotIn('key_which_doesnt_exist', json_object)
-        self.assertNotIn('key_which_doesnt_exist', json_keys(json_object))
-        self.assertNotIn('key_which_doesnt_exist', json_values(json_object))
-        self.assertNotIn('key_which_doesnt_exist', json_items(json_object))
+        self.assertNotIn('key_which_doesnt_exist', jsified_keys(json_object))
+        self.assertNotIn('key_which_doesnt_exist', jsified_values(json_object))
+        self.assertNotIn('key_which_doesnt_exist', jsified_items(json_object))
         json_object = jsify(self.test_list)
         self.assertIn(0, json_object)
         self.assertIn('0', json_object)
@@ -165,7 +165,7 @@ class TestJsonObject(TestCase):
         self.assertEqual(unjsify(json_object.copy()), unjsify(json_object))
 
         json_object = jsify(self.test_dict)
-        json_object_copy = json_copy(json_object, deep=True)
+        json_object_copy = jsified_copy(json_object, deep=True)
         self.assertEqual(unjsify(json_object_copy), unjsify(json_object))
         b = json_object_copy.a
         json_object_copy.a = None
@@ -200,7 +200,7 @@ class TestJsonObject(TestCase):
         test_list.reverse()
         self.assertEqual(unjsify(json_object), test_list)
         for value in list(iter(json_object)):
-            if isinstance(value, JsonDict):
+            if isinstance(value, Dict):
                 json_object.remove(value)
                 test_list.remove(value)
         json_object.sort()
@@ -212,23 +212,23 @@ class TestJsonObject(TestCase):
 
     def test_dict_functions(self):
         test_dict = self.test_dict.copy()
-        json_object = json_copy(jsify(test_dict))
-        self.assertEqual(json_get(json_object, 'a'), test_dict.get('a'))
-        self.assertListEqual(list(json_items(json_object)), list(test_dict.items()))
-        self.assertListEqual(list(json_keys(json_object)), list(test_dict.keys()))
-        self.assertListEqual(list(json_values(json_object)), list(test_dict.values()))
-        json_pop(json_object, 'a')
+        json_object = jsified_copy(jsify(test_dict))
+        self.assertEqual(jsified_get(json_object, 'a'), test_dict.get('a'))
+        self.assertListEqual(list(jsified_items(json_object)), list(test_dict.items()))
+        self.assertListEqual(list(jsified_keys(json_object)), list(test_dict.keys()))
+        self.assertListEqual(list(jsified_values(json_object)), list(test_dict.values()))
+        jsified_pop(json_object, 'a')
         test_dict.pop('a')
         self.assertEqual(jsify(json_object), test_dict)
-        json_popitem(json_object)
+        jsified_popitem(json_object)
         test_dict.popitem()
         self.assertEqual(jsify(json_object), test_dict)
-        json_setdefault(json_object, 'c', 8)
-        json_setdefault(json_object, 'd', 8)
+        jsified_setdefault(json_object, 'c', 8)
+        jsified_setdefault(json_object, 'd', 8)
         test_dict.setdefault('c', 8)
         test_dict.setdefault('d', 8)
         self.assertEqual(jsify(json_object), test_dict)
-        json_update(json_object, dict(z=1, n=2, m=3), u=7)
+        jsified_update(json_object, dict(z=1, n=2, m=3), u=7)
         test_dict.update(dict(z=1, n=2, m=3), u=7)
         self.assertEqual(jsify(json_object), test_dict)
 
@@ -246,13 +246,13 @@ class TestJsonObject(TestCase):
 
     def test_keys_values_items(self):
         json_object = jsify(self.test_dict)
-        keys = json_keys(json_object)
+        keys = jsified_keys(json_object)
         self.assertEqual(list(keys), list(self.test_dict.keys()))
         self.assertEqual(list(jsify(self.test_dict.keys())), list(self.test_dict.keys()))
-        values = json_values(json_object)
+        values = jsified_values(json_object)
         self.assertEqual(list(values), list(self.test_dict.values()))
         self.assertEqual(list(jsify(self.test_dict.values())), list(self.test_dict.values()))
-        items = json_items(json_object)
+        items = jsified_items(json_object)
         self.assertEqual(list(items), list(self.test_dict.items()))
         self.assertEqual(list(jsify(self.test_dict.items())), list(self.test_dict.items()))
 
@@ -279,34 +279,34 @@ class TestJsonObject(TestCase):
         self.assertEqual(json_object.not_defined_property, Undefined)
         self.assertEqual(json_object.not_defined_property.fghjj.dsffsd['42'], Undefined)
 
-    def test_dict_call(self):
+    def test_dict_defaults(self):
         json_object = jsify(self.test_dict)
-        json_object('unexisting', dict, dict(a=1, b=2)).c = 3
+        json_object['unexisting': lambda : dict(a=1, b=2)].c = 3
         self.assertTrue(json_object.unexisting.a == 1)
         self.assertTrue(json_object.unexisting.b == 2)
         self.assertTrue(json_object.unexisting.c == 3)
-        json_object('unexisting', dict, dict(a=3, b=4)).c = 5
+        json_object['unexisting': lambda : dict(a=3, b=4)].c = 5
         self.assertTrue(json_object.unexisting.a == 1)
         self.assertTrue(json_object.unexisting.b == 2)
         self.assertTrue(json_object.unexisting.c == 5)
 
     def test_iterator(self):
-        dict_iterator = JsonIterator(self.test_dict)
+        dict_iterator = Iterator(self.test_dict)
         for json_key, native_key in zip(dict_iterator, self.test_dict.keys()):
             self.assertEqual(json_key, native_key)
-        list_iterator = JsonIterator(self.test_list)
+        list_iterator = Iterator(self.test_list)
         for json_value, native_value in zip(list_iterator, self.test_list):
             self.assertEqual(json_value, native_value)
-        tuple_iterator = JsonIterator(self.test_tuple)
+        tuple_iterator = Iterator(self.test_tuple)
         for json_value, native_value in zip(tuple_iterator, self.test_tuple):
             self.assertEqual(json_value, native_value)
-        dict_iterator = JsonIterator(jsify(self.test_dict))
+        dict_iterator = Iterator(jsify(self.test_dict))
         for json_key, native_key in zip(dict_iterator, self.test_dict.keys()):
             self.assertEqual(json_key, native_key)
-        list_iterator = JsonIterator(jsify(self.test_list))
+        list_iterator = Iterator(jsify(self.test_list))
         for json_value, native_value in zip(list_iterator, self.test_list):
             self.assertEqual(json_value, native_value)
-        tuple_iterator = JsonIterator(jsify(self.test_tuple))
+        tuple_iterator = Iterator(jsify(self.test_tuple))
         for json_value, native_value in zip(tuple_iterator, self.test_tuple):
             self.assertEqual(json_value, native_value)
 
@@ -328,8 +328,8 @@ class TestJsonObject(TestCase):
                                 lastParameter=dict(value=(3, jsify([1, 2]))))
         result = test_function_original(**input_parameters)
         self.assertEqual(result, [1, 2, (3, jsify([1, 2]))])
-        self.assertNotIsInstance(result, JsonObject)
-        self.assertIsInstance(result[2][1], JsonObject)
+        self.assertNotIsInstance(result, Object)
+        self.assertIsInstance(result[2][1], Object)
 
         @jsified_function(result_deep_original=True)
         @camelized_function(replace=dict(last_parameter='last'))
@@ -340,8 +340,8 @@ class TestJsonObject(TestCase):
                                 lastParameter=dict(value=(3, jsify([1, 2]))))
         result = test_function_deep_original(**input_parameters)
         self.assertEqual(result, [1, 2, (3, [1, 2])])
-        self.assertNotIsInstance(result, JsonObject)
-        self.assertNotIsInstance(result[2][1], JsonObject)
+        self.assertNotIsInstance(result, Object)
+        self.assertNotIsInstance(result[2][1], Object)
 
         @jsified_function
         @camelized_function(replace=dict(last_parameter='last'))
@@ -352,4 +352,4 @@ class TestJsonObject(TestCase):
                                 lastParameter=dict(value=(3, jsify([1, 2]))))
         result = test_function(**input_parameters)
         self.assertEqual(result, [1, 2, (3, [1, 2])])
-        self.assertIsInstance(result, JsonObject)
+        self.assertIsInstance(result, Object)
