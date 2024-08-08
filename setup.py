@@ -6,14 +6,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="jsify",
-    version="0.9.4",  # Update the version as necessary
+    version="0.9.5",  # Update the version as necessary
     author="Zbigniew Rajewski",
     author_email="zbigniew.r@citsystems.pl",
     description="Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like "
                 "objects, offering seamless integration and manipulation of data in a JavaScript-like manner."
                 "With Jsify, you can effortlessly convert Python dictionaries, lists, and tuples into JSON-like "
-                "objects that support attribute-style access, automatic handling of undefined properties, "
-                "and easy serialization.",
+                "objects that support attribute-style access (dot notation), automatic handling of undefined "
+                "properties, and easy serialization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords="json javascript objects jsify dot attributes serialization",  # SEO keywords
