@@ -3,6 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. meta::
+   :description: Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like
+      objects, offering seamless integration and manipulation of data in a JavaScript-like manner
+      With Jsify, you can effortlessly convert Python dictionaries, lists, and tuples into JSON-like
+      objects that support attribute-style access (dot notation), automatic handling of undefined
+      properties, and easy serialization.
+   :keywords: json javascript objects jsify dot notation attributes serialization
+
+
 Welcome to jsify's documentation!
 =================================
 

@@ -1,0 +1,9 @@
+{% extends "!layout.html" %}
+{% block extrahead %}
+{% if meta %}
+    {%- for meta_item in meta -%}
+    <meta name="{{ meta_item.name }}" content="{{ meta_item.content }}" />
+    {%- endfor -%}
+{% endif %}
+{{ super() }}
+{% endblock %}
