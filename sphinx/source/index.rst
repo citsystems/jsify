@@ -22,6 +22,7 @@ The Jsify library provides a powerful suite of tools for working with JSON-like 
    :caption: Contents:
 
    intro
+   jsify_vs_simple
    installation
    downloading
    jsifying_unjsifying
