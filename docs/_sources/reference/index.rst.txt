@@ -15,6 +15,7 @@ Jsify's manual reference
    encoder
    exceptions
    jsify
+   simple
    stringcase
    undefined
 
