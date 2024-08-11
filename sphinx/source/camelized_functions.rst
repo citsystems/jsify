@@ -1,5 +1,9 @@
 .. _creating_camelized_functions:
 
+.. meta::
+   :keywords: Jsify, Python, camelCase, snake_case, camelized_function, decorator, JSON, API, key conversion
+   :description: Learn how to use the Jsify library's camelized_function decorator to create Python functions that automatically convert camelCase keys in JSON-like dictionaries to snake_case before processing them. This guide provides examples and explanations on how to integrate camelCase to snake_case conversion into your Python code.
+
 Creating Camelized Functions
 ============================
 

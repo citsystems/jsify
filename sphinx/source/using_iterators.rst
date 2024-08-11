@@ -1,5 +1,9 @@
 .. _using_iterators:
 
+.. meta::
+   :keywords: Jsify, Python, Iterator, jsified iteration, native Python objects, JSON-like objects, attribute access, iteration, data manipulation
+   :description: Discover how to use the Jsify library's Iterator class to iterate over native Python objects. This guide demonstrates how elements are automatically converted into jsified objects, allowing for property-style access and JSON-like behavior during iteration.
+
 Jsified Iteration Over Native Python Objects
 =============================================
 

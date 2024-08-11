@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jsify.encoder &mdash; jsify 0.9.0 documentation</title>
+  <title>jsify.encoder &mdash; jsify 0.9.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
 
   
+    <link rel="canonical" href="https://citsystems.github.io/jsify/_modules/jsify/encoder.html" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -45,6 +46,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../downloading.html">Downloading from GitHub</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_dictionaries.html">Using Jsified Dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_lists.html">Using Jsified Lists</a></li>
@@ -56,6 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../aiohttp.html">Creating flexible API with <cite>Jsify</cite> and <cite>aiohttp</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Jsify’s manual reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -98,6 +101,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">SimpleNamespace</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">from</span> <span class="nn">.jsify</span> <span class="kn">import</span> <span class="n">Undefined</span><span class="p">,</span> <span class="n">unjsify</span>
@@ -159,6 +163,8 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Object</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="n">__jsify_orig__</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">SimpleNamespace</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="vm">__dict__</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">o</span><span class="p">)</span></div>
 </div>
@@ -167,11 +173,13 @@
 
 <span class="n">_orig_dump</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dump</span>
 <span class="n">_orig_dumps</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span>
+<span class="n">_orig_load</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span>
+<span class="n">_orig_loads</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span>
 
 
 <div class="viewcode-block" id="dumps">
 <a class="viewcode-back" href="../../reference/encoder.html#jsify.encoder.dumps">[docs]</a>
-<span class="k">def</span> <span class="nf">dumps</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dumps</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Serialize `o` to a JSON formatted `str` using `ObjectEncoder`.</span>
 
@@ -192,13 +200,13 @@
 <span class="sd">    str</span>
 <span class="sd">        The JSON formatted string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_orig_dumps</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ObjectEncoder</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="n">omit_undefined</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_orig_dumps</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ObjectEncoder</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="n">omit_undefined</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="dump">
 <a class="viewcode-back" href="../../reference/encoder.html#jsify.encoder.dump">[docs]</a>
-<span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Serialize `o` as a JSON formatted stream to `fp` using `ObjectEncoder`.</span>
 
@@ -220,13 +228,14 @@
 <span class="sd">    -------</span>
 <span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_orig_dump</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ObjectEncoder</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="n">omit_undefined</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_orig_dump</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ObjectEncoder</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="n">omit_undefined</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
 <span class="c1"># Override the default json.dump and json.dumps with the custom implementations</span>
 <span class="n">json</span><span class="o">.</span><span class="n">dump</span> <span class="o">=</span> <span class="n">dump</span>
 <span class="n">json</span><span class="o">.</span><span class="n">dumps</span> <span class="o">=</span> <span class="n">dumps</span>
+
 
 <span class="c1"># Set the default method of JSONEncoder to handle Object instances</span>
 <span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">ObjectEncoder</span><span class="o">.</span><span class="n">default</span>

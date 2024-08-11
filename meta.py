@@ -11,7 +11,7 @@ class Setup:
         with open(module_dir + "/README.md", "r", encoding="utf-8") as fh:
             long_description = fh.read()
         self.name = "jsify"
-        self.version = "0.9.6"  # Update the version as necessary
+        self.version = "0.9.7"  # Update the version as necessary
         self.author = "Zbigniew Rajewski"
         self.author_email = "zbigniew.r@citsystems.pl"
         self.description = \

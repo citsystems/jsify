@@ -1,5 +1,9 @@
 .. _undefined_value:
 
+.. meta::
+   :keywords: Jsify, Python, Undefined value, JSON-like data, error prevention, singleton, JavaScript, data structures, optional fields, data handling
+   :description: Learn about the Undefined value in the Jsify library, which mimics JavaScript's undefined. This guide explains how to use Undefined as a placeholder for missing or optional data, its behavior in data structures, and how it helps prevent errors when accessing non-existent properties.
+
 `Undefined` Value
 ===================================
 

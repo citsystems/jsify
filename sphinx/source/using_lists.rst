@@ -1,5 +1,9 @@
 .. _using_lists:
 
+.. meta::
+   :keywords: Jsify, Python, jsified lists, List, JSON-like objects, attribute access, list operations, data manipulation, nested data, jsified_keys, jsified_items
+   :description: Learn how to use jsified lists in the Jsify library for Python. This guide covers creating jsified lists, accessing elements with attribute-style access, manipulating nested data, and using native list methods while maintaining JSON-like behavior.
+
 Using Jsified Lists
 ===================
 

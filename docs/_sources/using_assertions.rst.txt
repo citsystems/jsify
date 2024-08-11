@@ -1,5 +1,9 @@
 .. _assertions_usage:
 
+.. meta::
+   :keywords: Jsify, Python, assertions, data validation, IsIn, NotIn, values_equal, JSON-like objects, Object, data integrity, testing
+   :description: Learn how to use assertions in the Jsify library to validate the structure and content of JSON-like objects. This guide covers key methods like IsIn, NotIn, and values_equal, providing examples on how to ensure data integrity and correctness.
+
 Using Assertions in Jsify
 =========================
 

@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jsify.calls &mdash; jsify 0.9.0 documentation</title>
+  <title>jsify.calls &mdash; jsify 0.9.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
 
   
+    <link rel="canonical" href="https://citsystems.github.io/jsify/_modules/jsify/calls.html" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../../_static/documentation_options.js?v=f2328ca0"></script>
         <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -44,6 +45,8 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../downloading.html">Downloading from GitHub</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_dictionaries.html">Using Jsified Dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../using_lists.html">Using Jsified Lists</a></li>
@@ -55,6 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../camelized_functions.html">Creating Camelized Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../aiohttp.html">Creating flexible API with <cite>Jsify</cite> and <cite>aiohttp</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Jsify’s manual reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html#indices-and-tables">Indices and tables</a></li>
 </ul>
@@ -144,7 +148,7 @@
 
 <div class="viewcode-block" id="camelized_function">
 <a class="viewcode-back" href="../../reference/calls.html#jsify.calls.camelized_function">[docs]</a>
-<span class="k">def</span> <span class="nf">camelized_function</span><span class="p">(</span><span class="n">replace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">camelized_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A decorator to convert the keys of JSON-like dictionaries from camelCase to snake_case before passing them to the</span>
 <span class="sd">    function.</span>
@@ -163,7 +167,30 @@
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">json_camel_to_snake</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">wrapper</span>
-    <span class="k">return</span> <span class="n">wrapper_with_parameters</span></div>
+    <span class="k">return</span> <span class="n">wrapper_with_parameters</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">wrapper_with_parameters</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="json_function">
+<a class="viewcode-back" href="../../reference/calls.html#jsify.calls.json_function">[docs]</a>
+<span class="k">def</span> <span class="nf">json_function</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A decorator that allows a function to accept a JSON dictionary via a special `_json` keyword argument.</span>
+
+<span class="sd">    This decorator checks if the `_json` keyword argument is provided. If it is, the dictionary passed via `_json`</span>
+<span class="sd">    is unpacked and its key-value pairs are added to the function&#39;s keyword arguments before the function is called.</span>
+
+<span class="sd">    :param f: The function to be decorated.</span>
+<span class="sd">    :type f: function</span>
+<span class="sd">    :return: The decorated function.</span>
+<span class="sd">    :rtype: function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;_json&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">json_args</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;_json&quot;</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">json_args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
 
 </pre></div>
 

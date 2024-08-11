@@ -35,6 +35,7 @@ The Jsify library provides a powerful suite of tools for working with JSON-like 
    jsified_functions
    camelized_functions
    properties_exist
+   aiohttp
    reference/index
 
 Indices and tables

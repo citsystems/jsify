@@ -1,3 +1,9 @@
+.. _downloading:
+
+.. meta::
+   :keywords: Jsify, GitHub, download, source code, clone repository, Python library, manual installation
+   :description: Learn how to download and install the Jsify library directly from GitHub. This guide provides step-by-step instructions on cloning the Jsify repository and installing the package manually.
+
 Downloading from GitHub
 =======================
 

@@ -1,12 +1,13 @@
 import pickle
 from unittest import TestCase
 
-from jsify.calls import jsified_function, camelized_function
+from jsify.calls import jsified_function, camelized_function, json_function
 from jsify.jsify import Dict, jsify, jsified_copy, jsified_get, jsified_pop, jsified_popitem, jsified_setdefault, jsified_update, \
     jsified_values, jsified_keys, jsified_items, unjsify, Iterator, properties_exist, PropertiesExistResult
 from jsify.jsify import Object
 
 from jsify.encoder import dumps
+from jsify.simple import loads
 
 from jsify.undefined import Undefined
 
@@ -20,6 +21,143 @@ class TestObject(TestCase):
     test_types_dict = dict(list=test_list, dict=test_dict, tuple=test_tuple, literal=test_literal)
     test_types_list = [test_types_dict['list'], test_types_dict['dict'], test_types_dict['tuple'], test_literal]
     test_types_tuple = (test_types_dict['list'], test_types_dict['dict'], test_types_dict['tuple'], test_literal)
+    test_json_string = """{
+      "company": "Tech Innovators",
+      "location": {
+        "country": "USA",
+        "state": "California",
+        "address": {
+          "street": "123 Tech Drive",
+          "city": "Silicon Valley",
+          "zip": "94043"
+        }
+      },
+      "employees": [
+        {
+          "name": "Alice",
+          "role": "Engineer",
+          "projects": [
+            {
+              "name": "AI Development",
+              "duration": "6 months",
+              "technologies": ["Python", "TensorFlow", "Keras"]
+            },
+            {
+              "name": "Web Platform",
+              "duration": "12 months",
+              "technologies": ["JavaScript", "React", "Node.js"]
+            }
+          ]
+        },
+        {
+          "name": "Bob",
+          "role": "Designer",
+          "projects": [
+            {
+              "name": "Mobile App Design",
+              "duration": "3 months",
+              "tools": ["Sketch", "Figma"]
+            }
+          ]
+        }
+      ],
+      "departments": [
+        {
+          "name": "Engineering",
+          "head": {
+            "name": "Charlie",
+            "age": 45,
+            "experience": {
+              "years": 20,
+              "fields": ["Software Development", "AI", "Cloud Computing"]
+            }
+          },
+          "budget": 1500000,
+          "teams": [
+            {
+              "name": "Frontend",
+              "members": ["Alice", "David", "Eva"]
+            },
+            {
+              "name": "Backend",
+              "members": ["Frank", "George"]
+            }
+          ]
+        },
+        {
+          "name": "Design",
+          "head": {
+            "name": "Diana",
+            "age": 38,
+            "experience": {
+              "years": 15,
+              "fields": ["UI/UX", "Graphic Design"]
+            }
+          },
+          "budget": 800000,
+          "tools": ["Photoshop", "Illustrator", "InDesign"]
+        }
+      ],
+      "initiatives": [
+        {
+          "year": 2023,
+          "goals": [
+            "Expand market share",
+            "Develop new product line",
+            "Increase customer satisfaction"
+          ],
+          "milestones": {
+            "Q1": "Research and Planning",
+            "Q2": "Development",
+            "Q3": "Testing",
+            "Q4": "Launch"
+          }
+        },
+        {
+          "year": 2024,
+          "goals": [
+            "Global Expansion",
+            "AI Integration",
+            "Sustainability Initiatives"
+          ],
+          "milestones": {
+            "Q1": "Market Analysis",
+            "Q2": "Product Design",
+            "Q3": "Implementation",
+            "Q4": "Evaluation"
+          }
+        }
+      ],
+      "miscellaneous": {
+        "isPublicCompany": false,
+        "established": 2005,
+        "stockPrices": [
+          {
+            "year": 2021,
+            "prices": [150.25, 155.5, 160.75, 162.0]
+          },
+          {
+            "year": 2022,
+            "prices": [165.0, 170.25, 175.75, 180.5]
+          }
+        ],
+        "recentEvents": [
+          {
+            "type": "Conference",
+            "name": "Tech Summit 2023",
+            "attendees": [
+              {"name": "Alice", "role": "Speaker"},
+              {"name": "Charlie", "role": "Panelist"}
+            ]
+          },
+          {
+            "type": "Product Launch",
+            "name": "NextGen AI Platform",
+            "launchDate": "2023-09-15"
+          }
+        ]
+      }
+    }"""
 
     def test_create_from_literal(self):
         self.assertEqual(jsify(1), 1)
@@ -353,3 +491,16 @@ class TestObject(TestCase):
         result = test_function(**input_parameters)
         self.assertEqual(result, [1, 2, (3, [1, 2])])
         self.assertIsInstance(result, Object)
+
+    def test_json_function(self):
+        @json_function
+        @camelized_function
+        def test_function(first_parameter, second_parameter, last=3):
+            return first_parameter, second_parameter, last
+
+        json_parameters = dict(firstParameter=1, second_parameter=2)
+        self.assertEqual(test_function(_json=json_parameters), (1,2,3))
+
+    def test_simple_namespace_decoder(self):
+        json = loads(self.test_json_string)
+        self.assertEqual(json.location.country, "USA")

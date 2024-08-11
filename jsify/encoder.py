@@ -11,6 +11,7 @@ You must import this module if you want to use serialization done by the `json` 
 """
 
 import json
+from types import SimpleNamespace
 from typing import Any
 
 from .jsify import Undefined, unjsify
@@ -65,15 +66,19 @@ class ObjectEncoder(json.JSONEncoder):
             return None
         elif isinstance(o, Object):
             return o.__jsify_orig__
+        elif isinstance(o, SimpleNamespace):
+            return o.__dict__
         else:
             return super().default(o)
 
 
 _orig_dump = json.dump
 _orig_dumps = json.dumps
+_orig_load = json.load
+_orig_loads = json.loads
 
 
-def dumps(o, omit_undefined=True, **kwargs):
+def dumps(o, *args, omit_undefined=True, **kwargs):
     """
     Serialize `o` to a JSON formatted `str` using `ObjectEncoder`.
 
@@ -94,10 +99,10 @@ def dumps(o, omit_undefined=True, **kwargs):
     str
         The JSON formatted string.
     """
-    return _orig_dumps(o, cls=ObjectEncoder, omit_undefined=omit_undefined, **kwargs)
+    return _orig_dumps(o, *args, cls=ObjectEncoder, omit_undefined=omit_undefined, **kwargs)
 
 
-def dump(o, fp, omit_undefined=True, **kwargs):
+def dump(o, *args, omit_undefined=True, **kwargs):
     """
     Serialize `o` as a JSON formatted stream to `fp` using `ObjectEncoder`.
 
@@ -119,12 +124,13 @@ def dump(o, fp, omit_undefined=True, **kwargs):
     -------
     None
     """
-    return _orig_dump(o, fp, cls=ObjectEncoder, omit_undefined=omit_undefined, **kwargs)
+    return _orig_dump(o, *args, cls=ObjectEncoder, omit_undefined=omit_undefined, **kwargs)
 
 
 # Override the default json.dump and json.dumps with the custom implementations
 json.dump = dump
 json.dumps = dumps
+
 
 # Set the default method of JSONEncoder to handle Object instances
 json.JSONEncoder.default = ObjectEncoder.default

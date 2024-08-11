@@ -1,5 +1,9 @@
 .. _jsified_functions:
 
+.. meta::
+   :keywords: Jsify, Python, jsified_function, decorator, JSON, Object, attribute access, data processing, function arguments, result handling
+   :description: Learn how to create jsified functions using the Jsify library. This guide explains how to use the jsified_function decorator to automatically convert function arguments to Jsify Objects, allowing for attribute-style access and flexible result handling.
+
 Creating Jsified Functions
 ==========================
 

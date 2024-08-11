@@ -1,5 +1,9 @@
 .. _properties_exist_usage:
 
+.. meta::
+   :keywords: Jsify, Python, properties_exist, JSON, nested properties, data validation, Object, JSON-like data, robust code, data integrity
+   :description: Learn how to use the properties_exist function in the Jsify library to check for the existence of nested properties within JSON-like objects. This guide provides examples and usage scenarios to help you ensure the integrity and reliability of your data access patterns.
+
 Checking if Properties Path Exists
 ==================================
 

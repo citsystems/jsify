@@ -1,5 +1,9 @@
 .. _using_tuples:
 
+.. meta::
+   :keywords: Jsify, Python, jsified tuples, Tuple, JSON-like objects, attribute access, data manipulation, nested data, jsified_keys, jsified_items
+   :description: Learn how to use jsified tuples in the Jsify library for Python. This guide covers creating jsified tuples, accessing elements with attribute-style access, working with nested data, and using utility functions like jsified_keys and jsified_items.
+
 Using Jsified Tuples
 ====================
 

@@ -1,5 +1,9 @@
 .. _using_dictionaries:
 
+.. meta::
+   :keywords: Jsify, Python, dictionaries, jsified dictionaries, Dict, JSON-like objects, attribute access, data manipulation, dictionary functions, JSON-like behavior
+   :description: Learn how to use jsified dictionaries in the Jsify library. This guide explains how to convert Python dictionaries into Jsify Dict instances for attribute-style access, and details the use of standalone functions to manipulate these dictionaries while avoiding naming collisions.
+
 Using Jsified Dictionaries
 ==========================
 

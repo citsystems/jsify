@@ -1,5 +1,9 @@
 .. _jsify:
 
+.. meta::
+   :keywords: Jsify, Python, jsify, unjsify, deep_unjsify, Object, JSON, data structures, attribute access, serialization, data conversion
+   :description: Learn how to use the Jsify library to convert between standard Python data structures and JSON-like Objects. This guide covers the jsify and unjsify functions, including deep_unjsify, to facilitate flexible and dynamic data manipulation in Python.
+
 Jsifying and unjsyfing objects
 ===========================
 

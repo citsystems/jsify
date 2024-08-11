@@ -53,7 +53,7 @@ def jsified_function(*args, result_original=False, result_deep_original=False):
         return create_decorator()
 
 
-def camelized_function(replace=None):
+def camelized_function(*args, replace=None):
     """
     A decorator to convert the keys of JSON-like dictionaries from camelCase to snake_case before passing them to the
     function.
@@ -72,4 +72,24 @@ def camelized_function(replace=None):
         def wrapper(**kwargs):
             return func(**json_camel_to_snake(kwargs, replace=replace))
         return wrapper
-    return wrapper_with_parameters
+    return wrapper_with_parameters if len(args) == 0 else wrapper_with_parameters(args[0])
+
+
+def json_function(f):
+    """
+    A decorator that allows a function to accept a JSON dictionary via a special `_json` keyword argument.
+
+    This decorator checks if the `_json` keyword argument is provided. If it is, the dictionary passed via `_json`
+    is unpacked and its key-value pairs are added to the function's keyword arguments before the function is called.
+
+    :param f: The function to be decorated.
+    :type f: function
+    :return: The decorated function.
+    :rtype: function
+    """
+    def wrapper(*args, **kwargs):
+        if "_json" in kwargs:
+            json_args = kwargs.pop("_json")
+            kwargs.update(json_args)
+        return f(*args, **kwargs)
+    return wrapper

@@ -1,5 +1,9 @@
 .. _json_serialization:
 
+.. meta::
+   :keywords: Jsify, Python, JSON serialization, ObjectEncoder, jsify, unjsify, custom JSON encoder, undefined values, omit_undefined, data serialization
+   :description: Learn how to serialize Jsify Object instances and other jsified structures into JSON format using custom encoders. This guide covers the use of ObjectEncoder, handling undefined values, and controlling the serialization process with the omit_undefined feature.
+
 Serializing `Object` Instances with JSON
 ============================================
 

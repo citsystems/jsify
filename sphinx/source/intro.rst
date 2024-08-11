@@ -1,5 +1,9 @@
 .. _intro:
 
+.. meta::
+   :keywords: Jsify, Python, JSON, Object, data structures, attribute access, performance efficiency, API development, web development, data transformation
+   :description: Explore the Jsify library, which provides tools for working with JSON-like data structures in Python. Learn about the Object class, jsify and unjsify functions, decorators, and other utilities that make JSON handling more intuitive and efficient.
+
 Introduction
 =============
 

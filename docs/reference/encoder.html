@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Encoder module &mdash; jsify 0.9.0 documentation</title>
+  <title>Encoder module &mdash; jsify 0.9.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=39bb1c6d"></script>
+        <script src="../_static/documentation_options.js?v=f2328ca0"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../jsified_functions.html">Creating Jsified Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../camelized_functions.html">Creating Camelized Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../properties_exist.html">Checking if Properties Path Exists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../aiohttp.html">Creating flexible API with <cite>Jsify</cite> and <cite>aiohttp</cite></a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Jsify’s manual reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assertion.html">Assertion module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="calls.html">Calls module</a></li>
@@ -176,7 +177,7 @@ representation as available.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.encoder.dump">
-<span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.dump" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.dump" title="Link to this definition"></a></dt>
 <dd><p>Serialize <cite>o</cite> as a JSON formatted stream to <cite>fp</cite> using <cite>ObjectEncoder</cite>.</p>
 <p>This function wraps <cite>json.dump</cite>, providing custom serialization for <cite>Object</cite> instances
 and optionally omitting fields with the <cite>Undefined</cite> value.</p>
@@ -197,7 +198,7 @@ and optionally omitting fields with the <cite>Undefined</cite> value.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jsify.encoder.dumps">
-<span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">dumps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#dumps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.dumps" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jsify.encoder.</span></span><span class="sig-name descname"><span class="pre">dumps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#dumps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.dumps" title="Link to this definition"></a></dt>
 <dd><p>Serialize <cite>o</cite> to a JSON formatted <cite>str</cite> using <cite>ObjectEncoder</cite>.</p>
 <p>This function wraps <cite>json.dumps</cite>, providing custom serialization for <cite>Object</cite> instances
 and optionally omitting fields with the <cite>Undefined</cite> value.</p>

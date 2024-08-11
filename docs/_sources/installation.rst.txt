@@ -1,3 +1,9 @@
+.. _installation:
+
+.. meta::
+   :keywords: Jsify, Python, pip, installation, PyPI, upgrade, setup, install Jsify, Python package
+   :description: Learn how to install the Jsify library using pip from PyPI. This guide provides step-by-step instructions for setting up Jsify in your Python environment, verifying the installation, and upgrading to the latest version.
+
 Installation
 ============
 
