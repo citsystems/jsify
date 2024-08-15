@@ -22,7 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Stringcase module" href="stringcase.html" />
+    <link rel="next" title="Simple module" href="simple.html" />
     <link rel="prev" title="Exceptions module" href="exceptions.html" /> 
 </head>
 
@@ -108,6 +108,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#jsify.jsify.unjsify"><code class="docutils literal notranslate"><span class="pre">unjsify()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="simple.html">Simple module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringcase.html">Stringcase module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="undefined.html">Undefined module</a></li>
 </ul>
@@ -140,9 +141,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="jsify-module">
-<h1>Jsify module<a class="headerlink" href="#jsify-module" title="Link to this heading"></a></h1>
-<p id="module-jsify.jsify">The <cite>jsify</cite> module provides a set of classes and functions designed to wrap standard Python data structures
+  <section id="module-jsify.jsify">
+<span id="jsify-module"></span><h1>Jsify module<a class="headerlink" href="#module-jsify.jsify" title="Link to this heading"></a></h1>
+<p>The <cite>jsify</cite> module provides a set of classes and functions designed to wrap standard Python data structures
 (such as dictionaries, lists, and tuples) with JSON-like behavior. These wrapped objects, known as <cite>Object</cite>,
 <cite>Dict</cite>, <cite>List</cite>, and <cite>Tuple</cite>, allow for attribute-style access, dynamic nesting, and additional
 functionality that is commonly required when working with JSON data.
@@ -514,11 +515,12 @@ keys being their indexes in string format).</p>
 <dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#jsify.jsify.Object" title="jsify.jsify.Object"><em>Object</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.List" title="jsify.jsify.List"><em>List</em></a><em>, </em><a class="reference internal" href="#jsify.jsify.Tuple" title="jsify.jsify.Tuple"><em>Tuple</em></a><em> or </em><em>Any</em>) – The object to get the keys from.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A view object displaying a list of the object’s keys (in case of list or tuple these would be the indexes</p>
+<dd class="field-even"><p>A view object displaying a list of the object’s keys (in case of list or tuple these would be the indexes in string format).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.jsify.Iterator" title="jsify.jsify.Iterator">Iterator</a></p>
 </dd>
 </dl>
-<p>in string format).
-:rtype: Iterator</p>
 </dd></dl>
 
 <dl class="py function">
@@ -690,7 +692,7 @@ keys being their indexes in string format).</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="exceptions.html" class="btn btn-neutral float-left" title="Exceptions module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="stringcase.html" class="btn btn-neutral float-right" title="Stringcase module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="simple.html" class="btn btn-neutral float-right" title="Simple module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

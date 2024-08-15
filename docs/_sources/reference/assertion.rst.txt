@@ -1,5 +1,5 @@
 Assertion module
--------
+----------------
 
 .. automodule:: jsify.assertion
     :members:

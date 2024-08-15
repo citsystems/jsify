@@ -11,7 +11,6 @@
       properties, and easy serialization.
    :keywords: json javascript objects jsify dot notation attributes serialization
 
-
 Welcome to jsify's documentation!
 =================================
 

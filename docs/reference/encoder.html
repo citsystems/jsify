@@ -68,10 +68,8 @@
 <li class="toctree-l2"><a class="reference internal" href="calls.html">Calls module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Encoder module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.encoder.ObjectEncoder"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.ObjectEncoder.iterencode"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.iterencode()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.ObjectEncoder.default"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.default()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.default()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.iterencode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jsify.encoder.ObjectEncoder.iterencode"><code class="docutils literal notranslate"><span class="pre">ObjectEncoder.iterencode()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#jsify.encoder.dump"><code class="docutils literal notranslate"><span class="pre">dump()</span></code></a></li>
@@ -80,6 +78,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jsify.html">Jsify module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple.html">Simple module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stringcase.html">Stringcase module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="undefined.html">Undefined module</a></li>
 </ul>
@@ -112,9 +111,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="encoder-module">
-<h1>Encoder module<a class="headerlink" href="#encoder-module" title="Link to this heading"></a></h1>
-<p id="module-jsify.encoder">The <cite>encoder</cite> module provides custom JSON serialization functionality specifically designed to handle <cite>Object</cite>
+  <section id="module-jsify.encoder">
+<span id="encoder-module"></span><h1>Encoder module<a class="headerlink" href="#module-jsify.encoder" title="Link to this heading"></a></h1>
+<p>The <cite>encoder</cite> module provides custom JSON serialization functionality specifically designed to handle <cite>Object</cite>
 instances. This module extends Python’s built-in <cite>json</cite> module to ensure that <cite>Object</cite> instances are correctly
 converted into their original dictionary representation during the serialization process.</p>
 <p>The module features the <cite>ObjectEncoder</cite> class, which overrides the default JSON encoding behavior to accommodate
@@ -129,49 +128,48 @@ allowing seamless integration with standard JSON serialization workflows.</p>
 <p>This encoder converts <cite>Object</cite> instances to their original dictionary representation
 for JSON serialization. It also provides an option to omit fields with the <cite>Undefined</cite> value
 during serialization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Override the default method to handle <cite>Object</cite> and <cite>Undefined</cite> instances.</p>
+<p>This method converts <cite>Object</cite> instances to their original representation and handles
+<cite>Undefined</cite> values by converting them to <cite>None</cite>. It also supports serializing
+<cite>SimpleNamespace</cite> instances by returning their dictionary representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>o</strong> (<em>Any</em>) – The object to encode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The encoded object, or the result of calling the superclass’s <cite>default</cite> method
+if the object type is not explicitly handled.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder.iterencode">
+<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder.iterencode" title="Link to this definition"></a></dt>
+<dd><p>Encode the object into a JSON string.</p>
+<p>This method handles the serialization of <cite>Object</cite> instances by converting them
+to their original representation using <cite>unjsify</cite>. If <cite>omit_undefined</cite> is set to True,
+it omits fields with the <cite>Undefined</cite> value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>omit_undefined</strong> (<em>bool</em>) – If True, fields with the <cite>Undefined</cite> value are omitted from the serialized output.</p></li>
-<li><p><strong>*args</strong> (<em>tuple</em>) – Additional positional arguments passed to <cite>JSONEncoder</cite>.</p></li>
-<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <cite>JSONEncoder</cite>.</p></li>
+<li><p><strong>o</strong> (<em>Any</em>) – The object to encode into JSON format.</p></li>
+<li><p><strong>_one_shot</strong> (<em>bool</em><em>, </em><em>optional</em>) – A flag for one-shot encoding, passed to the parent <cite>JSONEncoder</cite>. Default is False.</p></li>
 </ul>
 </dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder.iterencode">
-<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="jsify.html#jsify.jsify.Iterator" title="jsify.jsify.Iterator"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder.iterencode" title="Link to this definition"></a></dt>
-<dd><p>Encodes the object into a JSON string, applying custom logic to handle <cite>Object</cite>
-instances and optionally omitting <cite>Undefined</cite> values.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jsify.encoder.ObjectEncoder.default">
-<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.encoder.ObjectEncoder.default" title="Link to this definition"></a></dt>
-<dd><p>Overrides the default method of <cite>JSONEncoder</cite> to handle <cite>Object</cite> instances and
-<cite>Undefined</cite> values.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterator that generates the encoded JSON string.</p>
+</dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+<dd class="field-odd"><p><a class="reference internal" href="jsify.html#jsify.jsify.Iterator" title="jsify.jsify.Iterator">Iterator</a>[str]</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jsify/encoder.html#ObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
-<dd><p>Encode the given object and yield each string
-representation as available.</p>
-<p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">iterencode</span><span class="p">(</span><span class="n">bigobject</span><span class="p">):</span>
-    <span class="n">mysocket</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </dd></dl>

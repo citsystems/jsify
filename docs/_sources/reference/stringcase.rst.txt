@@ -1,5 +1,5 @@
 Stringcase module
--------
+-----------------
 
 .. automodule:: jsify.stringcase
     :members:

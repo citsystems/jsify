@@ -25,31 +25,44 @@ class ObjectEncoder(json.JSONEncoder):
     This encoder converts `Object` instances to their original dictionary representation
     for JSON serialization. It also provides an option to omit fields with the `Undefined` value
     during serialization.
-
-    Parameters
-    ----------
-    omit_undefined : bool
-        If True, fields with the `Undefined` value are omitted from the serialized output.
-    *args : tuple
-        Additional positional arguments passed to `JSONEncoder`.
-    **kwargs : dict
-        Additional keyword arguments passed to `JSONEncoder`.
-
-    Methods
-    -------
-    iterencode(o: Any, _one_shot: bool = False) -> Iterator[str]
-        Encodes the object into a JSON string, applying custom logic to handle `Object`
-        instances and optionally omitting `Undefined` values.
-    default(o: Any) -> Any
-        Overrides the default method of `JSONEncoder` to handle `Object` instances and
-        `Undefined` values.
     """
 
     def __init__(self, omit_undefined, *args, **kwargs):
+        """
+        Initialize the `ObjectEncoder` with the option to omit `Undefined` values.
+
+        Parameters
+        ----------
+        omit_undefined : bool
+            If True, fields with the `Undefined` value are omitted from the serialized output.
+        *args : tuple
+            Additional positional arguments passed to `JSONEncoder`.
+        **kwargs : dict
+            Additional keyword arguments passed to `JSONEncoder`.
+        """
         super().__init__(*args, **kwargs)
         self.omit_undefined = omit_undefined
 
     def iterencode(self, o, _one_shot=False):
+        """
+        Encode the object into a JSON string.
+
+        This method handles the serialization of `Object` instances by converting them
+        to their original representation using `unjsify`. If `omit_undefined` is set to True,
+        it omits fields with the `Undefined` value.
+
+        Parameters
+        ----------
+        o : Any
+            The object to encode into JSON format.
+        _one_shot : bool, optional
+            A flag for one-shot encoding, passed to the parent `JSONEncoder`. Default is False.
+
+        Returns
+        -------
+        Iterator[str]
+            An iterator that generates the encoded JSON string.
+        """
         if isinstance(o, Object):
             o = unjsify(o)
         if self.omit_undefined:
@@ -62,6 +75,24 @@ class ObjectEncoder(json.JSONEncoder):
         return super().iterencode(o, _one_shot)
 
     def default(self, o: Any) -> Any:
+        """
+        Override the default method to handle `Object` and `Undefined` instances.
+
+        This method converts `Object` instances to their original representation and handles
+        `Undefined` values by converting them to `None`. It also supports serializing
+        `SimpleNamespace` instances by returning their dictionary representation.
+
+        Parameters
+        ----------
+        o : Any
+            The object to encode.
+
+        Returns
+        -------
+        Any
+            The encoded object, or the result of calling the superclass's `default` method
+            if the object type is not explicitly handled.
+        """
         if o is Undefined:
             return None
         elif isinstance(o, Object):

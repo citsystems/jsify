@@ -1,5 +1,5 @@
 Undefined module
--------
+----------------
 
 .. automodule:: jsify.undefined
     :members:

@@ -1,5 +1,5 @@
 Exceptions module
--------
+-----------------
 
 .. automodule:: jsify.exceptions
     :members:

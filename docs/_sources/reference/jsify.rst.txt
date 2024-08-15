@@ -1,5 +1,5 @@
 Jsify module
--------
+------------
 
 .. automodule:: jsify.jsify
     :members:

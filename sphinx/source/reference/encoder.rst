@@ -1,5 +1,5 @@
 Encoder module
--------
+--------------
 
 .. automodule:: jsify.encoder
     :members:

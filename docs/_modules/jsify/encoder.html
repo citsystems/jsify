@@ -118,33 +118,46 @@
 <span class="sd">    This encoder converts `Object` instances to their original dictionary representation</span>
 <span class="sd">    for JSON serialization. It also provides an option to omit fields with the `Undefined` value</span>
 <span class="sd">    during serialization.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    omit_undefined : bool</span>
-<span class="sd">        If True, fields with the `Undefined` value are omitted from the serialized output.</span>
-<span class="sd">    *args : tuple</span>
-<span class="sd">        Additional positional arguments passed to `JSONEncoder`.</span>
-<span class="sd">    **kwargs : dict</span>
-<span class="sd">        Additional keyword arguments passed to `JSONEncoder`.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    iterencode(o: Any, _one_shot: bool = False) -&gt; Iterator[str]</span>
-<span class="sd">        Encodes the object into a JSON string, applying custom logic to handle `Object`</span>
-<span class="sd">        instances and optionally omitting `Undefined` values.</span>
-<span class="sd">    default(o: Any) -&gt; Any</span>
-<span class="sd">        Overrides the default method of `JSONEncoder` to handle `Object` instances and</span>
-<span class="sd">        `Undefined` values.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the `ObjectEncoder` with the option to omit `Undefined` values.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        omit_undefined : bool</span>
+<span class="sd">            If True, fields with the `Undefined` value are omitted from the serialized output.</span>
+<span class="sd">        *args : tuple</span>
+<span class="sd">            Additional positional arguments passed to `JSONEncoder`.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments passed to `JSONEncoder`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">omit_undefined</span> <span class="o">=</span> <span class="n">omit_undefined</span>
 
 <div class="viewcode-block" id="ObjectEncoder.iterencode">
 <a class="viewcode-back" href="../../reference/encoder.html#jsify.encoder.ObjectEncoder.iterencode">[docs]</a>
     <span class="k">def</span> <span class="nf">iterencode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">_one_shot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Encode the object into a JSON string.</span>
+
+<span class="sd">        This method handles the serialization of `Object` instances by converting them</span>
+<span class="sd">        to their original representation using `unjsify`. If `omit_undefined` is set to True,</span>
+<span class="sd">        it omits fields with the `Undefined` value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        o : Any</span>
+<span class="sd">            The object to encode into JSON format.</span>
+<span class="sd">        _one_shot : bool, optional</span>
+<span class="sd">            A flag for one-shot encoding, passed to the parent `JSONEncoder`. Default is False.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Iterator[str]</span>
+<span class="sd">            An iterator that generates the encoded JSON string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Object</span><span class="p">):</span>
             <span class="n">o</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">omit_undefined</span><span class="p">:</span>
@@ -160,6 +173,24 @@
 <div class="viewcode-block" id="ObjectEncoder.default">
 <a class="viewcode-back" href="../../reference/encoder.html#jsify.encoder.ObjectEncoder.default">[docs]</a>
     <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override the default method to handle `Object` and `Undefined` instances.</span>
+
+<span class="sd">        This method converts `Object` instances to their original representation and handles</span>
+<span class="sd">        `Undefined` values by converting them to `None`. It also supports serializing</span>
+<span class="sd">        `SimpleNamespace` instances by returning their dictionary representation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        o : Any</span>
+<span class="sd">            The object to encode.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Any</span>
+<span class="sd">            The encoded object, or the result of calling the superclass&#39;s `default` method</span>
+<span class="sd">            if the object type is not explicitly handled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">o</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Object</span><span class="p">):</span>

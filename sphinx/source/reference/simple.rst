@@ -1,5 +1,5 @@
 Simple module
--------
+-------------
 
 .. automodule:: jsify.simple
     :members:

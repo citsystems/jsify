@@ -5,7 +5,7 @@
    :description: Learn how to serialize Jsify Object instances and other jsified structures into JSON format using custom encoders. This guide covers the use of ObjectEncoder, handling undefined values, and controlling the serialization process with the omit_undefined feature.
 
 Serializing `Object` Instances with JSON
-============================================
+========================================
 
 The Jsify library provides seamless integration with Python's built-in `json` module, allowing you to serialize `Object` instances and other jsified structures into JSON format. This is achieved through the use of the `ObjectEncoder`, a custom JSON encoder that ensures `Object` instances are correctly converted back into their original Python representations before serialization.
 
@@ -40,6 +40,7 @@ To serialize a `Object` to a JSON string, you can use the `json.dumps` function.
 
     print(json_string)
     # Outputs: {"name": "Alice", "details": {"age": 30, "city": "Wonderland"}}
+
 **Preserving Undefined Values:**
 
 By default, the `dumps` and `dump` functions omit any fields that have the value `Undefined`. You can control this

@@ -1038,8 +1038,7 @@ def jsified_keys(obj):
 
     :param obj: The object to get the keys from.
     :type obj: Object, List, Tuple or Any
-    :return: A view object displaying a list of the object's keys (in case of list or tuple these would be the indexes
-    in string format).
+    :return: A view object displaying a list of the object's keys (in case of list or tuple these would be the indexes in string format).
     :rtype: Iterator
     """
     return Iterator(

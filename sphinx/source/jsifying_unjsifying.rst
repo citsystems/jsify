@@ -5,7 +5,7 @@
    :description: Learn how to use the Jsify library to convert between standard Python data structures and JSON-like Objects. This guide covers the jsify and unjsify functions, including deep_unjsify, to facilitate flexible and dynamic data manipulation in Python.
 
 Jsifying and unjsyfing objects
-===========================
+==============================
 
 The `jsify` and `unjsify` functions are key utilities for converting between standard Python data structures and `Object` instances within the library. These functions enable smooth integration of Python's native types with the JSON-like behavior provided by `Object`, allowing for flexible and dynamic data manipulation.
 
@@ -37,7 +37,7 @@ The `jsify` function converts standard Python objects such as dictionaries, list
 - A `Object`, `Dict`, `List`, or `Tuple`, depending on the type of the input object.
 
 `unjsify` and `deep_unjsify`
----------
+----------------------------
 
 The `unjsify` function converts a `Object` back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.
 

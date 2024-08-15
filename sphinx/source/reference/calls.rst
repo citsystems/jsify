@@ -1,5 +1,5 @@
 Calls module
--------
+------------
 
 .. automodule:: jsify.calls
     :members:
