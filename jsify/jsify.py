@@ -10,6 +10,7 @@ Additionally, the module offers a series of utility functions such as `jsify` fo
 into their JSON-like counterparts, and `unjsify` for reversing this transformation.
 """
 from copy import copy, deepcopy
+from types import SimpleNamespace
 from typing import Iterable as TypeIterable, Iterator as TypeIterator
 
 from .exceptions import AnyError
@@ -18,7 +19,10 @@ from .undefined import Undefined
 _literals = (int, float, complex, str, bool, type(None))
 
 
-class Object:
+__orig_setattr__ = object.__setattr__
+
+
+class Object():
     """
     The `Object` class is designed to provide convenient access to object properties using dot notation instead of
     square brackets, enhancing code readability and ease of use. It acts as a wrapper around original objects,
@@ -35,7 +39,7 @@ class Object:
         :param o: The original dictionary or object to wrap.
         :type o: tuple or dict or list or object
         """
-        object.__setattr__(self, "__jsify_orig__", o)
+        __orig_setattr__(self, "__jsify_orig__", o)
 
     def __getitem__(self, item):
         """
@@ -70,7 +74,7 @@ class Object:
         :param value: The value to set.
         :type value: Any
         """
-        self.__jsify_orig__.__setitem__(item, value)
+        self.__jsify_orig__[item] = value
 
     def __delitem__(self, item):
         """
@@ -477,7 +481,7 @@ class Object:
         :param state: The state to set.
         :type state: dict
         """
-        object.__setattr__(self, "__jsify_orig__", state["__jsify_orig__"])
+        __orig_setattr__(self, "__jsify_orig__", state["__jsify_orig__"])
 
     def __dir__(self):
         """
@@ -830,9 +834,9 @@ class Dict(Object):
 
     def __getitem__(self, item):
         if isinstance(item, slice):
-            if item.start not in self:
-                self.__setattr__(item.start, item.stop())
-            return self.__getitem__(item.start)
+            if item.start not in self.__jsify_orig__:
+                self.__jsify_orig__[item.start] = unjsify(item.stop())
+            return super().__getitem__(item.start)
         else:
             return super().__getitem__(item)
 
