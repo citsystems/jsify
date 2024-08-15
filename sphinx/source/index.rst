@@ -9,7 +9,7 @@
       With Jsify, you can effortlessly convert Python dictionaries, lists, and tuples into JSON-like
       objects that support attribute-style access (dot notation), automatic handling of undefined
       properties, and easy serialization.
-   :keywords: python library json javascript objects jsify dot notation attributes access serialization
+   :keywords: python access dictionary library json javascript objects jsify dot notation attributes access serialization
 
 Welcome to jsify's documentation!
 =================================
