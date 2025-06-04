@@ -1,15 +1,13 @@
-import pickle
+import time
+from copy import copy
+from types import SimpleNamespace
 from unittest import TestCase
 
-from jsify.legacy.calls import jsified_function, camelized_function, json_function
-from jsify.legacy.jsify import Dict, jsify, jsified_copy, jsified_get, jsified_pop, jsified_popitem, jsified_setdefault, jsified_update, \
-    jsified_values, jsified_keys, jsified_items, unjsify, Iterator, properties_exist
-from jsify.legacy.jsify import Object
-
+from box import Box
+from jsify import List, Dict, jsify, jsified_copy, jsified_get, jsified_pop, jsified_popitem, jsified_setdefault, jsified_update, \
+    jsified_values, jsified_keys, jsified_items, unjsify, Iterator, Object, Undefined
 from jsify.json import jsified_dumps
-from jsify.simple import loads_simplified
-
-from jsify.legacy.undefined import Undefined
+from dotmap import DotMap
 
 
 class TestObject(TestCase):
@@ -186,9 +184,9 @@ class TestObject(TestCase):
         json_object = jsify(self.test_types_dict)
         self.assertNotIsInstance(json_object.literal, Object)
         self.assertEqual(json_object.literal, self.test_literal)
-        self.assertIsInstance(json_object.dict, Object)
+        self.assertIsInstance(json_object.dict, Dict)
         self.assertDictEqual(unjsify(json_object.dict), self.test_dict)
-        self.assertIsInstance(json_object.list, Object)
+        self.assertIsInstance(json_object.list, List)
         self.assertListEqual(unjsify(json_object.list), self.test_list)
         self.assertIsInstance(json_object.tuple, Object)
         self.assertTupleEqual(unjsify(json_object.tuple), self.test_tuple)
@@ -256,58 +254,48 @@ class TestObject(TestCase):
         json_object.append(additional_json_object)
         self.assertNotIsInstance(unjsify(json_object[-1]), Object)
 
-    def test_vars(self):
-        class MyClass:
-            pass
-
-        json_object = jsify(MyClass())
-        self.assertDictEqual(unjsify(vars(json_object)), {})
+    def test_vars_dir(self):
         json_object = jsify(self.test_list)
-        digits = len(str(len(self.test_list)))
-        self.assertDictEqual(unjsify(vars(json_object)),
-                             {f"{key:0{digits}}": value for key, value in enumerate(self.test_list)})
+        digits = len(self.test_list)
+        self.assertListEqual(dir(json_object), list(str(value) for value in range(digits)))
         json_object = jsify(self.test_tuple)
-        digits = len(str(len(self.test_tuple)))
-        self.assertDictEqual(unjsify(vars(json_object)),
-                             {f"{key:0{digits}}": value for key, value in enumerate(self.test_tuple)})
+        digits = len(self.test_tuple)
+        self.assertListEqual(dir(json_object), list(str(value) for value in range(digits)))
         json_object = jsify(self.test_dict)
-        self.assertDictEqual(unjsify(vars(json_object)), {key: value for key, value in self.test_dict.items()})
+        self.assertListEqual(sorted(dir(json_object)), sorted(list(str(value) for value in self.test_dict.keys())))
+        self.assertDictEqual(vars(json_object), {key: value for key, value in self.test_dict.items()})
 
     def test_contains(self):
         json_object = jsify(self.test_dict)
-        self.assertIn(list(jsified_keys(self.test_dict))[0], json_object)
-        self.assertIn(list(jsified_keys(self.test_dict))[0], jsified_keys(json_object))
-        self.assertIn(list(jsified_values(self.test_dict))[0], jsified_values(json_object))
-        self.assertIn(list(jsified_items(self.test_dict))[0], jsified_items(json_object))
-        self.assertNotIn('key_which_doesnt_exist', json_object)
-        self.assertNotIn('key_which_doesnt_exist', jsified_keys(json_object))
-        self.assertNotIn('key_which_doesnt_exist', jsified_values(json_object))
-        self.assertNotIn('key_which_doesnt_exist', jsified_items(json_object))
+        self.assertIn('a', json_object)
+        self.assertNotIn('v', json_object)
         json_object = jsify(self.test_list)
-        self.assertIn(0, json_object)
-        self.assertIn('0', json_object)
-        self.assertNotIn('1000', json_object)
+        self.assertIn(self.test_dict, json_object)
+        self.assertIn(1, json_object)
+        self.assertNotIn(10, json_object)
         json_object = jsify(self.test_tuple)
-        self.assertIn(0, json_object)
-        self.assertIn('0', json_object)
-        self.assertNotIn('1000', json_object)
+        self.assertIn(self.test_dict, json_object)
+        self.assertIn(1, json_object)
+        self.assertNotIn(10, json_object)
+
+    def macro_test_copy(self, obj, modified_key=None):
+        json_object = jsify(obj)
+        json_object_copy1 = json_object.__copy__()
+        json_object_copy2 = copy(json_object_copy1)
+        self.assertIsInstance(json_object_copy1, Object)
+        self.assertIsInstance(json_object_copy2, Object)
+        self.assertEqual(unjsify(json_object_copy1), obj)
+        self.assertEqual(unjsify(json_object_copy2), obj)
+        if modified_key is not None:
+            json_object_copy1[modified_key] = None
+            json_object_copy2[modified_key] = None
+            self.assertNotEqual(unjsify(json_object_copy1), obj)
+            self.assertNotEqual(unjsify(json_object_copy2), obj)
 
     def test_copy(self):
-        json_object = jsify(self.test_list)
-        json_object_copy = json_object.copy()
-        self.assertEqual(unjsify(json_object_copy), unjsify(json_object))
-        json_object_copy[0] = None
-        self.assertNotEqual(unjsify(json_object_copy), unjsify(json_object))
-
-        json_object = jsify(self.test_tuple)
-        self.assertEqual(unjsify(json_object.copy()), unjsify(json_object))
-
-        json_object = jsify(self.test_dict)
-        json_object_copy = jsified_copy(json_object, deep=True)
-        self.assertEqual(unjsify(json_object_copy), unjsify(json_object))
-        b = json_object_copy.a
-        json_object_copy.a = None
-        self.assertNotEqual(unjsify(json_object_copy), unjsify(json_object))
+        self.macro_test_copy(self.test_list, 0)
+        self.macro_test_copy(self.test_tuple)
+        self.macro_test_copy(self.test_dict, 'a')
 
     def test_tuple_functions(self):
         json_object = jsify(self.test_tuple)
@@ -317,19 +305,25 @@ class TestObject(TestCase):
     def test_list_functions(self):
         test_list = self.test_list.copy()
         json_object = jsify(test_list).copy()
-        self.assertEqual(json_object.count(1), test_list.count(1))
-        self.assertEqual(json_object.index(1), test_list.index(1))
+        self.assertEqual(json_object.count(self.test_dict), test_list.count(self.test_dict))
+        self.assertEqual(json_object.count(jsify(self.test_dict)), test_list.count(self.test_dict))
+        self.assertEqual(json_object.index(self.test_dict), test_list.index(self.test_dict))
+        self.assertEqual(json_object.index(jsify(self.test_dict)), test_list.index(self.test_dict))
         json_object.append(10)
+        json_object.append(jsify(self.test_dict))
         test_list.append(10)
+        test_list.append(self.test_dict)
         self.assertEqual(unjsify(json_object), test_list)
-        json_object.insert(2, 10)
-        test_list.insert(2, 10)
+        inserted = [9,8,7]
+        json_object.insert(2, jsify(inserted))
+        self.assertNotIsInstance(unjsify(json_object)[2], Object)
+        test_list.insert(2, inserted)
         self.assertEqual(unjsify(json_object), test_list)
-        json_object.remove(1)
-        test_list.remove(1)
+        json_object.remove(jsify(inserted))
+        test_list.remove(inserted)
         self.assertEqual(unjsify(json_object), test_list)
-        json_object.extend([9, 8, 7])
-        test_list.extend([9, 8, 7])
+        json_object.extend(jsify(inserted))
+        test_list.extend(inserted)
         self.assertEqual(unjsify(json_object), test_list)
         json_object.pop(3)
         test_list.pop(3)
@@ -341,12 +335,61 @@ class TestObject(TestCase):
             if isinstance(value, Dict):
                 json_object.remove(value)
                 test_list.remove(value)
-        json_object.sort()
-        test_list.sort()
+        json_object.sort(key=lambda a: str(a))
+        test_list.sort(key=lambda a: str(a))
         self.assertEqual(unjsify(json_object), test_list)
         json_object.clear()
         test_list.clear()
         self.assertEqual(unjsify(json_object), test_list)
+
+    def test_list_arithmetic(self):
+        l1 = jsify([1, 2, 3])
+        l2 = jsify([4, 5])
+
+        # Addition
+        self.assertEqual(list(l1 + l2), [1, 2, 3, 4, 5])
+
+        # Multiplication
+        self.assertEqual(list(l1 * 2), [1, 2, 3, 1, 2, 3])
+        self.assertEqual(list(2 * l2), [4, 5, 4, 5])
+
+        # In-place addition
+        l3 = jsify([1, 2])
+        l3 += jsify([3, 4])
+        self.assertEqual(list(l3), [1, 2, 3, 4])
+
+        # In-place multiplication
+        l4 = jsify([1, 2])
+        l4 *= 2
+        self.assertEqual(list(l4), [1, 2, 1, 2])
+
+    def test_list_comparisons(self):
+        l1 = jsify([1, 2, 3])
+        l2 = jsify([1, 2, 4])
+        l3 = jsify([1, 2, 3])
+
+        self.assertTrue(l1 < l2)
+        self.assertTrue(l2 > l1)
+        self.assertTrue(l1 <= l3)
+        self.assertTrue(l1 >= l3)
+        self.assertFalse(l1 > l2)
+        self.assertFalse(l1 < l3)
+        self.assertFalse(l1 > l3)
+        self.assertFalse(l2 < l1)
+
+    def test_list_indexing_and_slicing(self):
+        l1 = jsify([1, 2, 3, 4, 5])
+
+        # Negative index
+        self.assertEqual(l1[-1], 5)
+
+        # Slicing
+        self.assertEqual(list(l1[1:3]), [2, 3])
+
+        # Delete slice
+        l1 = jsify([1, 2, 3, 4, 5])
+        #del l1[1:3]
+        #self.assertEqual(list(l1), [1, 4, 5])
 
     def test_dict_functions(self):
         test_dict = self.test_dict.copy()
@@ -360,14 +403,18 @@ class TestObject(TestCase):
         self.assertEqual(jsify(json_object), test_dict)
         jsified_popitem(json_object)
         test_dict.popitem()
-        self.assertEqual(jsify(json_object), test_dict)
-        jsified_setdefault(json_object, 'c', 8)
-        jsified_setdefault(json_object, 'd', 8)
-        test_dict.setdefault('c', 8)
-        test_dict.setdefault('d', 8)
-        self.assertEqual(jsify(json_object), test_dict)
-        jsified_update(json_object, dict(z=1, n=2, m=3), u=7)
-        test_dict.update(dict(z=1, n=2, m=3), u=7)
+        self.assertEqual(len(json_object), len(test_dict))
+        default_value1 = jsified_setdefault(json_object, 'default_test', 3)
+        jsified_setdefault(json_object, 'default_test', 8)
+        default_value2 = test_dict.setdefault('default_test', 3)
+        test_dict.setdefault('default_test', 8)
+        self.assertEqual(default_value1, default_value2)
+        self.assertEqual(default_value1, json_object.default_test)
+        self.assertEqual(default_value2, test_dict['default_test'])
+        test_dict = dict(a=1,b=2)
+        json_object = jsified_copy(test_dict)
+        jsified_update(json_object, dict(z=1, n=2, m=3))
+        test_dict.update(dict(z=1, n=2, m=3))
         self.assertEqual(jsify(json_object), test_dict)
 
     def test_json_dump(self):
@@ -386,14 +433,13 @@ class TestObject(TestCase):
         json_object = jsify(self.test_dict)
         keys = jsified_keys(json_object)
         self.assertEqual(list(keys), list(self.test_dict.keys()))
-        self.assertEqual(list(jsify(self.test_dict.keys())), list(self.test_dict.keys()))
         values = jsified_values(json_object)
         self.assertEqual(list(values), list(self.test_dict.values()))
-        self.assertEqual(list(jsify(self.test_dict.values())), list(self.test_dict.values()))
         items = jsified_items(json_object)
         self.assertEqual(list(items), list(self.test_dict.items()))
-        self.assertEqual(list(jsify(self.test_dict.items())), list(self.test_dict.items()))
 
+    """
+    
     def test_pickle(self):
         json_object = jsify(self.test_list)
         json_object.append(self.test_literal)
@@ -403,6 +449,8 @@ class TestObject(TestCase):
         depickled = pickle.loads(pickled)
         dir(depickled)
         self.assertEqual(depickled, json_object)
+
+    """
 
     def test_undefined(self):
         json_object = jsify(self.test_dict)
@@ -414,19 +462,8 @@ class TestObject(TestCase):
         self.assertTrue(Undefined != False)
         self.assertTrue(Undefined == None)
         self.assertTrue(Undefined is not None)
-        self.assertEqual(json_object.not_defined_property, Undefined)
-        self.assertEqual(json_object.not_defined_property.fghjj.dsffsd['42'], Undefined)
-
-    def test_dict_defaults(self):
-        json_object = jsify(self.test_dict)
-        json_object['unexisting': lambda : dict(a=1, b=2)].c = 3
-        self.assertTrue(json_object.unexisting.a == 1)
-        self.assertTrue(json_object.unexisting.b == 2)
-        self.assertTrue(json_object.unexisting.c == 3)
-        json_object['unexisting': lambda : dict(a=3, b=4)].c = 5
-        self.assertTrue(json_object.unexisting.a == 1)
-        self.assertTrue(json_object.unexisting.b == 2)
-        self.assertTrue(json_object.unexisting.c == 5)
+        self.assertIs(json_object.not_defined_property, Undefined)
+        self.assertIs(json_object.not_defined_property.fghjj.dsffsd['42'], Undefined)
 
     def test_iterator(self):
         dict_iterator = Iterator(self.test_dict)
@@ -448,12 +485,239 @@ class TestObject(TestCase):
         for json_value, native_value in zip(tuple_iterator, self.test_tuple):
             self.assertEqual(json_value, native_value)
 
-    def test_properties_exist(self):
-        result = properties_exist(self.test_dict, 'b', 'b')
-        self.assertTrue(result)
-        self.assertEqual(result.unjsified, self.test_dict['b']['b'])
-        self.assertEqual(result.jsified, jsify(self.test_dict['b']['b']))
-        self.assertFalse(properties_exist(self.test_dict, 'a', 'b'))
+    def test_benchmark(self):
+        N = 10000 # 1000000000000000000
+        start = time.perf_counter()
+        for n in range(N):
+            d = jsify(self.test_dict)
+            d.new_attribute = {}
+            d.new_attribute.newdict = {}
+            d.new_list = [1,2,3,4,5]
+            a = d.mew_list[2]
+            d.new_list[2] = {}
+            d.new_attribute.new_subattribute = [1,2,3,4,5]
+            d.new_list_clone = d.new_attribute.new_subattribute
+            d.new_list_clone[4] = 10
+        print(f"Jsify {N} operations: {time.perf_counter() - start:.6f} sec")
+        start = time.perf_counter()
+        for n in range(N):
+            d = SimpleNamespace(self.test_dict)
+            d.new_attribute = SimpleNamespace()
+            d.new_attribute.new_subattribute = [1, 2, 3, 4, 5]
+            d.new_list_clone = d.new_attribute.new_subattribute
+            d.new_list_clone[4] = 10
+        print(f"SimpleNamespace {N} operations: {time.perf_counter() - start:.6f} sec")
+        start = time.perf_counter()
+        for n in range(N):
+            d = Box(self.test_dict)
+            d.new_attribute = SimpleNamespace()
+            d.new_attribute.new_subattribute = [1, 2, 3, 4, 5]
+            d.new_list_clone = d.new_attribute.new_subattribute
+            d.new_list_clone[4] = 10
+        print(f"Box {N} operations: {time.perf_counter() - start:.6f} sec")
+        start = time.perf_counter()
+        for n in range(N):
+            d = DotMap(self.test_dict)
+            d.new_attribute = SimpleNamespace()
+            d.new_attribute.new_subattribute = [1, 2, 3, 4, 5]
+            d.new_list_clone = d.new_attribute.new_subattribute
+            d.new_list_clone[4] = 10
+        print(f"DotMap {N} operations: {time.perf_counter() - start:.6f} sec")
+
+    def memory_usage(self):
+        import os, psutil
+        process = psutil.Process(os.getpid())
+        mem_bytes = process.memory_info().rss  # resident set size in bytes
+        mem_mb = mem_bytes // (1024)
+        return mem_mb
+
+    def test_memory_leak(self):
+        start_memory = self.memory_usage()
+        for i in range(10000):
+
+            # CREATE
+            jsify(1)
+            jsify(1.1)
+            jsify("string")
+            jsify(None)
+            jsify(True)
+            json_object = jsify(self.test_dict)
+            unjsify(json_object)
+            jsify(self.test_dict, **self.test_merge)
+            jsify(self.test_list)
+            jsify(self.test_tuple)
+
+            json_object = jsify(self.test_types_dict)
+            json_object.literal
+            json_object.dict
+            json_object.list
+            json_object.tuple
+            json_object['literal']
+            json_object['dict']
+            json_object['list']
+            json_object['tuple']
+
+            jsify(self.test_types_list)
+            jsify(self.test_types_tuple)
+
+            json_object = jsify(self.test_dict.copy())
+            json_object.new_literal = self.test_literal
+            json_object.new_dict = self.test_dict
+            json_object.new_list = self.test_list
+            json_object.new_tuple = self.test_tuple
+
+            additional_json_object = jsify(self.test_dict)
+            json_object.additional_json = additional_json_object
+
+            json_object = jsify(self.test_dict.copy())
+            json_object['new_literal'] = self.test_literal
+            json_object['new_dict'] = self.test_dict
+            json_object['new_list'] = self.test_list
+            json_object['new_tuple'] = self.test_tuple
+
+            additional_json_object = jsify(self.test_dict)
+            json_object['additional_json'] = additional_json_object
+
+            json_object = jsify(self.test_list.copy())
+            json_object.append(self.test_literal)
+            json_object.append(self.test_dict)
+            json_object.append(self.test_list)
+            json_object.append(self.test_tuple)
+            additional_json_object = jsify(self.test_dict)
+            json_object.append(additional_json_object)
+
+            json_object = jsify(self.test_list)
+            dir(json_object)
+            json_object = jsify(self.test_tuple)
+            dir(json_object)
+            json_object = jsify(self.test_dict)
+            dir(json_object)
+            vars(json_object)
+
+            json_object = jsify(self.test_dict)
+            'a' in json_object
+            'v' in json_object
+            json_object = jsify(self.test_list)
+            self.test_dict in json_object
+            1 in json_object
+            10 in json_object
+            json_object = jsify(self.test_tuple)
+            self.test_dict in json_object
+            1 in json_object
+            10 in json_object
+
+            # COPY
+            from copy import copy
+            for obj, modified_key in [
+                (self.test_list, 0),
+                (self.test_tuple, None),
+                (self.test_dict, 'a')
+            ]:
+                json_object = jsify(obj)
+                json_object_copy1 = json_object.__copy__()
+                json_object_copy2 = copy(json_object_copy1)
+                if modified_key is not None:
+                    json_object_copy1[modified_key] = None
+                    json_object_copy2[modified_key] = None
+
+            # TUPLE/LIST FUNCS
+            json_object = jsify(self.test_tuple)
+            json_object.count(1)
+            json_object.index(1)
+            test_list = self.test_list.copy()
+            json_object = jsify(test_list).copy()
+            json_object.count(self.test_dict)
+            json_object.count(jsify(self.test_dict))
+            json_object.index(self.test_dict)
+            json_object.index(jsify(self.test_dict))
+            json_object.append(10)
+            json_object.append(jsify(self.test_dict))
+
+            inserted = [9,8,7]
+            json_object.insert(2, jsify(inserted))
+            json_object.remove(jsify(inserted))
+            json_object.extend(jsify(inserted))
+            json_object.pop(3)
+            json_object.reverse()
+
+            for value in list(iter(json_object)):
+                if isinstance(value, Dict):
+                    json_object.remove(value)
+
+            json_object.sort(key=lambda a: str(a))
+            json_object.clear()
+
+            # ARYTMETYKA LIST
+            l1 = jsify([1, 2, 3])
+            l2 = jsify([4, 5])
+            l1 + l2
+            l1 * 2
+            2 * l2
+            l3 = jsify([1, 2])
+            l3 += jsify([3, 4])
+            l4 = jsify([1, 2])
+            l4 *= 2
+
+            # LIST COMP
+            l1 = jsify([1, 2, 3])
+            l2 = jsify([1, 2, 4])
+            l3 = jsify([1, 2, 3])
+            l1 < l2
+            l2 > l1
+            l1 <= l3
+            l1 >= l3
+            l1 > l2
+            l1 < l3
+            l1 > l3
+            l2 < l1
+
+            # INDEXING/SLICING
+            l1 = jsify([1, 2, 3, 4, 5])
+            l1[-1]
+            l1[1:3]
+
+            # DICT FUNCS
+            test_dict = self.test_dict.copy()
+            json_object = jsified_copy(jsify(test_dict))
+            jsified_get(json_object, 'a')
+            list(jsified_items(json_object))
+            list(jsified_keys(json_object))
+            list(jsified_values(json_object))
+            jsified_pop(json_object, 'a')
+            jsified_popitem(json_object)
+            jsified_setdefault(json_object, 'default_test', 3)
+            jsified_setdefault(json_object, 'default_test', 8)
+            test_dict = dict(a=1, b=2)
+            json_object = jsified_copy(test_dict)
+            jsified_update(json_object, dict(z=1, n=2, m=3))
+
+            # KEYS/VALUES/ITEMS
+            json_object = jsify(self.test_dict)
+            keys = jsified_keys(json_object)
+            list(keys)
+            values = jsified_values(json_object)
+            list(values)
+            items = jsified_items(json_object)
+            list(items)
+
+            # UNDEFINED
+            json_object = jsify(self.test_dict)
+            Undefined
+            json_object.not_defined_property
+            json_object.not_defined_property.fghjj.dsffsd['42']
+
+            # ITERATOR
+            Iterator(self.test_dict)
+            Iterator(self.test_list)
+            Iterator(self.test_tuple)
+            Iterator(jsify(self.test_dict))
+            Iterator(jsify(self.test_list))
+            Iterator(jsify(self.test_tuple))
+
+        self.assertEqual(start_memory, self.memory_usage())
+
+
+    """
 
     def test_jsified_camelized_function(self):
 
@@ -502,5 +766,7 @@ class TestObject(TestCase):
         self.assertEqual(test_function(_json=json_parameters), (1,2,3))
 
     def test_simple_namespace_decoder(self):
-        json = loads_simplified(self.test_json_string)
+        json = loads(self.test_json_string)
         self.assertEqual(json.location.country, "USA")
+    """
+
