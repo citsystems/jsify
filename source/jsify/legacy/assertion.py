@@ -8,7 +8,7 @@ instances of `Object`. These assertions enable you to verify that certain keys a
 a JSON object and that the values associated with those keys are as expected.
 """
 
-from .jsify import Object
+from jsify.legacy.jsify import Object
 
 
 class Assert:

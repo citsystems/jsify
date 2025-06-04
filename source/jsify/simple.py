@@ -11,7 +11,7 @@ code simplicity are important.
 """
 
 from types import SimpleNamespace
-from jsify.encoder import _orig_load, _orig_loads
+from jsify.json import _orig_load, _orig_loads
 
 
 def object_hook_convert_to_simple(obj):
@@ -30,7 +30,7 @@ def object_hook_convert_to_simple(obj):
         return SimpleNamespace(**obj)
 
 
-def load(fp, *args, **kwargs):
+def load_simplified(fp, *args, **kwargs):
     """
     Deserialize JSON content from a file pointer, converting dictionaries to SimpleNamespace.
 
@@ -45,7 +45,7 @@ def load(fp, *args, **kwargs):
     return _orig_load(fp, *args, object_hook=object_hook_convert_to_simple, **kwargs)
 
 
-def loads(s, *args, **kwargs):
+def loads_simplified(s, *args, **kwargs):
     """
     Deserialize JSON content from a string, converting dictionaries to SimpleNamespace.
 

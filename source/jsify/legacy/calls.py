@@ -8,8 +8,8 @@ At the heart of this module is the `jsified_function` decorator, which automatic
 to be returned in its original form or as a deeply unjsified structure, depending on the specified flags.
 """
 
-from .jsify import unjsify, Object, deep_unjsify
-from .stringcase import json_camel_to_snake
+from jsify.legacy.jsify import unjsify, Object, deep_unjsify
+from jsify.stringcase import json_camel_to_snake
 
 
 def jsified_function(*args, result_original=False, result_deep_original=False):

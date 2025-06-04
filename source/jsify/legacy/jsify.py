@@ -10,11 +10,10 @@ Additionally, the module offers a series of utility functions such as `jsify` fo
 into their JSON-like counterparts, and `unjsify` for reversing this transformation.
 """
 from copy import copy, deepcopy
-from types import SimpleNamespace
 from typing import Iterable as TypeIterable, Iterator as TypeIterator
 
-from .exceptions import AnyError
-from .undefined import Undefined
+from jsify.exceptions import AnyError
+from jsify.legacy.undefined import Undefined
 
 _literals = (int, float, complex, str, bool, type(None))
 
@@ -74,7 +73,10 @@ class Object():
         :param value: The value to set.
         :type value: Any
         """
-        self.__jsify_orig__[item] = value
+        if isinstance(value, Object):
+            self.__jsify_orig__[item] = value.__jsify_orig__
+        else:
+            self.__jsify_orig__[item] = value
 
     def __delitem__(self, item):
         """
@@ -1014,7 +1016,7 @@ def jsified_update(obj, value, *args, **kwargs):
     return jsify(
         super(Object, obj)
         .__getattribute__("__jsify_orig__")
-        .update(value, *args, **kwargs)
+        .update_task(value, *args, **kwargs)
         if isinstance(obj, Object)
         else obj.update(value, *args, **kwargs)
     )
@@ -1071,6 +1073,7 @@ def jsified_items(obj):
         if isinstance(obj, Object)
         else obj.items()
     )
+
 
 
 class PropertiesExistResult:
