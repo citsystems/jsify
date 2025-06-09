@@ -20,10 +20,24 @@ To install Jsify using pip, run the following command:
 
 This will install the latest version of Jsify and its dependencies.
 
-Verifying the Installation
----------------------------
+**Note:**
+If there is no prebuilt wheel available for your Python version or platform, pip will attempt to build Jsify from source.
+To compile successfully, you need a working C compiler and Python development headers (e.g. `python3-dev` on Debian/Ubuntu).
 
-To verify that Jsify is installed correctly, you can run a simple Python script to import the library:
+.. code-block:: bash
+
+    # On Debian/Ubuntu:
+    sudo apt install build-essential python3-dev
+
+    # Then run:
+    pip install jsify
+
+If you encounter errors during compilation, please check your compiler setup and ensure your environment is ready for building C extensions.
+
+Verifying the Installation
+--------------------------
+
+To verify that Jsify is installed correctly, run a simple Python script to import the library:
 
 .. code-block:: python
 
@@ -36,11 +50,10 @@ If Jsify is installed correctly, this script should output the version number of
 Upgrading Jsify
 ---------------
 
-To upgrade Jsify to the latest version, you can use the following pip command:
+To upgrade Jsify to the latest version, use:
 
 .. code-block:: bash
 
     pip install --upgrade jsify
 
-This command will upgrade Jsify to the most recent version available on PyPI.
-
+This will upgrade Jsify to the most recent version available on PyPI.

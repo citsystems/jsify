@@ -1,117 +1,123 @@
-.. _jsify:
+.. _jsifying_and_unjsifying:
 
 .. meta::
-   :keywords: Jsify, Python, jsify, unjsify, deep_unjsify, Object, JSON, data structures, attribute access, serialization, data conversion
-   :description: Learn how to use the Jsify library to convert between standard Python data structures and JSON-like Objects. This guide covers the jsify and unjsify functions, including deep_unjsify, to facilitate flexible and dynamic data manipulation in Python.
+   :keywords: Jsify, Python, jsify, jsified_copy, jsified_deepcopy, unjsify, unjsify_deepcopy, dejsify, Object, Dict, List, Tuple, JSON, data structures, attribute access, dot notation, serialization, data conversion, shallow copy, deep copy, unwrap, wrapper
+   :description: Comprehensive overview of Jsify's core conversion and copy functions: jsify, jsified_copy, jsified_deepcopy, unjsify, unjsify_deepcopy, and dejsify. Learn how to wrap, copy, and convert between native Python types and Jsify objects with dot notation and full JSON-like access.
 
-Jsifying and unjsyfing objects
-==============================
+Jsifying and unjsifying the objects
+------------------------------------
 
-The `jsify` and `unjsify` functions are key utilities for converting between standard Python data structures and `Object` instances within the library. These functions enable smooth integration of Python's native types with the JSON-like behavior provided by `Object`, allowing for flexible and dynamic data manipulation.
+Jsify provides a set of key functions for converting, copying, and unwrapping Jsify-wrapped objects and standard Python data types:
 
-`jsify`
--------
+**1. jsify**
 
-The `jsify` function converts standard Python objects such as dictionaries, lists, and tuples into their corresponding `Object` representations. This conversion enables attribute-style access and other JSON-like features, making it easier to work with complex nested data structures.
+Wraps a Python object (dict, list, tuple, etc.) as a Jsify object for dot-style attribute access and dynamic manipulation.
 
-**Usage Example:**
+- Returns a Jsify wrapper: `Object`, `Dict`, `List`, or `Tuple`.
+- Deep/nested wrapping is **lazy**: only the top-level object is wrapped; deeper elements are wrapped automatically on attribute or item access.
+- **Typical usage:** It's usually enough to call `jsify` on the top-level object—nested access will always work seamlessly.
 
-.. code-block:: python
-
-    from jsify import jsify
-
-    # Convert a dictionary into a Object
-    data = {'key1': 'value1', 'key2': {'nestedKey': 'nestedValue'}}
-    json_obj = jsify(data)
-
-    # Access nested elements using attribute-style access
-    print(json_obj.key2.nestedKey)  # Outputs: nestedValue
-
-**Parameters:**
-
-- ``o`` : The object to convert, which can be of type ``dict``, ``list``, ``tuple``, or any other object.
-- ``kwargs`` : Additional keyword arguments to customize the conversion.
-
-**Returns:**
-
-- A `Object`, `Dict`, `List`, or `Tuple`, depending on the type of the input object.
-
-`unjsify` and `deep_unjsify`
-----------------------------
-
-The `unjsify` function converts a `Object` back into its original Python representation, such as a dictionary, list, or tuple. This function is useful when you need to serialize or process the data in its native form after manipulating it using the JSON-like interface.
-
-**Usage Example:**
+**Example:**
 
 .. code-block:: python
 
-    from jsify import unjsify
+    data = {'user': {'name': 'Alice', 'info': {'age': 30}}}
+    obj = jsify(data)
+    print(obj.user.info.age)  # Outputs: 30
 
-    # Assuming json_obj is a Object
-    original_data = unjsify(json_obj)
+**2. jsified_copy**
 
-    # The original_data is now a standard Python dictionary
-    print(original_data)  # Outputs: {'key1': 'value1', 'key2': {'nestedKey': 'nestedValue'}}
+Returns a shallow Jsify-wrapped copy of the object.
 
-**Parameters:**
+- Performs a shallow copy of the original data (only the outermost container is new).
+- The result is again Jsify-wrapped.
+- Inner mutable objects (like lists, dicts) are **not** copied.
 
-- ``obj`` : The `Object` to convert back into its original form.
-
-**Returns:**
-
-- The original object if ``obj`` is a `Object`, otherwise returns the object unchanged.
-
-**Deep unjsifying:**
-
-In scenarios where you have nested `Object` instances and want to deeply convert them back to their original Python structures, the `deep_unjsify` function can be used. It performs a recursive unjsification, ensuring that all nested `Object` instances are properly converted.
-This function is particularly useful in scenarios where you have complex, deeply nested JSON-like objects that need to be converted back to standard Python types, such as dictionaries, lists, and tuples, for further processing or serialization.
-
-
-**Using `deep_unjsify`:**
+**Example:**
 
 .. code-block:: python
 
-    from jsify import jsify, deep_unjsify
+    obj = jsify({'x': [1, 2]})
+    c = jsified_copy(obj)
+    # c is a new Jsify wrapper, c.x is the *same* list as obj.x
 
-    # Complex deeply jsified structure
-    json_obj = jsify({
-        'level1': jsify({
-            'level2': jsify({
-                'level3': 'value'
-            }),
-            'level2_list': [
-                {'nested_key': 'nested_value'},
-                {'another_key': 'another_value'}
-            ]
-        })
-    })
+**3. jsified_deepcopy**
 
-    # Accessing elements in a JSON-like manner
-    print(json_obj.level1.level2.level3)  # Outputs: value
-    print(json_obj.level1.level2_list[0].nested_key)  # Outputs: nested_value
+Returns a deep Jsify-wrapped copy of the object.
 
-    # Now, deeply unjsify the Object back to its original form
-    original_data = deep_unjsify(json_obj)
+- Recursively deep-copies the original data.
+- Result is a Jsify-wrapped structure with no shared mutable references at any level.
 
-    # Verify the structure
-    print(original_data)
-
-**Expected Output:**
-
-As a result, the `original_data` object should consist of native `dict` and `list` instance objects.
+**Example:**
 
 .. code-block:: python
 
-    {
-        'level1': {
-            'level2': {
-                'level3': 'value'
-            },
-            'level2_list': [
-                {'nested_key': 'nested_value'},
-                {'another_key': 'another_value'}
-            ]
-        }
-    }
+    obj = jsify({'x': [1, 2]})
+    d = jsified_deepcopy(obj)
+    # d is a new Jsify wrapper, d.x is a *new* list, independent from obj.x
 
-By utilizing the `jsify` and `unjsify` functions, developers can easily switch between Python's native data types and the enhanced JSON-like structures provided by the library, facilitating more flexible and intuitive data manipulation.
+**4. unjsify**
+
+Returns the original Python object from a Jsify wrapper.
+
+- Only the top-level Jsify object is unwrapped.
+- Nested objects are usually already plain Python types because Jsify wraps only on access.
+- In most real cases, a single call to `unjsify` will recover the full, deeply-native structure.
+
+**Example:**
+
+.. code-block:: python
+
+    obj = jsify({'a': {'b': 1}})
+    result = unjsify(obj)
+    # result == {'a': {'b': 1}}
+
+**5. unjsify_deepcopy**
+
+Returns a *deep copy* of the object with all Jsify wrappers removed.
+
+- Deeply unwraps and copies the data.
+- The output is a completely new native structure.
+
+**Example:**
+
+.. code-block:: python
+
+    obj = jsify({'a': {'b': 1}})
+    result = unjsify_deepcopy(obj)
+    # result == {'a': {'b': 1}} (no Jsify wrappers anywhere, all data is copied)
+
+**6. dejsify**
+
+Recursively replaces all Jsify objects with their underlying values, *in-place*, without making a copy.
+
+- The structure is modified so every Jsify wrapper becomes its underlying Python value.
+- No new containers (dicts/lists) are created—just substitution.
+
+**Example:**
+
+.. code-block:: python
+
+    obj = jsify({'a': {'b': 1}})
+    result = dejsify(obj)
+    # result is the same structure as obj, but all Jsify wrappers are replaced by plain types
+
+**Summary Table**
+
++------------------------+------------------------------+-----------------------------------------------+
+| Function               | Recursion Depth              | Copy or In-place / Wrap or Unwrap             |
++========================+==============================+===============================================+
+| jsify                  | Top-level only (lazy nested) | No copy, wraps for dot access                 |
++------------------------+------------------------------+-----------------------------------------------+
+| jsified_copy           | Top-level only               | Shallow copy, wrap                            |
++------------------------+------------------------------+-----------------------------------------------+
+| jsified_deepcopy       | Deep (recursive)             | Deep copy, wrap                               |
++------------------------+------------------------------+-----------------------------------------------+
+| unjsify                | Top-level only               | No copy, unwrap                               |
++------------------------+------------------------------+-----------------------------------------------+
+| unjsify_deepcopy       | Deep (recursive)             | Deep copy, unwrap                             |
++------------------------+------------------------------+-----------------------------------------------+
+| dejsify                | Deep (recursive)             | In-place, unwrap                              |
++------------------------+------------------------------+-----------------------------------------------+
+
+**Note:** For most applications, you only need to call `jsify` on your top-level object; dot-style access and lazy wrapping will just work for all nested content.

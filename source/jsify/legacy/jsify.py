@@ -12,7 +12,7 @@ into their JSON-like counterparts, and `unjsify` for reversing this transformati
 from copy import copy, deepcopy
 from typing import Iterable as TypeIterable, Iterator as TypeIterator
 
-from jsify.exceptions import AnyError
+from jsify.legacy.exceptions import AnyError
 from jsify.legacy.undefined import Undefined
 
 _literals = (int, float, complex, str, bool, type(None))

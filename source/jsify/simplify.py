@@ -11,7 +11,29 @@ code simplicity are important.
 """
 
 from types import SimpleNamespace
-from jsify.json import _orig_load, _orig_loads
+from json import load as _orig_load, loads as _orig_loads, JSONEncoder, dump, dumps
+from .jsify import Undefined
+
+class SimplifiedObject(SimpleNamespace):
+    def __getattr__(self, item):
+        return Undefined
+
+
+class SimplifiedEncoder(JSONEncoder):
+    def default(self, obj):
+        if obj is Undefined:
+            return None
+        if isinstance(obj, SimplifiedObject):
+            return obj.__dict__
+        return super().default(obj)
+
+
+def simplified_dumps(obj, **kwargs):
+    return dumps(obj, cls=SimplifiedEncoder, **kwargs)
+
+
+def simplified_dump(fp, obj, **kwargs):
+    return dump(fp, obj, cls=SimplifiedEncoder, **kwargs)
 
 
 def object_hook_convert_to_simple(obj):
@@ -27,7 +49,7 @@ def object_hook_convert_to_simple(obj):
     :rtype: SimpleNamespace
     """
     if isinstance(obj, dict):
-        return SimpleNamespace(**obj)
+        return SimplifiedObject(**obj)
 
 
 def load_simplified(fp, *args, **kwargs):

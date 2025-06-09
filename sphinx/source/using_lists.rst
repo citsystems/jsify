@@ -120,45 +120,13 @@ Jsified lists retain all the native Python list methods, such as `append`, `remo
     json_list.insert(1, {'name': 'Eve', 'age': 28})
     print(json_list[1].name)  # Outputs: Eve
 
-**Using `jsified_keys` with Jsified Lists:**
+**Result of ``dir()``**
 
-The `jsified_keys` function can be used with `List` to retrieve the indices of the list elements as keys, represented in string format.
+- ``dir(jsified_list)``
+  Returns a tuple of stringified integer indices representing valid keys.
 
-**Example:**
+  .. code-block:: python
 
-.. code-block:: python
+      t = jsify(['x', 'y'])
+      print(dir(t))  # Outputs: ('0', '1')
 
-    from jsify import jsified_keys
-
-    json_list = jsify([
-        {'name': 'Alice', 'details': {'city': 'Wonderland', 'age': 30}},
-        {'name': 'Bob', 'details': {'city': 'Metropolis', 'age': 25}},
-        {'name': 'Charlie', 'details': {'city': 'Metropolis', 'age': 35}},
-    ])
-
-    # Get a view of the indices as keys
-    keys_view = jsified_keys(json_list)
-    for key in keys_view:
-        print(key)
-    # Outputs: '0', '1', '2'
-
-**Using `jsified_items` with Jsified Lists:**
-
-The `jsified_items` function allows you to retrieve the elements of a `List` as key-value pairs, where the keys are the indices of the elements in string format.
-
-**Example:**
-
-.. code-block:: python
-
-    from jsify import jsified_items
-
-    # Get a view of the items with indices as keys
-    items_view = jsified_items(json_list)
-    for key, value in items_view:
-        print(f"{key}: {value.name}, {value.details.age}")
-    # Outputs:
-    # 0: Alice, 30
-    # 1: Bob, 25
-    # 2: Charlie, 35
-
-By using jsified lists, you gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's list operations. This makes `List` an excellent choice for working with complex and nested list data in a more intuitive and accessible way.

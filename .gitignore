@@ -1,6 +1,6 @@
-__pycache__/
-dist/
-build/
-jsify.egg-info/
-.idea/
-/docs/.buildinfo
+**/__pycache__/
+**/dist/
+**/build/
+**/jsify.egg-info/
+**/.idea/
+**/.buildinfo/

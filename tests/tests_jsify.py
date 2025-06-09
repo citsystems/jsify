@@ -7,7 +7,7 @@ from jsify.legacy.jsify import Dict, jsify, jsified_copy, jsified_get, jsified_p
 from jsify.legacy.jsify import Object
 
 from jsify.json import jsified_dumps
-from jsify.simple import loads_simplified
+from jsify.simplify import loads_simplified
 
 from jsify.legacy.undefined import Undefined
 

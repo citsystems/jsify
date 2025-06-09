@@ -7,11 +7,11 @@
 Using Jsified Tuples
 ====================
 
-In the Jsify library, tuples can be converted into `Tuple` instances, which are enhanced versions of standard Python tuples with JSON-like behavior. These jsified tuples allow for more intuitive manipulation of tuple data, including attribute-style access to elements, dynamic nesting, and integration with the broader `Object` ecosystem.
+In the Jsify library, tuples can be converted into ``Tuple`` instances, which are enhanced versions of standard Python tuples with JSON-like behavior. These jsified tuples allow for more intuitive manipulation of tuple data, including attribute-style access to elements, dynamic nesting, and integration with the broader ``Object`` ecosystem.
 
 **Creating and Using Jsified Tuples:**
 
-To create a jsified tuple, you can use the `jsify` function, which converts a standard Python tuple into a `Tuple`. This allows you to interact with tuple elements using JSON-like methods, while still preserving the immutable characteristics of tuples.
+To create a jsified tuple, you can use the ``jsify`` function, which converts a standard Python tuple into a ``Tuple``. This allows you to interact with tuple elements using JSON-like methods, while still preserving the immutable characteristics of tuples.
 
 **Example:**
 
@@ -41,46 +41,40 @@ To create a jsified tuple, you can use the `jsify` function, which converts a st
         # Bob is 25 years old
         # Charlie is 35 years old
 
-**Using `jsified_keys` with Jsified Tuples:**
+**Tuple Methods:**
 
-The `jsified_keys` function can be used with `Tuple` to retrieve the indices of the tuple elements as keys, represented in string format.
+Jsified tuples provide additional methods similar to standard Python tuples:
 
-**Example:**
+- ``count(value)``
+  Returns the number of times ``value`` appears in the tuple.
 
-.. code-block:: python
+  .. code-block:: python
 
-    from jsify import jsified_keys
+      t = jsify((1, 2, 2, 3))
+      print(t.count(2))  # Outputs: 2
 
-    # Get a view of the indices as keys
-    keys_view = jsified_keys(json_tuple)
-    for key in keys_view:
-        print(key)
-        # Outputs: '0', '1', '2'
+- ``index(value)``
+  Returns the index of the first occurrence of ``value`` in the tuple.
 
-**Using `jsified_items` with Jsified Tuples:**
+  .. code-block:: python
 
-The `jsified_items` function allows you to retrieve the elements of a `Tuple` as key-value pairs, where the keys are the indices of the elements in string format.
+      t = jsify(('a', 'b', 'c'))
+      print(t.index('b'))  # Outputs: 1
 
-**Example:**
+**Result of ``dir()``**
 
-.. code-block:: python
+- ``dir(jsified_tuple)``
+  Returns a tuple of stringified integer indices representing valid keys.
 
-    from jsify import jsified_items
+  .. code-block:: python
 
-    # Get a view of the items with indices as keys
-    items_view = jsified_items(json_tuple)
-    for key, value in items_view:
-        print(f"{key}: {value.name}, {value.age}")
-        # Outputs:
-        # 0: Alice, 30
-        # 1: Bob, 25
-        # 2: Charlie, 35
+      t = jsify(('x', 'y'))
+      print(dir(t))  # Outputs: ('0', '1')
+
 
 **Advanced Usage:**
 
 Jsified tuples support nesting, which allows you to work with deeply nested data structures seamlessly. You can access and manipulate nested elements using the same intuitive interface.
-
-**Example:**
 
 .. code-block:: python
 
@@ -103,4 +97,4 @@ Jsified tuples support nesting, which allows you to work with deeply nested data
         # 0: Wonderland
         # 1: Metropolis
 
-By using jsified tuples and the `jsified_keys` and `jsified_items` functions, you can gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's immutable tuples. This makes `Tuple` an excellent choice for working with complex and nested tuple data in a more intuitive and accessible way.
+By using jsified tuples and the ``jsified_keys`` and ``jsified_items`` functions, you can gain the flexibility of dynamic JSON-like data manipulation combined with the power of Python's immutable tuples. This makes ``Tuple`` an excellent choice for working with complex and nested tuple data in a more intuitive and accessible way.
