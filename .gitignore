@@ -3,4 +3,4 @@
 **/build/
 **/jsify.egg-info/
 **/.idea/
-**/.buildinfo/
+**/.buildinfo
