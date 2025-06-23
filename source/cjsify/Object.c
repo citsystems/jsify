@@ -353,7 +353,7 @@ PyNumberMethods Object_as_number = {
 // === Type definition ========
 // ============================
 
-PyTypeObject ObjectType __attribute__((used)) = {
+PyTypeObject ObjectType  = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_name = "Object",
     .tp_basicsize = sizeof(Object),

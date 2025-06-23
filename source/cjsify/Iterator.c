@@ -57,7 +57,7 @@ static PyObject *Iterator_iternext(PyObject *self) {
 // === Type definition ========
 // ============================
 
-PyTypeObject IteratorType __attribute__((used)) = {
+PyTypeObject IteratorType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_name = "Iterator",
     .tp_basicsize = sizeof(Iterator),

@@ -56,7 +56,7 @@ static PyMappingMethods Tuple_as_mapping = {
 // === Type definition ========
 // ============================
 
-PyTypeObject TupleType __attribute__((used)) = {
+PyTypeObject TupleType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_base = &ObjectType,
     .tp_name = "Tuple",

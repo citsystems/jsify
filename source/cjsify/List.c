@@ -183,7 +183,7 @@ static PyMappingMethods List_as_mapping = {
     .mp_ass_subscript = (objobjargproc)List_ass_subscript,
 };
 
-PyTypeObject ListType __attribute__((used)) = {
+PyTypeObject ListType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_base = &ObjectType,
     .tp_name = "List",
