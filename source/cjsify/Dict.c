@@ -49,7 +49,7 @@ static PyObject *Dict_getattr(PyObject *self, PyObject *name) {
 
 PySequenceMethods Dict_as_sequence = {};
 
-PyTypeObject DictType __attribute__((used)) = {
+PyTypeObject DictType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_base = &ObjectType,
     .tp_name = "Dict",
