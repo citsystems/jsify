@@ -2,12 +2,13 @@
 #include <Python.h>
 #include <stdio.h>
 
-#include "jsify.h"
+#include "cjsify.h"
 #include "Object.h"
 #include "List.h"
 #include "Dict.h"
 #include "Tuple.h"
 #include "Undefined.h"
+#include "Iterator.h"
 
 // ============================
 // === Helper macros ==========
@@ -48,7 +49,7 @@ static REDIRECT_TO_ORIG_BINARY(PyObject *, Object, _xor, PyNumber_Xor)
 static REDIRECT_TO_ORIG_BINARY(PyObject *, Object, _divmod, PyNumber_Divmod)
 static REDIRECT_TO_ORIG_BINARY(PyObject *, Object, _matmul, PyNumber_MatrixMultiply)
 
-static PyObject *REDIRECT_TO_ORIG_METHOD(Object, _iter, PyObject_GetIter)
+//static PyObject *REDIRECT_TO_ORIG_METHOD(Object, _iter, PyObject_GetIter)
 static PyObject *REDIRECT_TO_ORIG_METHOD(Object, _iternext, PyIter_Next)
 
 static REDIRECT_TO_ORIG_BINARY(PyObject *, Object, _iadd, PyNumber_InPlaceAdd)
@@ -275,6 +276,22 @@ static PyObject *Object_sq_irepeat(PyObject *self, Py_ssize_t count) {
 }
 
 // ============================
+// === Iteration ==========
+// ============================
+
+static PyObject *Object_iter(PyObject *self) {
+    PyObject *orig_iter = PyObject_GetIter(((Object *)self)->orig);
+    if (!orig_iter)
+        return NULL;
+
+    // Wywołanie konstruktora typu Iterator z oryginalnym iteratorem jako argumentem
+    PyObject *iter_obj = PyObject_CallFunctionObjArgs((PyObject *)&IteratorType, orig_iter, NULL);
+    Py_DECREF(orig_iter);  // zmniejszamy refcount, bo PyObject_CallFunctionObjArgs inkrementuje
+
+    return iter_obj;
+}
+
+// ============================
 // === Method tables ==========
 // ============================
 
@@ -352,6 +369,12 @@ PyNumberMethods Object_as_number = {
 // ============================
 // === Type definition ========
 // ============================
+
+#ifdef _MSC_VER
+    #ifndef __attribute__
+        #define __attribute__(x)
+    #endif
+#endif
 
 PyTypeObject ObjectType __attribute__((used)) = {
     PyVarObject_HEAD_INIT(NULL, 0)

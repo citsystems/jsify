@@ -1,12 +1,3 @@
-.. jsify documentation master file, created by
-   sphinx-quickstart on Sun Jul 28 19:34:24 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-.. meta::
-   :description: Jsify is a blazing-fast Python library for attribute-style (dot notation) access to any JSON-like data, with automatic Undefined support and JavaScript-inspired convenience.
-   :keywords: python, access, dictionary, library, json, javascript, objects, jsify, dot notation, attributes, access, serialization, undefined
-
 Welcome to jsify's documentation!
 =================================
 
@@ -22,22 +13,14 @@ With Jsify you can:
 Jsify is the perfect tool whenever you need readable, robust, and error-tolerant access to dynamic data—especially with APIs, web payloads, or any JSON-centric workflow.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    intro
    installation
-   downloading
-   jsify_vs_simple
-   jsifying_unjsifying
-   using_dictionaries
-   using_lists
-   using_tuples
-   using_iterators
-   undefined_value
-   json_serialization
-   camelized_functions
-   reference/index
+   simplify
+   jsify
+   json
 
 Indices and tables
 ==================

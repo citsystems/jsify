@@ -2,12 +2,10 @@
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta content="Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like objects, offering seamless integration and manipulation of data in a JavaScript-like manner With Jsify, you can effortlessly convert Python dictionaries, lists, and tuples into JSON-like objects that support attribute-style access (dot notation), automatic handling of undefined properties, and easy serialization." name="description" />
-<meta content="python access dictionary library json javascript object jsify dot notation attributes serialization" name="keywords" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to jsify’s documentation! &mdash; jsify 0.9.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>Welcome to jsify’s documentation! &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
@@ -18,8 +16,8 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f2328ca0"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -49,23 +47,12 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsify_vs_simple.html">Choosing Between <cite>Jsify</cite> and <cite>SimpleNamespace</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloading.html">Downloading from GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aiohttp.html">Creating flexible API with <cite>Jsify</cite> and <cite>aiohttp</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsify.html">Jsify Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
 </ul>
 
         </div>
@@ -94,28 +81,71 @@
              
   <section id="welcome-to-jsify-s-documentation">
 <h1>Welcome to jsify’s documentation!<a class="headerlink" href="#welcome-to-jsify-s-documentation" title="Link to this heading"></a></h1>
-<p>The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the <cite>Object</cite> class, which allows for attribute-style access (using dot notation) and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.</p>
+<p><strong>Jsify</strong> is a blazing-fast Python library for handling JSON-like data with JavaScript-style convenience.</p>
+<p>With Jsify you can:
+- Use dot notation for dictionaries, lists, and tuples—<cite>obj.key</cite> instead of <cite>obj[‘key’]</cite>, even for nested structures.
+- Access missing keys safely using <cite>Undefined</cite>, just like in JavaScript—no more <cite>KeyError</cite>.
+- Enjoy performance: C TypeExtension, only ~2× slower than SimpleNamespace (but much more powerful), 10× faster than dotmap, and up to 50× faster than Box.
+- Work seamlessly with JSON data—perfect for APIs, web applications, and dynamic or unknown schemas.
+- Write code that feels natural to JavaScript developers, but in pure Python.</p>
+<p>Jsify is the perfect tool whenever you need readable, robust, and error-tolerant access to dynamic data—especially with APIs, web payloads, or any JSON-centric workflow.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsify_vs_simple.html">Choosing Between <cite>Jsify</cite> and <cite>SimpleNamespace</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloading.html">Downloading from GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aiohttp.html">Creating flexible API with <cite>Jsify</cite> and <cite>aiohttp</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#contents">Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#key-object-types-simplifiedobject-vs-jsify-objects">Key Object Types: SimplifiedObject vs jsify objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#simplifiedobject-simple-safe-dot-access">SimplifiedObject: Simple &amp; Safe Dot Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#jsify-objects-advanced-dynamic-wrapping">jsify Objects: Advanced Dynamic Wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#undefined-error-free-access-for-missing-keys">Undefined: Error-Free Access for Missing Keys</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#why-simplifiedobject">Why SimplifiedObject?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#why-jsify">Why jsify?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#no-key-conflicts">No Key Conflicts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#quick-install">Quick Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#how-to-create">How to Create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#deep-attribute-access-and-undefined">Deep Attribute Access and <code class="docutils literal notranslate"><span class="pre">Undefined</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#falsy-and-comparison-behavior">Falsy and Comparison Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#serialization">Serialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#working-with-nested-structures-and-recursive-dot-access">Working with Nested Structures and Recursive Dot Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#manual-construction-tips">Manual Construction Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simplify.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsify.html">Jsify Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html">jsify / unjsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html">Tuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html">Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html">Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html">Dict Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="json.html#dumping-jsified-objects-to-json">Dumping Jsified Objects to JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html#loading-json-data">Loading JSON Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html#encoder-and-decoder-notes">Encoder and Decoder Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html#see-also">See Also</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -138,7 +168,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

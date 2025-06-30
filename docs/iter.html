@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iterator &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/iter.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dict Functions" href="dict_functions.html" />
+    <link rel="prev" title="Dict" href="dict.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="jsify.html">Jsify Objects</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html">jsify / unjsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html">Tuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html">Dict</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Iterator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-jsified-iterator">Creating a Jsified Iterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iterator-semantics-and-limitations">Iterator Semantics and Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html">Dict Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="jsify.html">Jsify Objects</a></li>
+      <li class="breadcrumb-item active">Iterator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/iter.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="iterator">
+<h1>Iterator<a class="headerlink" href="#iterator" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code> is the jsified wrapper for Python iterators, created by passing any Python iterator to <code class="xref py py-func docutils literal notranslate"><span class="pre">jsify()</span></code>.
+It provides:</p>
+<ul class="simple">
+<li><p><strong>Sequential access only:</strong> you can only iterate forward; there is no random or indexed access to the iterator itself.</p></li>
+<li><p><strong>Yields jsified values:</strong> every value yielded is automatically jsified (if possible: e.g. dicts, lists, tuples are wrapped for dot/index access).</p></li>
+<li><p><strong>Dot/index access on yielded items:</strong> if a yielded value is a dict, list, or tuple, you can use dot or index access on it; for other types, use as-is.</p></li>
+<li><p><strong>Safe chaining on yielded objects:</strong> missing attributes or indexes on jsified dicts/lists/tuples yield <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>, allowing safe chaining.</p></li>
+<li><p><strong>Reference semantics:</strong> the iterator wraps the original Python iterator directly; once exhausted, it cannot be rewound or reused.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">jsify.Iterator</span></code> does <strong>not</strong> support random access, indexing, or attribute chaining itself; these features apply only to the items yielded by the iterator (if they are jsifiable).</p>
+</div>
+</section>
+<section id="creating-a-jsified-iterator">
+<h2>Creating a Jsified Iterator<a class="headerlink" href="#creating-a-jsified-iterator" title="Link to this heading"></a></h2>
+<p>To create a jsified iterator, pass any Python iterator (not just any iterable) to <code class="xref py py-func docutils literal notranslate"><span class="pre">jsify()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;jsify.Iterator&#39;&gt;</span>
+
+<span class="c1"># Trying to pass a non-iterator (like an int or plain list) will not return a jsify.Iterator.</span>
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<p>You can iterate as with any Python iterator. Each yielded value is jsified, so you can use dot/index access if possible:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>  <span class="c1"># item is jsified: supports .a/.b if item is dict, [0] if list/tuple, otherwise returned as-is</span>
+
+<span class="c1"># Or access elements one by one:</span>
+<span class="n">item</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<span class="c1"># Nested dicts/lists/tuples are jsified recursively</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="nb">iter</span><span class="p">([{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}}]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">obj2</span><span class="p">)</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 5</span>
+
+<span class="c1"># Attempting to access .foo on a non-jsified item (like int/str) returns AttributeError as normal.</span>
+</pre></div>
+</div>
+</section>
+<section id="iterator-semantics-and-limitations">
+<h2>Iterator Semantics and Limitations<a class="headerlink" href="#iterator-semantics-and-limitations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>The jsified iterator wraps and <strong>consumes</strong> the original Python iterator; it cannot be rewound or reset.</p></li>
+<li><p>Iteration is <strong>one-time only</strong>. If you iterate past the end, <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code> is raised (just like any Python iterator).</p></li>
+<li><p>There is <strong>no random access</strong>: no support for <code class="docutils literal notranslate"><span class="pre">[]</span></code> or <code class="docutils literal notranslate"><span class="pre">.get()</span></code> on the iterator itself.</p></li>
+<li><p>Passing a non-iterator (e.g., an int, list, or dict) to <code class="xref py py-func docutils literal notranslate"><span class="pre">jsify()</span></code> does <strong>not</strong> create a jsified iterator; you must explicitly call <code class="docutils literal notranslate"><span class="pre">iter()</span></code> first.</p></li>
+<li><p>If you try to access attributes or indexes on the jsified iterator itself (not on its items), you’ll get normal Python errors.</p></li>
+</ul>
+</section>
+<section id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>StopIteration:</strong> As with all Python iterators, iterating past the end raises <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code>.</p></li>
+</ul>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reusing an exhausted jsified iterator:</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>  <span class="c1"># [1, 2]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>  <span class="c1"># []</span>
+
+<span class="c1"># Attempting random access:</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="nb">iter</span><span class="p">([{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}]))</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No random access: Iterator does not support indexing.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="list.html"><span class="doc">List</span></a> for jsified lists</p></li>
+<li><p><a class="reference internal" href="tuple.html"><span class="doc">Tuple</span></a> for jsified tuples</p></li>
+<li><p><a class="reference internal" href="dict.html"><span class="doc">Dict</span></a> for jsified dicts</p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">jsify()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">unjsify()</span></code> for conversion and reference rules</p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">jsified_copy()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">jsified_deepcopy()</span></code> for copying jsified objects</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dict.html" class="btn btn-neutral float-left" title="Dict" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dict_functions.html" class="btn btn-neutral float-right" title="Dict Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <Python.h>
 
-#include "jsify.h"
+#include "cjsify.h"
 #include "Object.h"
 #include "Dict.h"
 #include "List.h"
@@ -40,6 +40,12 @@ static PyObject *Dict_getattr(PyObject *self, PyObject *name) {
 // ============================
 // === Type definition ========
 // ============================
+
+#ifdef _MSC_VER
+    #ifndef __attribute__
+        #define __attribute__(x)
+    #endif
+#endif
 
 PySequenceMethods Dict_as_sequence = {};
 

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/list.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dict" href="dict.html" />
+    <link rel="prev" title="Tuple" href="tuple.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="jsify.html">Jsify Objects</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html">jsify / unjsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html">Tuple</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">List</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-jsified-list">Creating a Jsified List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-elements">Accessing Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteration">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#standard-list-methods">Standard List Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference-behavior">Reference Behavior</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html">Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html">Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html">Dict Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="jsify.html">Jsify Objects</a></li>
+      <li class="breadcrumb-item active">List</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/list.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="list">
+<h1>List<a class="headerlink" href="#list" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code> is the jsified wrapper for Python lists, created by passing any list (or list-containing structure) to <code class="xref py py-func docutils literal notranslate"><span class="pre">jsify()</span></code>.</p>
+<p>It supports:</p>
+<ul class="simple">
+<li><p><strong>Standard index access</strong> for all elements.</p></li>
+<li><p><strong>All standard list methods</strong>: append, extend, insert, remove, pop, clear, copy, count, index, sort, reverse, etc.</p></li>
+<li><p><strong>Mutable and reference-based</strong>: changes are always reflected in the original data and vice versa.</p></li>
+<li><p><strong>Safe chaining</strong>: missing elements accessed by index out of range return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>.</p></li>
+<li><p><strong>Iteration returns a :class:`jsify.Iterator`</strong> supporting Python and JavaScript-like iteration semantics.</p></li>
+</ul>
+</section>
+<section id="creating-a-jsified-list">
+<h2>Creating a Jsified List<a class="headerlink" href="#creating-a-jsified-list" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="n">lst</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>       <span class="c1"># &lt;class &#39;jsify.List&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="accessing-elements">
+<h2>Accessing Elements<a class="headerlink" href="#accessing-elements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Use standard index access: <code class="docutils literal notranslate"><span class="pre">obj[0]</span></code></p></li>
+<li><p><strong>Do not use dot-style attribute access for list elements or keys</strong>; unlike dicts, jsified lists do <strong>not</strong> support attribute access for elements or keys to avoid collision with list methods.</p></li>
+<li><p>For nested dicts/lists inside the list, use index access combined with attribute access on those nested dicts/lists.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>    <span class="c1"># 1  (if element is dict)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>    <span class="c1"># 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>         <span class="c1"># 3  (native int)</span>
+
+<span class="c1"># Dot access like `obj.nope` is not supported on lists and may conflict with methods.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This design preserves full access to list methods and avoids name collisions.</p>
+</div>
+</section>
+<section id="iteration">
+<h2>Iteration<a class="headerlink" href="#iteration" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Iterating over a <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code> returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code>.</p></li>
+<li><p>The iterator supports Python and JavaScript-like iteration semantics.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">it</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;jsify.Iterator&#39;&gt;</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="standard-list-methods">
+<h2>Standard List Methods<a class="headerlink" href="#standard-list-methods" title="Link to this heading"></a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code> supports all standard Python list methods, including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">append(value)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extend(iterable)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">insert(index,</span> <span class="pre">value)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remove(value)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop([index])</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clear()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">copy()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count(value)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index(value)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sort(key=None,</span> <span class="pre">reverse=False)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reverse()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__len__()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__getitem__()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__setitem__()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__delitem__()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__iter__()</span></code></p></li>
+<li><p>Slicing</p></li>
+<li><p>Comparison (<cite>==</cite>, <cite>&lt;</cite>, etc.)</p></li>
+<li><p>String conversion and representation</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">])</span>    <span class="c1"># 9</span>
+
+<span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>  <span class="c1"># 42  # Changes affect original list</span>
+
+<span class="n">obj</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>     <span class="c1"># len(lst) after removal</span>
+
+<span class="c1"># Iteration and length</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+<span class="c1"># List arithmetic and slicing</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">obj</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">sublist</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sublist</span><span class="p">))</span>
+
+<span class="c1"># String representation</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="reference-behavior">
+<h2>Reference Behavior<a class="headerlink" href="#reference-behavior" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>All changes to the jsified list (and its nested elements) are immediately reflected in the original Python list and vice versa.</p></li>
+<li><p>Assigning a jsified object as a list element keeps it jsified.</p></li>
+<li><p>For example:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">])</span>  <span class="c1"># 100</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>For converting back to native types throughout nested structures, see <a class="reference internal" href="jsify_unjsify.html"><span class="doc">jsify / unjsify</span></a>.</p></li>
+</ul>
+</section>
+<section id="limitations-and-gotchas">
+<h2>Limitations and Gotchas<a class="headerlink" href="#limitations-and-gotchas" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>All mutation operations (<code class="docutils literal notranslate"><span class="pre">append</span></code>, <code class="docutils literal notranslate"><span class="pre">insert</span></code>, <code class="docutils literal notranslate"><span class="pre">pop</span></code>, etc.) directly modify the original data.</p></li>
+<li><p>Slicing always produces a new jsified List (never a native Python list).</p></li>
+<li><p>When unjsifying, only the top-level list becomes native unless you use <code class="docutils literal notranslate"><span class="pre">unjsify_deepcopy</span></code> to recurse.</p></li>
+<li><p>Methods like <code class="docutils literal notranslate"><span class="pre">index()</span></code> and <code class="docutils literal notranslate"><span class="pre">count()</span></code> use Python equality comparison:
+- Be cautious comparing jsified children with native objects; equality may not behave as expected.</p></li>
+<li><p>No type enforcement is performed; lists may contain mixed jsified and native elements.</p></li>
+<li><p>Indexing out of range <strong>returns :class:`jsify.Undefined` instead of raising an exception</strong>.</p></li>
+<li><p>Dot-style attribute access on the list itself for elements or keys is <strong>not supported</strong> to avoid method name collisions.</p></li>
+</ul>
+</section>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">remove(value)</span></code> raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the value is not found.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index(value)</span></code> raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the value is not found.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pop(index)</span></code> raises <code class="docutils literal notranslate"><span class="pre">IndexError</span></code> if the list is empty or index is out of range.</p></li>
+</ul>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code> — This class.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Tuple</span></code> — Jsified tuples.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code> — Jsified dictionaries.</p></li>
+<li><p><a class="reference internal" href="jsify_unjsify.html"><span class="doc">jsify / unjsify</span></a> — Conversion and reference handling.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code> — Iterators returned by lists and other containers.</p></li>
+</ul>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">js_list</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Access nested attributes with index and dot notation on dicts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">js_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;a&quot;</span><span class="p">])</span>  <span class="c1"># 1</span>
+
+<span class="c1"># Modify nested values; changes reflect in original list</span>
+<span class="n">js_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;b&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;b&quot;</span><span class="p">])</span>  <span class="c1"># 20</span>
+
+<span class="c1"># Append new item</span>
+<span class="n">js_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">js_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;c&quot;</span><span class="p">])</span>  <span class="c1"># 3</span>
+
+<span class="c1"># Slicing returns jsified List</span>
+<span class="n">sublist</span> <span class="o">=</span> <span class="n">js_list</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sublist</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;jsify.List&#39;&gt;</span>
+
+<span class="c1"># Iteration</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">js_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<span class="c1"># Equality caution: comparing jsified with native</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">js_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>       <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">js_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span> <span class="c1"># May be False due to jsify wrappers</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tuple.html" class="btn btn-neutral float-left" title="Tuple" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dict.html" class="btn btn-neutral float-right" title="Dict" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module Reference &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/modindex.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsify.html">Jsify Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Module Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modindex.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-jsify.jsify">
+<span id="module-reference"></span><h1>Module Reference<a class="headerlink" href="#module-jsify.jsify" title="Link to this heading"></a></h1>
+<p>Convert dict, list, or tuple to Object.</p>
+<dl class="py class" id="module-jsify.simplify">
+<dt class="sig sig-object py" id="jsify.simplify.SimplifiedEncoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">SimplifiedEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#SimplifiedEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.SimplifiedEncoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONEncoder</span></code></p>
+<p>JSON encoder for structures containing SimplifiedObject and Undefined.</p>
+<p>This encoder customizes JSON serialization for types relevant to the
+simplified object pattern:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The <cite>Undefined</cite> singleton is encoded as <cite>null</cite> in JSON.</p></li>
+<li><p>Any instance of <cite>SimplifiedObject</cite> is serialized as a JSON object using
+its internal attribute dictionary.</p></li>
+<li><p>Other types are handled by the standard JSONEncoder.</p></li>
+</ul>
+</div></blockquote>
+<p>This allows Python objects using this pattern to be safely and predictably
+encoded to JSON for interoperability or storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>skipkeys</strong> (<em>bool</em><em>, </em><em>optional</em>) – Skip keys not of a basic type if True.</p></li>
+<li><p><strong>ensure_ascii</strong> (<em>bool</em><em>, </em><em>optional</em>) – Escape all non-ASCII characters if True.</p></li>
+<li><p><strong>check_circular</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check for circular references if True.</p></li>
+<li><p><strong>allow_nan</strong> (<em>bool</em><em>, </em><em>optional</em>) – Allow NaN and Infinity values if True.</p></li>
+<li><p><strong>sort_keys</strong> (<em>bool</em><em>, </em><em>optional</em>) – Sort output dictionary keys if True.</p></li>
+<li><p><strong>indent</strong> (<em>int</em><em> or </em><em>str</em><em>, </em><em>optional</em>) – Indentation level for pretty-printing.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.simplify.SimplifiedEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#SimplifiedEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.SimplifiedEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Return a serializable form of <cite>SimplifiedObject</cite> or <cite>Undefined</cite>.</p>
+<ul class="simple">
+<li><p>If <cite>obj</cite> is <cite>Undefined</cite>, return None (serialized as <cite>null</cite> in JSON).</p></li>
+<li><p>If <cite>obj</cite> is a <cite>SimplifiedObject</cite>, serialize using its <cite>__dict__</cite>.</p></li>
+<li><p>Otherwise, use the standard JSONEncoder behavior.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>obj</strong> (<em>Any</em>) – The object to serialize.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON-serializable representation of <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jsify.simplify.SimplifiedObject">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">SimplifiedObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping_or_iterable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#SimplifiedObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.SimplifiedObject" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleNamespace</span></code></p>
+<p>An extension of SimpleNamespace that mimics JavaScript-like property access.</p>
+<p>This class behaves like a dynamic object whose attributes can be set and retrieved.
+If an attribute is accessed that does not exist, it returns the singleton <cite>Undefined</cite>
+object instead of raising an <cite>AttributeError</cite>. This enables safe chaining of attribute
+access in deeply nested structures, similar to how missing properties return <cite>undefined</cite>
+in JavaScript.</p>
+<p>When a dictionary is deserialized into a SimplifiedObject, its keys become attributes.
+Any missing attribute will yield <cite>Undefined</cite>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">&lt;dynamic&gt;</span></span></dt>
+<dd><p>All fields are dynamically set as attributes. Missing fields yield <cite>Undefined</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">jsify.cjsify.Undefined</span></code></dt><dd><p>The singleton returned for missing attributes.</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.simplify.load_simplified">
+<span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">load_simplified</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#load_simplified"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.load_simplified" title="Link to this definition"></a></dt>
+<dd><p>Load JSON from a file and produce a structure of SimplifiedObject instances.</p>
+<p>This function behaves like <cite>json.load</cite>, but ensures that every dictionary in the
+resulting object tree is converted to a <cite>SimplifiedObject</cite>. Attribute access is
+available throughout, and missing attributes yield <cite>Undefined</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fp</strong> (<em>IO</em><em>[</em><em>str</em><em>]</em>) – File or file-like object to read JSON from.</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments to <cite>json.load</cite>.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to <cite>json.load</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parsed and converted JSON object structure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.simplify.loads_simplified">
+<span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">loads_simplified</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#loads_simplified"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.loads_simplified" title="Link to this definition"></a></dt>
+<dd><p>Load JSON from a string and produce a structure of SimplifiedObject instances.</p>
+<p>This function behaves like <cite>json.loads</cite>, but ensures that every dictionary in the
+resulting object tree is converted to a <cite>SimplifiedObject</cite>. All fields are accessible
+as attributes, and missing fields yield <cite>Undefined</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>str</em>) – JSON string to parse.</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments to <cite>json.loads</cite>.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to <cite>json.loads</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parsed and converted JSON object structure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.simplify.object_hook_convert_to_simple">
+<span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">object_hook_convert_to_simple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#object_hook_convert_to_simple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.object_hook_convert_to_simple" title="Link to this definition"></a></dt>
+<dd><p>Object hook for JSON deserialization to convert dicts to SimplifiedObject.</p>
+<p>When used as the <cite>object_hook</cite> in <cite>json.load</cite> or <cite>json.loads</cite>, this function
+replaces every dictionary with a <cite>SimplifiedObject</cite>, so that all fields can
+be accessed as attributes and any missing attribute access will yield <cite>Undefined</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>obj</strong> (<em>dict</em>) – The dictionary object parsed from JSON.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dictionary converted to a SimplifiedObject.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#jsify.simplify.SimplifiedObject" title="jsify.simplify.SimplifiedObject">SimplifiedObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.simplify.simplified_dump">
+<span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">simplified_dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#simplified_dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.simplified_dump" title="Link to this definition"></a></dt>
+<dd><p>Serialize an object as JSON and write it to a file using SimplifiedEncoder.</p>
+<p>This function writes the JSON serialization of an object to a file or file-like
+object, using the same rules as <cite>simplified_dumps</cite>. It handles <cite>Undefined</cite> as <cite>null</cite>
+and serializes <cite>SimplifiedObject</cite> instances as objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fp</strong> (<em>IO</em><em>[</em><em>str</em><em>]</em>) – File or file-like object to write the JSON output to.</p></li>
+<li><p><strong>obj</strong> (<em>Any</em>) – The object to serialize.</p></li>
+<li><p><strong>**kwargs</strong> – Any additional keyword arguments for <cite>json.dump</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.simplify.simplified_dumps">
+<span class="sig-prename descclassname"><span class="pre">jsify.simplify.</span></span><span class="sig-name descname"><span class="pre">simplified_dumps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/simplify.html#simplified_dumps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.simplify.simplified_dumps" title="Link to this definition"></a></dt>
+<dd><p>Serialize an object as a JSON string using the SimplifiedEncoder.</p>
+<p>This function provides JSON serialization for objects that may contain
+<cite>SimplifiedObject</cite> and <cite>Undefined</cite> values. The encoder ensures that <cite>Undefined</cite>
+is represented as <cite>null</cite> and all <cite>SimplifiedObject</cite> instances are serialized
+as JSON objects. Additional keyword arguments are passed to <cite>json.dumps</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – The object to serialize to JSON.</p></li>
+<li><p><strong>**kwargs</strong> – Any additional keyword arguments for <cite>json.dumps</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON-formatted string representing the object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class" id="module-jsify.json">
+<dt class="sig sig-object py" id="jsify.json.ObjectEncoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jsify.json.</span></span><span class="sig-name descname"><span class="pre">ObjectEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/json.html#ObjectEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.json.ObjectEncoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONEncoder</span></code></p>
+<p>Custom JSON encoder supporting jsify objects, omitting <cite>Undefined</cite> values.</p>
+<dl class="simple">
+<dt>This encoder serializes:</dt><dd><ul class="simple">
+<li><p><cite>Undefined</cite> as <cite>null</cite> in JSON, unless omitted.</p></li>
+<li><p><cite>Object</cite> (from jsify) by recursively converting them to plain Python objects using <cite>unjsify</cite>.</p></li>
+<li><p><cite>SimpleNamespace</cite> as a dictionary of its attributes.</p></li>
+<li><p>All other types using standard JSON encoding.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The <cite>omit_undefined</cite> parameter controls whether fields or items with <cite>Undefined</cite> values
+are included in the output. If <cite>omit_undefined</cite> is True, all such values are omitted
+from dictionaries, lists, and tuples at all nesting levels before encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>omit_undefined</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, any field/item with value <cite>Undefined</cite> is omitted from the output (default: True).</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments passed to <cite>json.JSONEncoder</cite>.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to <cite>json.JSONEncoder</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.json.ObjectEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/json.html#ObjectEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.json.ObjectEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Custom default handler for objects not serializable by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>o</strong> (<em>Any</em>) – The object to encode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A JSON-serializable value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Returns None for <cite>Undefined</cite> (serialized as <cite>null</cite> in JSON).</p></li>
+<li><p>Returns unjsified value for <cite>Object</cite> instances.</p></li>
+<li><p>Serializes <cite>SimpleNamespace</cite> as its attribute dictionary.</p></li>
+<li><p>Falls back to the base encoder otherwise.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jsify.json.ObjectEncoder.iterencode">
+<span class="sig-name descname"><span class="pre">iterencode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_one_shot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/json.html#ObjectEncoder.iterencode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.json.ObjectEncoder.iterencode" title="Link to this definition"></a></dt>
+<dd><p>Recursively remove all <cite>Undefined</cite> values (if enabled) before serialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>o</strong> (<em>Any</em>) – The object to encode.</p></li>
+<li><p><strong>_one_shot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Passed through to the base class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterator yielding encoded JSON chunks.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>generator</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Converts all <cite>Object</cite> instances to plain Python objects using <cite>unjsify</cite>.</p></li>
+<li><p>Omits fields/items with <cite>Undefined</cite> values if <cite>omit_undefined</cite> is True.</p></li>
+<li><p>Handles all nested containers recursively.</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.json.jsified_dump">
+<span class="sig-prename descclassname"><span class="pre">jsify.json.</span></span><span class="sig-name descname"><span class="pre">jsified_dump</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/json.html#jsified_dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.json.jsified_dump" title="Link to this definition"></a></dt>
+<dd><p>Serialize an object as JSON and write it to a file using ObjectEncoder.</p>
+<p>Handles jsified objects and omits <cite>Undefined</cite> values if specified.
+All nested structures are unjsified recursively and can be filtered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>o</strong> (<em>Any</em>) – The object to serialize.</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments passed to <cite>json.dump</cite>.</p></li>
+<li><p><strong>omit_undefined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to omit <cite>Undefined</cite> values (default: True).</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to <cite>json.dump</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jsify.json.jsified_dumps">
+<span class="sig-prename descclassname"><span class="pre">jsify.json.</span></span><span class="sig-name descname"><span class="pre">jsified_dumps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_undefined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jsify/json.html#jsified_dumps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jsify.json.jsified_dumps" title="Link to this definition"></a></dt>
+<dd><p>Serialize an object as a JSON string using ObjectEncoder.</p>
+<p>Handles jsified objects and omits <cite>Undefined</cite> values if specified.
+All nested structures are unjsified recursively and can be filtered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>o</strong> (<em>Any</em>) – The object to serialize.</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments passed to <cite>json.dumps</cite>.</p></li>
+<li><p><strong>omit_undefined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to omit <cite>Undefined</cite> values (default: True).</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to <cite>json.dumps</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The JSON-formatted string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jsify.simplify &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/_modules/jsify/simplify.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=9bcbadda"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jsify.html">Jsify Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jsify.simplify</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jsify.simplify</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleNamespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="kn">import</span> <span class="n">load</span><span class="p">,</span> <span class="n">loads</span><span class="p">,</span> <span class="n">JSONEncoder</span><span class="p">,</span> <span class="n">dump</span><span class="p">,</span> <span class="n">dumps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.cjsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">Undefined</span>
+
+<div class="viewcode-block" id="SimplifiedObject">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.SimplifiedObject">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimplifiedObject</span><span class="p">(</span><span class="n">SimpleNamespace</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An extension of SimpleNamespace that mimics JavaScript-like property access.</span>
+
+<span class="sd">    This class behaves like a dynamic object whose attributes can be set and retrieved.</span>
+<span class="sd">    If an attribute is accessed that does not exist, it returns the singleton `Undefined`</span>
+<span class="sd">    object instead of raising an `AttributeError`. This enables safe chaining of attribute</span>
+<span class="sd">    access in deeply nested structures, similar to how missing properties return `undefined`</span>
+<span class="sd">    in JavaScript.</span>
+
+<span class="sd">    When a dictionary is deserialized into a SimplifiedObject, its keys become attributes.</span>
+<span class="sd">    Any missing attribute will yield `Undefined`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    &lt;dynamic&gt; : Any</span>
+<span class="sd">        All fields are dynamically set as attributes. Missing fields yield `Undefined`.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    jsify.cjsify.Undefined : The singleton returned for missing attributes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the `Undefined` singleton for any missing attribute.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        item : str</span>
+<span class="sd">            The attribute name.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Any</span>
+<span class="sd">            The value of the attribute if it exists, or `Undefined` if not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Undefined</span></div>
+
+
+
+<div class="viewcode-block" id="SimplifiedEncoder">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.SimplifiedEncoder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimplifiedEncoder</span><span class="p">(</span><span class="n">JSONEncoder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    JSON encoder for structures containing SimplifiedObject and Undefined.</span>
+
+<span class="sd">    This encoder customizes JSON serialization for types relevant to the</span>
+<span class="sd">    simplified object pattern:</span>
+<span class="sd">      - The `Undefined` singleton is encoded as `null` in JSON.</span>
+<span class="sd">      - Any instance of `SimplifiedObject` is serialized as a JSON object using</span>
+<span class="sd">        its internal attribute dictionary.</span>
+<span class="sd">      - Other types are handled by the standard JSONEncoder.</span>
+
+<span class="sd">    This allows Python objects using this pattern to be safely and predictably</span>
+<span class="sd">    encoded to JSON for interoperability or storage.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    skipkeys : bool, optional</span>
+<span class="sd">        Skip keys not of a basic type if True.</span>
+<span class="sd">    ensure_ascii : bool, optional</span>
+<span class="sd">        Escape all non-ASCII characters if True.</span>
+<span class="sd">    check_circular : bool, optional</span>
+<span class="sd">        Check for circular references if True.</span>
+<span class="sd">    allow_nan : bool, optional</span>
+<span class="sd">        Allow NaN and Infinity values if True.</span>
+<span class="sd">    sort_keys : bool, optional</span>
+<span class="sd">        Sort output dictionary keys if True.</span>
+<span class="sd">    indent : int or str, optional</span>
+<span class="sd">        Indentation level for pretty-printing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SimplifiedEncoder.default">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.SimplifiedEncoder.default">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a serializable form of `SimplifiedObject` or `Undefined`.</span>
+
+<span class="sd">        - If `obj` is `Undefined`, return None (serialized as `null` in JSON).</span>
+<span class="sd">        - If `obj` is a `SimplifiedObject`, serialize using its `__dict__`.</span>
+<span class="sd">        - Otherwise, use the standard JSONEncoder behavior.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obj : Any</span>
+<span class="sd">            The object to serialize.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Any</span>
+<span class="sd">            JSON-serializable representation of `obj`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">SimplifiedObject</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="simplified_dumps">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.simplified_dumps">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">simplified_dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serialize an object as a JSON string using the SimplifiedEncoder.</span>
+
+<span class="sd">    This function provides JSON serialization for objects that may contain</span>
+<span class="sd">    `SimplifiedObject` and `Undefined` values. The encoder ensures that `Undefined`</span>
+<span class="sd">    is represented as `null` and all `SimplifiedObject` instances are serialized</span>
+<span class="sd">    as JSON objects. Additional keyword arguments are passed to `json.dumps`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : Any</span>
+<span class="sd">        The object to serialize to JSON.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Any additional keyword arguments for `json.dumps`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        JSON-formatted string representing the object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">SimplifiedEncoder</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="simplified_dump">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.simplified_dump">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">simplified_dump</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serialize an object as JSON and write it to a file using SimplifiedEncoder.</span>
+
+<span class="sd">    This function writes the JSON serialization of an object to a file or file-like</span>
+<span class="sd">    object, using the same rules as `simplified_dumps`. It handles `Undefined` as `null`</span>
+<span class="sd">    and serializes `SimplifiedObject` instances as objects.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fp : typing.IO[str]</span>
+<span class="sd">        File or file-like object to write the JSON output to.</span>
+<span class="sd">    obj : Any</span>
+<span class="sd">        The object to serialize.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Any additional keyword arguments for `json.dump`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dump</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">SimplifiedEncoder</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="object_hook_convert_to_simple">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.object_hook_convert_to_simple">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">object_hook_convert_to_simple</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object hook for JSON deserialization to convert dicts to SimplifiedObject.</span>
+
+<span class="sd">    When used as the `object_hook` in `json.load` or `json.loads`, this function</span>
+<span class="sd">    replaces every dictionary with a `SimplifiedObject`, so that all fields can</span>
+<span class="sd">    be accessed as attributes and any missing attribute access will yield `Undefined`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : dict</span>
+<span class="sd">        The dictionary object parsed from JSON.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    SimplifiedObject</span>
+<span class="sd">        The dictionary converted to a SimplifiedObject.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="o">**</span><span class="n">obj</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_simplified">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.load_simplified">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_simplified</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load JSON from a file and produce a structure of SimplifiedObject instances.</span>
+
+<span class="sd">    This function behaves like `json.load`, but ensures that every dictionary in the</span>
+<span class="sd">    resulting object tree is converted to a `SimplifiedObject`. Attribute access is</span>
+<span class="sd">    available throughout, and missing attributes yield `Undefined`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fp : typing.IO[str]</span>
+<span class="sd">        File or file-like object to read JSON from.</span>
+<span class="sd">    *args</span>
+<span class="sd">        Additional positional arguments to `json.load`.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional keyword arguments to `json.load`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        The parsed and converted JSON object structure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">object_hook_convert_to_simple</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="loads_simplified">
+<a class="viewcode-back" href="../../modindex.html#jsify.simplify.loads_simplified">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">loads_simplified</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load JSON from a string and produce a structure of SimplifiedObject instances.</span>
+
+<span class="sd">    This function behaves like `json.loads`, but ensures that every dictionary in the</span>
+<span class="sd">    resulting object tree is converted to a `SimplifiedObject`. All fields are accessible</span>
+<span class="sd">    as attributes, and missing fields yield `Undefined`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    s : str</span>
+<span class="sd">        JSON string to parse.</span>
+<span class="sd">    *args</span>
+<span class="sd">        Additional positional arguments to `json.loads`.</span>
+<span class="sd">    **kwargs</span>
+<span class="sd">        Additional keyword arguments to `json.loads`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        The parsed and converted JSON object structure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">object_hook</span><span class="o">=</span><span class="n">object_hook_convert_to_simple</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

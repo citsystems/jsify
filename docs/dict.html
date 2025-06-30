@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dict &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/dict.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Iterator" href="iter.html" />
+    <link rel="prev" title="List" href="list.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="jsify.html">Jsify Objects</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html">jsify / unjsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html">Tuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html">List</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-jsified-dict">Creating a Jsified Dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-elements">Accessing Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteration">Iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#standard-dict-methods">Standard Dict Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference-behavior">Reference Behavior</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html">Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html">Dict Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="jsify.html">Jsify Objects</a></li>
+      <li class="breadcrumb-item active">Dict</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dict.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dict">
+<h1>Dict<a class="headerlink" href="#dict" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code> is the jsified wrapper for Python dictionaries, created by passing any dict (or dict-containing structure) to <code class="xref py py-func docutils literal notranslate"><span class="pre">jsify()</span></code>.</p>
+<p><strong>Key features:</strong></p>
+<ul class="simple">
+<li><p><strong>Dot-style attribute access</strong> for all keys (even deeply nested).</p></li>
+<li><p><strong>Bracket/item access:</strong> <cite>obj[‘key’]</cite> works as expected.</p></li>
+<li><p><strong>Most standard dict operations via helpers:</strong> see “Dict Methods” and <a class="reference internal" href="dict_functions.html"><span class="doc">Dict Functions</span></a> for details.</p></li>
+<li><p><strong>Mutable and reference-based:</strong> changes are always reflected in the original data and vice versa, including all nested containers.</p></li>
+<li><p><strong>Safe chaining:</strong> missing attributes/keys always return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>, never raise <cite>KeyError</cite> or <cite>AttributeError</cite>.</p></li>
+<li><p><strong>Consistent interface:</strong> all nested dicts/lists are jsified recursively, changing their type and adding dot-access and chaining.</p></li>
+<li><p><strong>Iteration returns a :class:`jsify.Iterator`</strong> that supports Python and JavaScript-like iteration semantics.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Jsified <code class="docutils literal notranslate"><span class="pre">Dict</span></code> objects do <em>not</em> provide most standard dict methods as direct attributes (e.g., <code class="docutils literal notranslate"><span class="pre">obj.items()</span></code> or <code class="docutils literal notranslate"><span class="pre">obj.copy()</span></code> will not work).
+Instead, use the corresponding <code class="docutils literal notranslate"><span class="pre">jsified_*</span></code> helper functions.
+If a key matches a dict method name (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;items&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;get&quot;</span></code>), the key always takes priority and the method is unavailable by attribute.
+For native type methods, use <code class="docutils literal notranslate"><span class="pre">unjsify(obj)</span></code> to obtain a standard dict.</p>
+</div>
+</section>
+<section id="creating-a-jsified-dict">
+<h2>Creating a Jsified Dict<a class="headerlink" href="#creating-a-jsified-dict" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="s2">&quot;arr&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>       <span class="c1"># &lt;class &#39;jsify.Dict&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">b</span><span class="p">))</span>     <span class="c1"># &lt;class &#39;jsify.Dict&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">arr</span><span class="p">))</span>   <span class="c1"># &lt;class &#39;jsify.List&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All nested dicts and lists will be jsified recursively.
+Their type and interface change to support dot/item access, safe chaining, and JavaScript-like behaviors.
+Use <code class="docutils literal notranslate"><span class="pre">unjsify(obj)</span></code> if you need a raw Python dict or list.</p>
+</div>
+</section>
+<section id="accessing-elements">
+<h2>Accessing Elements<a class="headerlink" href="#accessing-elements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Use dot access: <code class="docutils literal notranslate"><span class="pre">obj.a</span></code></p></li>
+<li><p>Use item (bracket) access: <code class="docutils literal notranslate"><span class="pre">obj[&quot;a&quot;]</span></code></p></li>
+<li><p>Both work at any depth; all nested dicts/lists are jsified</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>          <span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span>       <span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>        <span class="c1"># 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">][</span><span class="s2">&quot;c&quot;</span><span class="p">])</span>  <span class="c1"># 2</span>
+
+<span class="c1"># Lists inside dicts are jsified:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>     <span class="c1"># 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">arr</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;jsify.List&#39;&gt;</span>
+
+<span class="c1"># Safe for missing keys/attributes (never raises):</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">nope</span><span class="p">)</span>       <span class="c1"># Undefined</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;nope&quot;</span><span class="p">])</span>    <span class="c1"># Undefined</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Dot-style attribute access <strong>never raises</strong> for missing keys—missing attributes always return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>.
+This enables safe chaining, e.g., <code class="docutils literal notranslate"><span class="pre">obj.not_here.foo.bar</span></code> is valid and always returns <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>.</p>
+<p>If a dict key matches a Python dict method name (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;items&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;get&quot;</span></code>, etc.), dot-access returns the key’s value, <strong>not</strong> the method.
+Dict methods are not available as attributes if shadowed.</p>
+</div>
+</section>
+<section id="iteration">
+<h2>Iteration<a class="headerlink" href="#iteration" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Iterating over a <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code> returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code>.</p></li>
+<li><p>The iterator supports Python and JavaScript-like iteration semantics.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">it</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;jsify.Iterator&#39;&gt;</span>
+
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="standard-dict-methods">
+<h2>Standard Dict Methods<a class="headerlink" href="#standard-dict-methods" title="Link to this heading"></a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code> supports <strong>most standard Python dict operations</strong> via helper functions in the jsify package.
+Classic methods like <code class="docutils literal notranslate"><span class="pre">items()</span></code>, <code class="docutils literal notranslate"><span class="pre">keys()</span></code>, <code class="docutils literal notranslate"><span class="pre">values()</span></code>, etc. are <strong>not</strong> available directly on jsified objects—use helpers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_items(obj)</span></code> – Returns a jsified list of (key, value) pairs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_keys(obj)</span></code> – Returns a jsified list of keys</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_values(obj)</span></code> – Returns a jsified list of values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_update(obj,</span> <span class="pre">other)</span></code> – Updates the dict in place</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_get(obj,</span> <span class="pre">key,</span> <span class="pre">default=None)</span></code> – Safe get with default</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_setdefault(obj,</span> <span class="pre">key,</span> <span class="pre">default)</span></code> – Set default value if missing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_pop(obj,</span> <span class="pre">key[,</span> <span class="pre">default])</span></code> – Pop a key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsified_popitem(obj)</span></code> – Remove and return a (key, value) pair</p></li>
+</ul>
+<p>See <a class="reference internal" href="dict_functions.html"><span class="doc">Dict Functions</span></a> for all available helpers and full documentation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">jsified_items</span><span class="p">,</span> <span class="n">jsified_keys</span><span class="p">,</span> <span class="n">jsified_values</span><span class="p">,</span>
+    <span class="n">jsified_update</span><span class="p">,</span> <span class="n">jsified_get</span><span class="p">,</span> <span class="n">jsified_setdefault</span><span class="p">,</span>
+    <span class="n">jsified_pop</span><span class="p">,</span> <span class="n">jsified_popitem</span>
+<span class="p">)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">jsified_keys</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>    <span class="c1"># [&#39;x&#39;, &#39;y&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">jsified_values</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>  <span class="c1"># [1, 2]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">jsified_items</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>   <span class="c1"># [(&#39;x&#39;, 1), (&#39;y&#39;, 2)]</span>
+
+<span class="n">jsified_update</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>     <span class="c1"># 3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jsified_get</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">))</span>     <span class="c1"># 1</span>
+<span class="n">jsified_pop</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>     <span class="c1"># Undefined</span>
+
+<span class="n">jsified_setdefault</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>     <span class="c1"># 99</span>
+
+<span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">jsified_popitem</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removed: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="reference-behavior">
+<h2>Reference Behavior<a class="headerlink" href="#reference-behavior" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>All changes to the jsified dict <strong>and its nested elements</strong> are reflected in the original Python dict, and vice versa.</p></li>
+<li><p>Mutations are always reference-based: editing any nested dict/list structure via a jsified object mutates the original.</p></li>
+<li><p>Assigning a jsified object as a value in a dict keeps it jsified (see deep unjsify in <a class="reference internal" href="jsify_unjsify.html"><span class="doc">jsify / unjsify</span></a> if you want to convert back to native types everywhere).</p></li>
+</ul>
+</section>
+<section id="limitations-and-gotchas">
+<h2>Limitations and Gotchas<a class="headerlink" href="#limitations-and-gotchas" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>All mutation operations (assignment, pop, update, etc.) directly affect the original data, recursively for all contained structures.</p></li>
+<li><p>When unjsifying, only the top-level dict becomes native unless you use <code class="docutils literal notranslate"><span class="pre">unjsify_deepcopy</span></code> (see <a class="reference internal" href="jsify_unjsify.html"><span class="doc">jsify / unjsify</span></a>).</p></li>
+<li><p>Classic dict methods (such as <code class="docutils literal notranslate"><span class="pre">copy</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">fromkeys</span></code>, etc.) are <strong>not</strong> available as direct methods.
+Use provided helper functions for supported operations, or unjsify to access native methods.</p></li>
+<li><p>Type checks with <code class="docutils literal notranslate"><span class="pre">isinstance(obj,</span> <span class="pre">dict)</span></code> or <code class="docutils literal notranslate"><span class="pre">type(obj)</span> <span class="pre">is</span> <span class="pre">dict</span></code> will <strong>not work</strong>—jsified objects are not standard dicts/lists/tuples.
+Use <code class="docutils literal notranslate"><span class="pre">unjsify(obj)</span></code> for such checks.</p></li>
+<li><p>If your keys clash with dict method names (e.g., <code class="docutils literal notranslate"><span class="pre">obj.items</span></code>), the key always takes priority; use the helper function for the classic method.</p></li>
+</ul>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="dict_functions.html"><span class="doc">Dict Functions</span></a> for full documentation of dict utilities and helpers</p></li>
+<li><p><a class="reference internal" href="list.html"><span class="doc">List</span></a> for jsified lists</p></li>
+<li><p><a class="reference internal" href="tuple.html"><span class="doc">Tuple</span></a> for jsified tuples</p></li>
+<li><p><a class="reference internal" href="jsify_unjsify.html"><span class="doc">jsify / unjsify</span></a> for conversion, reference rules, and copying</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code> for iterators returned by dicts and other containers</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="list.html" class="btn btn-neutral float-left" title="List" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="iter.html" class="btn btn-neutral float-right" title="Iterator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

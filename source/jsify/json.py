@@ -1,86 +1,91 @@
-"""
-The `encoder` module provides custom JSON serialization functionality specifically designed to handle `Object`
-instances. This module extends Python's built-in `json` module to ensure that `Object` instances are correctly
-converted into their original dictionary representation during the serialization process.
-
-The module features the `ObjectEncoder` class, which overrides the default JSON encoding behavior to accommodate
-`Object` instances. Additionally, it provides custom `dump` and `dumps` functions that leverage this encoder,
-allowing seamless integration with standard JSON serialization workflows.
-
-You must import this module if you want to use serialization done by the `json` module.
-"""
-
 import json
 from types import SimpleNamespace
 from typing import Any
 
-from .jsify import Undefined, unjsify
-from .jsify import Object
+from .cjsify import Undefined, unjsify
+from .cjsify import Object
 
 
 class ObjectEncoder(json.JSONEncoder):
     """
-    Custom JSON encoder for `Object` instances.
+    Custom JSON encoder supporting jsify objects, omitting `Undefined` values.
 
-    This encoder converts `Object` instances to their original dictionary representation
-    for JSON serialization. It also provides an option to omit fields with the `Undefined` value
-    during serialization.
+    This encoder serializes:
+      - `Undefined` as `null` in JSON, unless omitted.
+      - `Object` (from jsify) by recursively converting them to plain Python objects using `unjsify`.
+      - `SimpleNamespace` as a dictionary of its attributes.
+      - All other types using standard JSON encoding.
+
+    The `omit_undefined` parameter controls whether fields or items with `Undefined` values
+    are included in the output. If `omit_undefined` is True, all such values are omitted
+    from dictionaries, lists, and tuples at all nesting levels before encoding.
+
+    Parameters
+    ----------
+    omit_undefined : bool, optional
+        If True, any field/item with value `Undefined` is omitted from the output (default: True).
+    *args
+        Additional positional arguments passed to `json.JSONEncoder`.
+    **kwargs
+        Additional keyword arguments passed to `json.JSONEncoder`.
     """
 
-    def __init__(self, omit_undefined, *args, **kwargs):
+    def __init__(self, omit_undefined=True, *args, **kwargs):
         """
-        Initialize the `ObjectEncoder` with the option to omit `Undefined` values.
+        Initialize the encoder with an option to omit `Undefined` values.
 
         Parameters
         ----------
-        omit_undefined : bool
-            If True, fields with the `Undefined` value are omitted from the serialized output.
-        *args : tuple
-            Additional positional arguments passed to `JSONEncoder`.
-        **kwargs : dict
-            Additional keyword arguments passed to `JSONEncoder`.
+        omit_undefined : bool, optional
+            If True, `Undefined` values are omitted from output (default: True).
+        *args
+            Additional positional arguments for the parent constructor.
+        **kwargs
+            Additional keyword arguments for the parent constructor.
         """
         super().__init__(*args, **kwargs)
         self.omit_undefined = omit_undefined
 
     def iterencode(self, o, _one_shot=False):
         """
-        Encode the object into a JSON string.
-
-        This method handles the serialization of `Object` instances by converting them
-        to their original representation using `unjsify`. If `omit_undefined` is set to True,
-        it omits fields with the `Undefined` value.
+        Recursively remove all `Undefined` values (if enabled) before serialization.
 
         Parameters
         ----------
         o : Any
-            The object to encode into JSON format.
+            The object to encode.
         _one_shot : bool, optional
-            A flag for one-shot encoding, passed to the parent `JSONEncoder`. Default is False.
+            Passed through to the base class.
 
         Returns
         -------
-        Iterator[str]
-            An iterator that generates the encoded JSON string.
+        generator
+            An iterator yielding encoded JSON chunks.
+
+        Notes
+        -----
+        - Converts all `Object` instances to plain Python objects using `unjsify`.
+        - Omits fields/items with `Undefined` values if `omit_undefined` is True.
+        - Handles all nested containers recursively.
         """
-        if isinstance(o, Object):
-            o = unjsify(o)
-        if self.omit_undefined:
-            if isinstance(o, tuple):
-                o = o.__class__(value for value in o if value is not Undefined)
-            elif isinstance(o, list):
-                o = o.__class__(value for value in o if value is not Undefined)
-            elif isinstance(o, dict):
-                o = o.__class__({key: value for key, value in o.items() if value is not Undefined})
-        return super().iterencode(o, _one_shot)
+
+        def deeply_unjsify_with_omit(o):
+            if isinstance(o, Object):
+                o = unjsify(o)
+            if self.omit_undefined:
+                if isinstance(o, tuple):
+                    o = o.__class__(deeply_unjsify_with_omit(value) for value in o if value is not Undefined)
+                elif isinstance(o, list):
+                    o = o.__class__(deeply_unjsify_with_omit(value) for value in o if value is not Undefined)
+                elif isinstance(o, dict):
+                    o = o.__class__({key: deeply_unjsify_with_omit(value) for key, value in o.items() if value is not Undefined})
+            return o
+
+        return super().iterencode(deeply_unjsify_with_omit(o), _one_shot)
 
     def default(self, o: Any) -> Any:
         """
-        Override the default method to handle `Object` and `Undefined` instances.
-
-        This method converts `Object` instances to their original representation and handles
-        `Undefined` values by converting them to `None`. It also supports serializing
-        `SimpleNamespace` instances by returning their dictionary representation.
+        Custom default handler for objects not serializable by default.
 
         Parameters
         ----------
@@ -90,8 +95,14 @@ class ObjectEncoder(json.JSONEncoder):
         Returns
         -------
         Any
-            The encoded object, or the result of calling the superclass's `default` method
-            if the object type is not explicitly handled.
+            A JSON-serializable value.
+
+        Notes
+        -----
+        - Returns None for `Undefined` (serialized as `null` in JSON).
+        - Returns unjsified value for `Object` instances.
+        - Serializes `SimpleNamespace` as its attribute dictionary.
+        - Falls back to the base encoder otherwise.
         """
         if o is Undefined:
             return None
@@ -105,44 +116,46 @@ class ObjectEncoder(json.JSONEncoder):
 
 def jsified_dumps(o, *args, omit_undefined=True, **kwargs):
     """
-    Serialize `o` to a JSON formatted `str` using `ObjectEncoder`.
+    Serialize an object as a JSON string using ObjectEncoder.
 
-    This function wraps `json.dumps`, providing custom serialization for `Object` instances
-    and optionally omitting fields with the `Undefined` value.
+    Handles jsified objects and omits `Undefined` values if specified.
+    All nested structures are unjsified recursively and can be filtered.
 
     Parameters
     ----------
     o : Any
         The object to serialize.
+    *args
+        Additional positional arguments passed to `json.dumps`.
     omit_undefined : bool, optional
-        If True, fields with the `Undefined` value are omitted from the serialized output. Default is True.
-    **kwargs : dict
+        Whether to omit `Undefined` values (default: True).
+    **kwargs
         Additional keyword arguments passed to `json.dumps`.
 
     Returns
     -------
     str
-        The JSON formatted string.
+        The JSON-formatted string.
     """
     return json.dumps(o, *args, cls=ObjectEncoder, omit_undefined=omit_undefined, **kwargs)
 
 
 def jsified_dump(o, *args, omit_undefined=True, **kwargs):
     """
-    Serialize `o` as a JSON formatted stream to `fp` using `ObjectEncoder`.
+    Serialize an object as JSON and write it to a file using ObjectEncoder.
 
-    This function wraps `json.dump`, providing custom serialization for `Object` instances
-    and optionally omitting fields with the `Undefined` value.
+    Handles jsified objects and omits `Undefined` values if specified.
+    All nested structures are unjsified recursively and can be filtered.
 
     Parameters
     ----------
     o : Any
         The object to serialize.
-    fp : file-like object
-        The file-like object to which the JSON formatted stream is written.
+    *args
+        Additional positional arguments passed to `json.dump`.
     omit_undefined : bool, optional
-        If True, fields with the `Undefined` value are omitted from the serialized output. Default is True.
-    **kwargs : dict
+        Whether to omit `Undefined` values (default: True).
+    **kwargs
         Additional keyword arguments passed to `json.dump`.
 
     Returns
@@ -150,4 +163,3 @@ def jsified_dump(o, *args, omit_undefined=True, **kwargs):
     None
     """
     return json.dump(o, *args, cls=ObjectEncoder, omit_undefined=omit_undefined, **kwargs)
-

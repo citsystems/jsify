@@ -11,20 +11,26 @@ class Setup:
         with open(module_dir + "/README.md", "r", encoding="utf-8") as fh:
             long_description = fh.read()
         self.name = "jsify"
-        self.version = "0.9.7"  # Update the version as necessary
+        self.version = "1.0.0"  # Update the version as necessary
         self.author = "Zbigniew Rajewski"
         self.author_email = "zbigniew.r@citsystems.pl"
         self.description = \
-            "Jsify is a Python library designed to bridge the gap between Python's data structures and JSON-like " \
-            "objects, offering seamless integration and manipulation of data in a JavaScript-like manner." \
-            "With Jsify, you can effortlessly convert Python dictionaries, lists, and tuples into JSON-like " \
-            "objects that support attribute-style access (dot notation), automatic handling of undefined " \
-            "properties, and easy serialization."
+            """
+            Jsify is a blazing-fast Python library (powered by a C extension) that transforms dictionaries, lists,
+            and tuples into smart objects supporting JavaScript-style dot access (attribute-style, e.g. obj.key),
+            lazy dynamic wrapping, and safe, deep navigation. Missing or undefined attributes never raise errors—
+            they return a special `Undefined` object instead. Ideal for handling messy, deeply nested, or
+            unpredictable JSON and Python data, Jsify also provides seamless serialization and real-time,
+            reference-based manipulation.
+            """
         self.long_description = long_description
         self.long_description_content_type = "text/markdown"
-        self.keywords = "json javascript objects jsify dot notation attributes serialization"  # SEO keywords
+        self.keywords = \
+             """
+             jsify, python, json, dot notation, attribute access, javascript, objects, serialization, undefined,
+             c extension, safe access
+             """  # SEO keywords
         self.url = "https://github.com/citsystems/jsify"  # Replace with the correct URL
-        self.packages = find_packages()
         self.classifiers = [
             "Programming Language :: Python :: 3",
             "License :: OSI Approved :: MIT License",

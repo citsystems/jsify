@@ -2,7 +2,7 @@
 #include <Python.h>
 
 #include "Macro.h"
-#include "jsify.h"
+#include "cjsify.h"
 #include "Iterator.h"
 
 // ============================
@@ -56,6 +56,12 @@ static PyObject *Iterator_iternext(PyObject *self) {
 // ============================
 // === Type definition ========
 // ============================
+
+#ifdef _MSC_VER
+    #ifndef __attribute__
+        #define __attribute__(x)
+    #endif
+#endif
 
 PyTypeObject IteratorType __attribute__((used)) = {
     PyVarObject_HEAD_INIT(NULL, 0)

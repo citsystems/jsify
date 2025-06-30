@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jsify Objects &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/jsify.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="jsify / unjsify" href="jsify_unjsify.html" />
+    <link rel="prev" title="SimplifiedObject" href="simplify.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Jsify Objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html">jsify / unjsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html">Tuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html">Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html">Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html">Dict Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Jsify Objects</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/jsify.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jsify-objects">
+<h1>Jsify Objects<a class="headerlink" href="#jsify-objects" title="Link to this heading"></a></h1>
+<p>The <strong>Jsify Object system</strong> transforms Python dicts, lists, and (read-only) tuples into JavaScript-like objects
+with blazing-fast dot notation, safe deep access, and reference-based, mutable structures.
+All wrapped objects are powered by a high-performance C extension for maximum speed.</p>
+<ul class="simple">
+<li><p><strong>Dot access at any depth:</strong> Use <cite>obj.key</cite> even on deeply nested structures—never worry about <cite>‘KeyError’</cite> or <cite>‘AttributeError’</cite>.</p></li>
+<li><p><strong>Reference-based:</strong> Jsified objects reflect the original data; changes go both ways (for dicts and lists).</p></li>
+<li><p><strong>Safe undefined handling:</strong> Missing keys/attributes return the special singleton <cite>Undefined</cite> object, not an exception. Any further access on <cite>Undefined</cite> always returns <cite>Undefined</cite> (like JavaScript).</p></li>
+<li><p><strong>Fully automatic:</strong> Nesting and type detection are fully recursive; not just the top-level object is wrapped.</p></li>
+<li><p><strong>Supports all standard container operations:</strong> Slicing and iteration for lists/tuples, in-place modification for dicts and lists, plus all standard dict methods (e.g., pop, setdefault, update, keys, values, items).</p></li>
+</ul>
+<p><strong>Note:</strong>
+- <em>Tuples</em> are wrapped for read-only access and slicing, but are not mutable.
+- Iterators can also be jsified for JavaScript-like iteration.
+- For lightweight, pure-Python use-cases, see <cite>SimplifiedObject</cite> for a SimpleNamespace-based fallback (see: <cite>simplify</cite>).</p>
+<p>The special <cite>Undefined</cite> singleton replaces exceptions for missing keys or attributes.
+It is always returned when you access a non-existent property or index, and any further access on <cite>Undefined</cite> will also return <cite>Undefined</cite> (mimicking JavaScript’s <cite>undefined</cite>).</p>
+<p>For JSON support and details on serializing jsified objects (including omission or conversion of <cite>Undefined</cite>), see the [json](json) section.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jsify_unjsify.html">jsify / unjsify</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#jsify">Jsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#jsified-deep-copy">Jsified Deep Copy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#unjsify">Unjsify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#unjsify-deep-copy">Unjsify Deep Copy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#quick-reference-table">Quick Reference Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jsify_unjsify.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tuple.html">Tuple</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#creating-a-jsified-tuple">Creating a jsified Tuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#accessing-elements">Accessing Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#iteration">Iteration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#standard-tuple-methods">Standard Tuple Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#reference-behavior">Reference Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="list.html">List</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#creating-a-jsified-list">Creating a Jsified List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#accessing-elements">Accessing Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#iteration">Iteration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#standard-list-methods">Standard List Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#reference-behavior">Reference Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#see-also">See Also</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dict.html">Dict</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#creating-a-jsified-dict">Creating a Jsified Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#accessing-elements">Accessing Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#iteration">Iteration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#standard-dict-methods">Standard Dict Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#reference-behavior">Reference Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="iter.html">Iterator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#creating-a-jsified-iterator">Creating a Jsified Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#iterator-semantics-and-limitations">Iterator Semantics and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#error-handling">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dict_functions.html">Dict Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html#helper-functions">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html#usage-notes">Usage Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="json.html#dumping-jsified-objects-to-json">Dumping Jsified Objects to JSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html#loading-json-data">Loading JSON Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html#encoder-and-decoder-notes">Encoder and Decoder Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html#see-also">See Also</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simplify.html" class="btn btn-neutral float-left" title="SimplifiedObject" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jsify_unjsify.html" class="btn btn-neutral float-right" title="jsify / unjsify" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

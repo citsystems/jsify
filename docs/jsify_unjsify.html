@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jsify / unjsify &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/jsify_unjsify.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tuple" href="tuple.html" />
+    <link rel="prev" title="Jsify Objects" href="jsify.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="jsify.html">Jsify Objects</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">jsify / unjsify</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsify">Jsify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsified-deep-copy">Jsified Deep Copy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unjsify">Unjsify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unjsify-deep-copy">Unjsify Deep Copy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quick-reference-table">Quick Reference Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tuple.html">Tuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list.html">List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict.html">Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iter.html">Iterator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dict_functions.html">Dict Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="jsify.html">Jsify Objects</a></li>
+      <li class="breadcrumb-item active">jsify / unjsify</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/jsify_unjsify.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jsify-unjsify">
+<h1>jsify / unjsify<a class="headerlink" href="#jsify-unjsify" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Jsify Object system allows you to convert Python dictionaries, lists, tuples, and iterators into JavaScript-like, dot-accessible containers, powered by a high-performance C extension.
+All access is reference-based by default—mutations are visible in both directions.
+You can also create <em>deeply independent</em> jsified copies or deeply convert back to pure Python structures using the <cite>jsified_deepcopy</cite> and <cite>unjsify_deepcopy</cite> helpers.</p>
+</section>
+<hr class="docutils" />
+<section id="jsify">
+<h2>Jsify<a class="headerlink" href="#jsify" title="Link to this heading"></a></h2>
+<p><strong>jsify(obj)</strong></p>
+<p>Wraps a Python dict, list, tuple, or iterator in a jsified container that allows:</p>
+<ul class="simple">
+<li><p><strong>Dot-style attribute access</strong> at every depth</p></li>
+<li><p><strong>Reference-based mutation</strong> (changes propagate instantly to the underlying Python object)</p></li>
+<li><p><strong>Safe deep attribute/item access</strong> (missing keys or attributes always return <cite>Undefined</cite> instead of raising errors)</p></li>
+<li><p><strong>Automatic recursive wrapping</strong> for all nested containers</p></li>
+</ul>
+<p><strong>Return types:</strong>
+Depending on the type of input object, <cite>jsify</cite> returns a specific Jsify object type:</p>
+<ul class="simple">
+<li><p><strong>Dict</strong> → <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code></p></li>
+<li><p><strong>List</strong> → <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code></p></li>
+<li><p><strong>Tuple</strong> → <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Tuple</span></code></p></li>
+<li><p><strong>Iterator</strong> → <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code></p></li>
+<li><p>All other types (int, float, str, None, bool, already-jsified objects, or <cite>Undefined</cite>) are returned unchanged</p></li>
+</ul>
+<p>Each Jsify object type:
+- Preserves all native Python behaviors (iteration, slicing, etc.)
+- Adds fast, safe dot notation at every level</p>
+<p><strong>Examples:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">jsify</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})))</span>             <span class="c1"># &lt;class &#39;jsify.Dict&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">jsify</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])))</span>            <span class="c1"># &lt;class &#39;jsify.List&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">jsify</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))))</span>            <span class="c1"># &lt;class &#39;jsify.Tuple&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">jsify</span><span class="p">(</span><span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))))</span>         <span class="c1"># &lt;class &#39;jsify.Iterator&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">jsify</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)))))</span><span class="c1"># &lt;class &#39;jsify.Iterator&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jsify</span><span class="p">(</span><span class="mi">123</span><span class="p">))</span>                        <span class="c1"># 123 (unchanged)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jsify</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>                       <span class="c1"># None (unchanged)</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">))</span>                     <span class="c1"># &lt;class &#39;jsify.List&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>                  <span class="c1"># &lt;class &#39;jsify.Dict&#39;&gt;</span>
+
+<span class="c1"># All changes are by reference</span>
+<span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="mi">99</span>
+</pre></div>
+</div>
+<p>Scalars (numbers, strings, bools, None) and already-jsified objects are returned unchanged.</p>
+<p><strong>Missing key or attribute:</strong>
+No error—always returns <cite>Undefined</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">not_present</span><span class="p">)</span>      <span class="c1"># Undefined</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">[</span><span class="mi">99</span><span class="p">])</span>          <span class="c1"># Undefined (for out-of-bounds access)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">not_here</span><span class="p">)</span>  <span class="c1"># Undefined</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="jsified-deep-copy">
+<h2>Jsified Deep Copy<a class="headerlink" href="#jsified-deep-copy" title="Link to this heading"></a></h2>
+<p>Normally, <cite>jsify()</cite> recursively wraps all dicts, lists, tuples, and iterators for dot access at every level.
+All mutations are reference-based: changes to the jsified object are instantly reflected in the original.</p>
+<p>If you want an <em>independent deep copy</em> of the whole structure (not referencing the original data), use <cite>jsified_deepcopy</cite>:</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">jsified_deepcopy</span>
+
+<span class="n">original</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}]}}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">jsified_deepcopy</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>  <span class="c1"># deep, independent jsified copy</span>
+
+<span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">original</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">])</span>  <span class="c1"># 99 (reference)</span>
+
+<span class="n">obj2</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">original</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;z&quot;</span><span class="p">])</span>  <span class="c1"># 99 (deep copy: original not changed)</span>
+</pre></div>
+</div>
+<p><strong>Summary:</strong>
+- <cite>jsify(obj)</cite> — recursive, reference-based wrapping; correct Jsify type returned for each container
+- <cite>jsified_deepcopy(obj)</cite> — deep-copied, jsified structure (no references to original data)</p>
+<p>See:
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Tuple</span></code>
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code>
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code>
+- <code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code></p>
+</section>
+<hr class="docutils" />
+<section id="unjsify">
+<h2>Unjsify<a class="headerlink" href="#unjsify" title="Link to this heading"></a></h2>
+<p><strong>unjsify(obj)</strong></p>
+<p>Returns the <em>original</em>, underlying Python container from a jsified object—<strong>shallow</strong> by default.</p>
+<ul class="simple">
+<li><p>If given a jsified dict/list/tuple/iterator, returns the original Python object (top-level only).</p></li>
+<li><p>For other objects (scalars, non-jsified types), returns as-is.</p></li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">unjsify</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">orig</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">orig</span> <span class="ow">is</span> <span class="n">d</span><span class="p">)</span>  <span class="c1"># True</span>
+
+<span class="c1"># Only the top-level jsified object is unwrapped:</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">)))</span>  <span class="c1"># &lt;class &#39;list&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="unjsify-deep-copy">
+<h2>Unjsify Deep Copy<a class="headerlink" href="#unjsify-deep-copy" title="Link to this heading"></a></h2>
+<p><strong>unjsify_deepcopy(obj)</strong></p>
+<p>Recursively converts any jsified containers (Dict, List, Tuple, Iterator) into native Python objects (dict, list, tuple, etc.), returning a deep-copied, pure-Python structure.
+This is important if you have ever nested jsified objects inside other Python containers and then wrapped the whole structure again, which can otherwise result in a mixed jsified/native structure.</p>
+<p><strong>Example Scenario:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">unjsify</span><span class="p">,</span> <span class="n">unjsify_deepcopy</span>
+
+<span class="c1"># Create a jsified object and nest it in another dict</span>
+<span class="n">profile</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">})</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;profile&quot;</span><span class="p">:</span> <span class="n">profile</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">}</span>
+
+<span class="c1"># Now jsify the whole structure</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># .profile is STILL a jsified object, not a dict!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;jsify.Dict&#39;&gt;</span>
+
+<span class="c1"># Shallow unjsify only unwraps the top-level</span>
+<span class="n">shallow</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">shallow</span><span class="p">[</span><span class="s2">&quot;profile&quot;</span><span class="p">]))</span>  <span class="c1"># &lt;class &#39;jsify.Dict&#39;&gt;</span>
+
+<span class="c1"># Deep unjsify fully unwraps everything recursively</span>
+<span class="n">deep</span> <span class="o">=</span> <span class="n">unjsify_deepcopy</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">deep</span><span class="p">[</span><span class="s2">&quot;profile&quot;</span><span class="p">]))</span>     <span class="c1"># &lt;class &#39;dict&#39;&gt;</span>
+
+<span class="c1"># Now deep[&quot;profile&quot;] is a plain dict, safe for vanilla Python code or export</span>
+</pre></div>
+</div>
+<p><strong>Summary:</strong>
+- Use <cite>unjsify(obj)</cite> to get the original, possibly mixed, structure (shallow unwrap)
+- Use <cite>unjsify_deepcopy(obj)</cite> if you need a <em>fully native</em> structure (dicts/lists/tuples only),</p>
+<blockquote>
+<div><p>especially if you have ever nested jsified objects inside original data!</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="quick-reference-table">
+<h2>Quick Reference Table<a class="headerlink" href="#quick-reference-table" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>jsify(obj)</p></td>
+<td><p>Returns: Dict, List, Tuple, Iterator (with
+recursive, reference-based, mutation-safe
+dot/item access)</p></td>
+</tr>
+<tr class="row-odd"><td><p>jsified_deepcopy(obj)</p></td>
+<td><p>Deep-copied jsified structure, independent
+from original</p></td>
+</tr>
+<tr class="row-even"><td><p>unjsify(obj)</p></td>
+<td><p>Shallow unwrapping (top-level original)</p></td>
+</tr>
+<tr class="row-odd"><td><p>unjsify_deepcopy(obj)</p></td>
+<td><p>Deep pure-Python copy (no jsified wrappers)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Dict</span></code> — Dict wrapper with dot access</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.List</span></code> — List wrapper with dot access</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Tuple</span></code> — Tuple wrapper with dot access</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Iterator</span></code> — Iterator wrapper with dot access</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">jsify.Undefined</span></code> — Singleton returned for all missing keys/attributes</p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">jsified_get()</span></code> / <code class="xref py py-func docutils literal notranslate"><span class="pre">jsified_pop()</span></code> / <code class="xref py py-func docutils literal notranslate"><span class="pre">jsified_setdefault()</span></code> / <code class="xref py py-func docutils literal notranslate"><span class="pre">jsified_update()</span></code> — helpers for dictionary-style operations on jsified objects</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jsify.html" class="btn btn-neutral float-left" title="Jsify Objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tuple.html" class="btn btn-neutral float-right" title="Tuple" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

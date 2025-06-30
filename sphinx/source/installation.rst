@@ -1,59 +1,47 @@
-.. _installation:
-
-.. meta::
-   :keywords: Jsify, Python, pip, installation, PyPI, upgrade, setup, install Jsify, Python package
-   :description: Learn how to install the Jsify library using pip from PyPI. This guide provides step-by-step instructions for setting up Jsify in your Python environment, verifying the installation, and upgrading to the latest version.
-
 Installation
 ============
 
-Jsify can be easily installed via pip from PyPI. Follow the instructions below to set up Jsify in your Python environment.
+Requirements
+------------
 
-Using pip
----------
+- **Python 3** (any supported version) is required.
+- **C compiler and Python development headers are required** on all platforms, as Jsify includes a C extension and is usually built from source during installation.
+  - **Linux:** GCC and Python dev headers (`build-essential python3-dev` on Debian/Ubuntu)
+  - **Windows:** Microsoft Visual Studio Build Tools (Desktop development with C++)
+  - **macOS:** Xcode command line tools (`xcode-select --install`)
+- **pip** and **setuptools** must be installed and up to date.
 
-To install Jsify using pip, run the following command:
+Quick Install
+-------------
 
-.. code-block:: bash
-
-    pip install jsify
-
-This will install the latest version of Jsify and its dependencies.
-
-**Note:**
-If there is no prebuilt wheel available for your Python version or platform, pip will attempt to build Jsify from source.
-To compile successfully, you need a working C compiler and Python development headers (e.g. `python3-dev` on Debian/Ubuntu).
+Install the latest release from PyPI (pip will build the C extension automatically):
 
 .. code-block:: bash
 
-    # On Debian/Ubuntu:
-    sudo apt install build-essential python3-dev
+   pip install jsify
 
-    # Then run:
-    pip install jsify
-
-If you encounter errors during compilation, please check your compiler setup and ensure your environment is ready for building C extensions.
-
-Verifying the Installation
---------------------------
-
-To verify that Jsify is installed correctly, run a simple Python script to import the library:
-
-.. code-block:: python
-
-    import jsify
-
-    print(jsify.__version__)
-
-If Jsify is installed correctly, this script should output the version number of the installed package.
-
-Upgrading Jsify
+Troubleshooting
 ---------------
 
-To upgrade Jsify to the latest version, use:
+If you see errors like ``Failed building wheel for jsify`` or ``Could not find a version that satisfies the requirement jsify``, check that:
 
-.. code-block:: bash
+- You have Python 3.x (check with ``python --version``)
+- Your C compiler and Python development headers are installed and properly configured for your OS
+- pip and setuptools are up to date:
 
-    pip install --upgrade jsify
+  .. code-block:: bash
 
-This will upgrade Jsify to the most recent version available on PyPI.
+     python -m pip install --upgrade pip setuptools
+
+- On Windows, use the "x64 Native Tools Command Prompt for VS" for installation.
+
+Notes
+-----
+
+- Jsify will be built and installed in a single step using pip.
+- No manual build steps are needed for most users, but you must have the appropriate build environment for your platform.
+
+See Also
+--------
+
+- :doc:`jsify_unjsify` for usage and conversion

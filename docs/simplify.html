@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SimplifiedObject &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+    <link rel="canonical" href="https://citsystems.github.io/jsify/simplify.html" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Jsify Objects" href="jsify.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            jsify
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#concepts">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html#advantages">Advantages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SimplifiedObject</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-create">How to Create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deep-attribute-access-and-undefined">Deep Attribute Access and <code class="docutils literal notranslate"><span class="pre">Undefined</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#falsy-and-comparison-behavior">Falsy and Comparison Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#serialization">Serialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-nested-structures-and-recursive-dot-access">Working with Nested Structures and Recursive Dot Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manual-construction-tips">Manual Construction Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#limitations-and-gotchas">Limitations and Gotchas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jsify.html">Jsify Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">jsify</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SimplifiedObject</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/simplify.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simplifiedobject">
+<h1>SimplifiedObject<a class="headerlink" href="#simplifiedobject" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> is a lightweight Python object that provides safe attribute-style (dot) access to nested data.
+You can create it <strong>directly with its constructor</strong> or by loading JSON using <a class="reference internal" href="modindex.html#jsify.simplify.loads_simplified" title="jsify.simplify.loads_simplified"><code class="xref py py-func docutils literal notranslate"><span class="pre">loads_simplified()</span></code></a> or <a class="reference internal" href="modindex.html#jsify.simplify.load_simplified" title="jsify.simplify.load_simplified"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_simplified()</span></code></a>.</p>
+<p>Missing attributes <strong>never raise errors</strong>—they return the special <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> object for safe, error-free deep access.</p>
+</section>
+<section id="how-to-create">
+<h2>How to Create<a class="headerlink" href="#how-to-create" title="Link to this heading"></a></h2>
+<p>You can create a <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> in two ways:</p>
+<p><strong>1. Directly from Python data:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify.simplify</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimplifiedObject</span><span class="p">,</span> <span class="n">Undefined</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>         <span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>    <span class="c1"># 5 (if c is a dict)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">missing</span><span class="p">)</span>   <span class="c1"># Undefined</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> When created directly, nested dicts like <cite>c</cite> remain plain dicts and are not automatically converted to
+<code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> instances. Use <a class="reference internal" href="modindex.html#jsify.simplify.loads_simplified" title="jsify.simplify.loads_simplified"><code class="xref py py-func docutils literal notranslate"><span class="pre">loads_simplified()</span></code></a> or <a class="reference internal" href="modindex.html#jsify.simplify.load_simplified" title="jsify.simplify.load_simplified"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_simplified()</span></code></a> for recursive conversion.</p>
+<p><strong>2. By parsing JSON (auto-recursive conversion):</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify.simplify</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads_simplified</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;{&quot;user&quot;: {&quot;profile&quot;: </span><span class="si">{}</span><span class="s1">, &quot;age&quot;: 25}}&#39;</span>  <span class="c1"># Changed null to empty dict</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">loads_simplified</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>          <span class="c1"># 25</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span><span class="p">)</span>      <span class="c1"># SimplifiedObject({})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>  <span class="c1"># Undefined</span>
+
+<span class="c1"># All nested dicts become SimplifiedObject for full dot-access!</span>
+</pre></div>
+</div>
+</section>
+<section id="deep-attribute-access-and-undefined">
+<h2>Deep Attribute Access and <code class="docutils literal notranslate"><span class="pre">Undefined</span></code><a class="headerlink" href="#deep-attribute-access-and-undefined" title="Link to this heading"></a></h2>
+<p>Any missing attribute at any depth returns the special <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> object:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">name</span>
+<span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Name is not available&quot;</span><span class="p">)</span>
+
+<span class="c1"># Deep chaining is always safe:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>  <span class="c1"># Always returns Undefined</span>
+</pre></div>
+</div>
+</section>
+<section id="falsy-and-comparison-behavior">
+<h2>Falsy and Comparison Behavior<a class="headerlink" href="#falsy-and-comparison-behavior" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Undefined</span></code> is <em>falsy</em> in boolean context.</p></li>
+<li><p>It compares as equal to <code class="docutils literal notranslate"><span class="pre">None</span></code>, but is not identical to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">some</span><span class="o">.</span><span class="n">missing</span><span class="o">.</span><span class="n">attribute</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not present or falsy&quot;</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">unknown</span> <span class="ow">is</span> <span class="n">Undefined</span>
+<span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">unknown</span> <span class="o">==</span> <span class="kc">None</span>
+<span class="k">assert</span> <span class="n">obj</span><span class="o">.</span><span class="n">unknown</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="serialization">
+<h2>Serialization<a class="headerlink" href="#serialization" title="Link to this heading"></a></h2>
+<p>Serialize <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> instances to JSON using <a class="reference internal" href="modindex.html#jsify.simplify.simplified_dumps" title="jsify.simplify.simplified_dumps"><code class="xref py py-func docutils literal notranslate"><span class="pre">simplified_dumps()</span></code></a> or <a class="reference internal" href="modindex.html#jsify.simplify.simplified_dump" title="jsify.simplify.simplified_dump"><code class="xref py py-func docutils literal notranslate"><span class="pre">simplified_dump()</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify.simplify</span><span class="w"> </span><span class="kn">import</span> <span class="n">simplified_dumps</span><span class="p">,</span> <span class="n">simplified_dump</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">Undefined</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">simplified_dumps</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+<span class="c1"># Outputs: {&quot;a&quot;: 1, &quot;b&quot;: null, &quot;c&quot;: null}</span>
+
+<span class="c1"># Undefined attributes serialize as null.</span>
+
+<span class="c1"># To dump to a file:</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="n">simplified_dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>  <span class="c1"># Correct argument order: object, file</span>
+<span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="working-with-nested-structures-and-recursive-dot-access">
+<h2>Working with Nested Structures and Recursive Dot Access<a class="headerlink" href="#working-with-nested-structures-and-recursive-dot-access" title="Link to this heading"></a></h2>
+<p>Nested dicts stay as dicts unless you wrap them.
+<strong>For recursive dot access at every depth</strong>, you have two main options:</p>
+<ul>
+<li><p><strong>Manually nest SimplifiedObjects:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inner</span> <span class="o">=</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">outer</span> <span class="o">=</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">inner</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outer</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 5</span>
+</pre></div>
+</div>
+<p>If you want lists of dot-access objects:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">2</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 1</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Auto-recursive dot access:</strong></p>
+<p>For <strong>automatic recursive wrapping</strong> of all nested dicts and lists, use the Jsify Object system:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify.cjsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># Alice</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="manual-construction-tips">
+<h2>Manual Construction Tips<a class="headerlink" href="#manual-construction-tips" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>You can pass any keyword arguments; they become attributes.</p></li>
+<li><p>You can assign new attributes after creation, but nested dicts remain plain dicts unless wrapped.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">SimplifiedObject</span><span class="p">(</span><span class="n">foo</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">])</span>  <span class="c1"># 123</span>
+<span class="c1"># But obj.foo is a dict, not a SimplifiedObject, unless you wrap it manually</span>
+</pre></div>
+</div>
+</section>
+<section id="limitations-and-gotchas">
+<h2>Limitations and Gotchas<a class="headerlink" href="#limitations-and-gotchas" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Direct constructor use:</strong> Only the top level is a <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code>—nested dicts remain plain dicts unless you wrap them yourself.</p></li>
+<li><p><strong>Using ``loads_simplified`` or ``load_simplified``:</strong>
+The <strong>entire nested structure is recursively converted</strong>—all dicts become <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code>, so you always have dot-access at every level.</p></li>
+<li><p><strong>No item access on top-level:</strong> <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> inherits from <code class="docutils literal notranslate"><span class="pre">SimpleNamespace</span></code>, which does not support item access (<cite>obj[‘key’]</cite>) at the top level. Use attribute access (<cite>obj.key</cite>) instead.
+If you need dictionary-like access, convert to dict with <code class="docutils literal notranslate"><span class="pre">obj.__dict__</span></code> or use <code class="docutils literal notranslate"><span class="pre">loads_simplified</span></code> and work with the original JSON dicts.</p></li>
+<li><p><strong>Undefined is not None:</strong> Treat <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> as a special “missing” value. It is falsy and compares equal to None, but it is a distinct singleton and not identical to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>Importing Undefined:</strong>
+Remember to import <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> explicitly from <code class="docutils literal notranslate"><span class="pre">jsify.simplify</span></code> when you want to compare or check for missing values.</p></li>
+</ul>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="jsify.html"><span class="doc">Jsify Objects</span></a> — For fully automatic, deep, recursive dot access, mutation support, and C-extension speed.</p></li>
+</ul>
+<hr class="docutils" />
+<p><code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> is ideal for <strong>quick, simple, error-free</strong> dot-access to shallow or partially known data—either from JSON or built manually.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jsify.html" class="btn btn-neutral float-right" title="Jsify Objects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

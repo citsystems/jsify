@@ -2,7 +2,7 @@
 #include <Python.h>
 #include <stdio.h>
 
-#include "jsify.h"
+#include "cjsify.h"
 #include "Object.h"
 #include "Tuple.h"
 #include "Dict.h"
@@ -55,6 +55,12 @@ static PyMappingMethods Tuple_as_mapping = {
 // ============================
 // === Type definition ========
 // ============================
+
+#ifdef _MSC_VER
+    #ifndef __attribute__
+        #define __attribute__(x)
+    #endif
+#endif
 
 PyTypeObject TupleType __attribute__((used)) = {
     PyVarObject_HEAD_INIT(NULL, 0)

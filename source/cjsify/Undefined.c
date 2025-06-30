@@ -87,6 +87,6 @@ PyTypeObject UndefinedType = {
 static UndefinedObject _Undefined;
 PyObject *Undefined = (PyObject *)&_Undefined;
 
-// W PyInit_jsify():
+// W PyInit_cjsify():
 // PyObject_INIT(& _Undefined, &UndefinedType);
 // Py_INCREF(Undefined);

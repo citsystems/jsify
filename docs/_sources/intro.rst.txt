@@ -1,62 +1,224 @@
-.. _intro:
-
-.. meta::
-   :keywords: Jsify, Python, JSON, Object, data structures, attribute access, performance efficiency, API development, web development, data transformation
-   :description: Explore the Jsify library, which provides tools for working with JSON-like data structures in Python. Learn about the Object class, jsify and unjsify functions, decorators, and other utilities that make JSON handling more intuitive and efficient.
-
 Introduction
-=============
+============
 
-The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the `Object` class, which allows for attribute-style access (using dot notation) and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.
+.. _introduction:
 
-**Key Concept: Wrapping the Original Object**
+Welcome to **jsify** – a Python library with a blazing fast C extension that brings JavaScript-like dot access, lazy dynamic wrapping, and safe deep data handling to your nested structures. jsify is designed for complex, unpredictable, or deeply nested JSON and Python data, delivering high performance for common dynamic access patterns.
 
-One of the key features of the `Object` class is that it wraps the original Python object rather than deeply copying or transforming it. This means that `Object` provides a dynamic interface for interacting with the data while maintaining a reference to the original object.
+.. note::
 
-**Advantages of Wrapping the Original Object:**
+   This library uses a C extension for ultra-fast access to your data structures.
 
-- **Performance Efficiency:** Since `Object` does not create deep copies of the original data, it minimizes memory usage and processing time. This is particularly advantageous when working with large or complex data structures.
+Contents
+--------
 
-- **Data Integrity:** By wrapping the original object, `Object` ensures that changes made through the `Object` interface are reflected in the original data structure and vice versa. This bidirectional linkage helps maintain consistency across your data.
+- :ref:`concepts`
+  - :ref:`simplifiedobject`
+  - :ref:`jsifyobjects`
+  - :ref:`undefined`
+- :ref:`advantages`
+  - :ref:`why-simplifiedobject`
+  - :ref:`why-jsify`
+  - :ref:`no-key-conflicts`
 
-- **Seamless Integration:** Wrapping the original object allows for a seamless integration of `Object` into existing codebases. You can easily add JSON-like behavior to existing data structures without disrupting their core functionality.
+.. _concepts:
 
-- **Flexibility:** The approach of wrapping allows you to selectively apply `Object` features only where needed, providing flexibility in how you structure and manipulate your data.
+Concepts
+========
 
+Key Object Types: SimplifiedObject vs jsify objects
+---------------------------------------------------
 
-In addition to `Object`, the library includes a range of utilities for converting between standard Python data structures (like dictionaries, lists, and tuples) and their `Object` counterparts. This includes functions like `jsify`, which wraps native Python objects in `Object` instances, and `unjsify`, which reverts them back to their original forms. The library also supports deep conversions with `deep_unjsify`, ensuring that even complex, nested data structures can be easily managed.
+jsify provides two main dynamic wrappers:
 
-Key Components:
----------------
+- ``SimplifiedObject``: For simple dot-access with missing-attribute safety, modeled after Python's ``SimpleNamespace``.
+- ``jsify`` wrappers (``Object``, ``Dict``, ``List``, etc): For deep, JavaScript-style dot/item access and automatic lazy wrapping.
 
-- **Object Class:** The cornerstone of the library, enabling JavaScript-like interaction with Python data structures. It supports dynamic attribute access, automatic nesting, and enhanced functionality for handling JSON-like data.
+You can use either approach depending on your requirements. See below for precise behaviors.
 
-- **Dict, List, Tuple:** Specialized subclasses of `Object` tailored to work with dictionaries, lists, and tuples, respectively. These classes extend the functionality of `Object` to provide additional methods specific to each data type.
+.. _simplifiedobject:
 
-- **jsify and unjsify Functions:** Essential utilities for converting between native Python types and `Object` instances, allowing for seamless integration of JSON-like behavior in Python applications.
+SimplifiedObject: Simple & Safe Dot Access
+------------------------------------------
 
-- **Decorators and Encoders:** The library includes decorators like `jsified_function` to automatically manage JSON data within functions, and custom JSON encoders like `ObjectEncoder` to handle serialization of `Object` instances.
+A ``SimplifiedObject`` is like an improved ``SimpleNamespace``:
 
-- **Exception Handling:** A general-purpose `AnyError` exception is provided to facilitate robust error handling across the library’s functionalities.
+- Dot access for every key—missing attributes return ``Undefined`` instead of raising errors.
+- Only the top-level dict is converted by default; nested dicts remain dicts unless you recursively wrap or use ``loads_simplified`` with an object hook to convert all levels.
 
-- **String Conversion Tools:** Utilities like `stringcase` enable easy conversion between common naming conventions (e.g., `camelCase` to `snake_case`), ensuring consistent data formatting throughout your application.
+**Example:**
 
-Use Cases:
+.. code-block:: python
+
+   from jsify.simplify import loads_simplified, Undefined
+
+   data = '{"user": {"profile": null}}'
+   obj = loads_simplified(data)
+
+   # Works: user exists (SimplifiedObject), profile is None (no error).
+   if obj.user.profile is None:
+       print("No profile")
+
+   # If 'profile' is a dict and you want further dot access,
+   # use loads_simplified on nested dicts as needed.
+
+Missing attributes on a ``SimplifiedObject`` always return ``Undefined``—not errors. However, deep safe chaining only works for dicts converted to ``SimplifiedObject``.
+
+**Another Example:**
+
+.. code-block:: python
+
+   data = '{"a": 1, "b": 2}'
+   obj = loads_simplified(data)
+   print(obj.a)  # 1
+   print(obj.z)  # <Undefined>, no error
+
+   # If obj.b is a dict, you must wrap it for dot access on its keys.
+
+.. _jsifyobjects:
+
+jsify Objects: Advanced Dynamic Wrapping
+----------------------------------------
+
+``jsify`` turns dicts, lists, or tuples (even deeply nested) into JavaScript-style objects:
+
+- **Blazing fast:** Built on a C extension for top performance.
+- **Lazy wrapping:** Only wraps as you access, not eagerly.
+- **Reflects changes** in the original structure; wrappers are views, not copies.
+- **Supports both dot and item access**, just like in JavaScript.
+
+**Example:**
+
+.. code-block:: python
+
+   from jsify import jsify
+
+   data = {"settings": {"theme": "dark"}, "items": [1, 2, 3]}
+   obj = jsify(data)
+
+   # Dot access
+   print(obj.settings.theme)    # "dark"
+   # List access
+   print(obj.items[1])          # 2
+
+   # Changes in the original dict are reflected in the wrapper
+   data["settings"]["theme"] = "light"
+   print(obj.settings.theme)    # "light"
+
+**Nested mutation example:**
+
+.. code-block:: python
+
+   orig = {"foo": {"bar": 1}}
+   o = jsify(orig)
+   print(o.foo.bar)    # 1
+   orig["foo"]["bar"] = 2
+   print(o.foo.bar)    # 2
+
+.. _undefined:
+
+Undefined: Error-Free Access for Missing Keys
+---------------------------------------------
+
+``Undefined`` is a special singleton returned for any missing key or attribute on jsify wrappers or ``SimplifiedObject``. It behaves like JavaScript's ``undefined``:
+
+- All missing keys/attributes return ``Undefined`` when accessed on a jsify or SimplifiedObject wrapper.
+- ``Undefined`` is safe to chain: any attribute/item access on it yields itself, and it is falsy in boolean checks.
+- Note: You must use ``jsify()`` or ``loads_simplified()`` to get this behavior; plain dict/list/tuple will not auto-return ``Undefined``.
+
+**Example:**
+
+.. code-block:: python
+
+   wrapped = jsify({"user": {}})
+   print(wrapped.user.profile.email)  # <Undefined>, never raises error
+
+   if wrapped.user.profile.email is Undefined:
+       print("Email not available")
+
+**Boolean check:**
+
+.. code-block:: python
+
+   if not wrapped.user.notexisting.anything:
+       print("No value!")  # This line executes because Undefined is falsy
+
+.. _advantages:
+
+Advantages
+==========
+
+.. _why-simplifiedobject:
+
+Why SimplifiedObject?
+---------------------
+
+- Never raises exceptions for missing attributes—returns ``Undefined``.
+- Cleaner code: no need for multiple checks or try/except blocks.
+- Instantly converts JSON/dict to dot-access objects for convenient use.
+- Can be used with the ``object_hook`` to recursively wrap dicts from JSON.
+
+See example above at :ref:`simplifiedobject`.
+
+.. _why-jsify:
+
+Why jsify?
 ----------
 
-The Jsify library is particularly valuable in the following scenarios:
+- **Blazing fast C extension:** Efficient even with very large or deeply nested data.
+- **Lazy and reference-based:** You see changes live, as objects are mutated.
+- **Handles all nestings:** Works for dicts, lists, tuples, and deep chains.
+- **Safe chaining:** Missing paths never error—just return ``Undefined``.
+- **JSON (de)serialization:** Can automatically omit or include ``Undefined`` values.
 
-- **API Development:** Simplifies the process of working with JSON data returned from or sent to APIs, allowing for more intuitive data manipulation.
+See example above at :ref:`jsifyobjects`.
 
-- **Data Transformation:** Facilitates the conversion and processing of data across different formats and structures, making it easier to work with complex datasets.
+**Example: Serialization**
 
-- **Web Development:** Offers a more JavaScript-like experience when working with data structures in Python, reducing the friction between client-side and server-side code.
+.. code-block:: python
 
-- **Configuration Management:** Allows for dynamic and nested configurations that can be easily accessed and modified using attribute-style access.
+   from jsify.json import jsified_dumps, Undefined
+   obj = jsify({"a": 1, "b": None, "c": Undefined})
+   print(jsified_dumps(obj))                  # {"a": 1, "b": null}
+   print(jsified_dumps(obj, omit_undefined=False))  # {"a": 1, "b": null, "c": null}
 
-Getting Started:
+.. _no-key-conflicts:
+
+No Key Conflicts
 ----------------
 
-To get started with Jsify, begin by installing the library and exploring its core components. The `Object` class and its associated utilities provide a strong foundation for managing JSON-like data in Python. Review the detailed documentation for each module to understand how to leverage the full potential of the library in your projects.
+- Your data’s keys always take priority (e.g., ``obj.items`` gives the value of ``"items"`` in your dict, not the method).
+- Use helper functions for classic methods: ``jsified_items(obj)``, ``jsified_update(obj, data)``, etc.
+- Or unwrap with ``unjsify(obj)`` to get back the original dict and standard methods.
 
-The Jsify library is designed to be developer-friendly, providing intuitive interfaces and robust functionality to streamline the handling of JSON data in Python. Whether you are developing complex APIs, processing large datasets, or simply need a more dynamic way to work with data, Jsify is an essential tool in your Python toolkit.
+**Example:**
+
+.. code-block:: python
+
+   from jsify import jsify, jsified_items, unjsify
+
+   data = {"items": "DATA"}
+   obj = jsify(data)
+
+   print(obj.items)                 # "DATA" (your dict value)
+   print(list(jsified_items(obj)))  # dict items, e.g. [("items", "DATA")]
+
+   # Or get classic dict methods:
+   orig = unjsify(obj)
+   print(list(orig.items()))        # [('items', 'DATA')]
+
+**Example: Key masking built-ins**
+
+.. code-block:: python
+
+   data = {"update": "NOT_A_METHOD"}
+   obj = jsify(data)
+   print(obj.update)   # "NOT_A_METHOD"
+   # Still call classic update via helper:
+   from jsify import jsified_update
+   jsified_update(obj, {"x": 5})
+   print(obj.x)  # 5
+
+----
+
+:doc:`Next: Installation <installation>`

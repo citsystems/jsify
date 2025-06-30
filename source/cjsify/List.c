@@ -1,9 +1,10 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include "jsify.h"
+#include "cjsify.h"
 #include "Object.h"
 #include "List.h"
+#include "Undefined.h"
 
 // ============================
 // === Helper macros ==========
@@ -29,7 +30,16 @@ static REDIRECT_TO_ORIG_METHOD_CALL_O_ARGS(PyObject *, List, _remove, "remove")
 // __getitem__
 PyObject *List_getitem(PyObject *self, PyObject *key) {
     if (PyLong_Check(key)) {
-        PyObject *value = PySequence_GetItem(((List *)self)->orig, PyLong_AsSsize_t(key));
+        Py_ssize_t idx = PyLong_AsSsize_t(key);
+        PyObject *orig = ((List *)self)->orig;
+        Py_ssize_t size = PySequence_Size(orig);
+        if (idx < 0)
+            idx += size;
+        if (idx < 0 || idx >= size) {
+            Py_INCREF(Undefined);
+            return Undefined;
+        }
+        PyObject *value = PySequence_GetItem(orig, idx);
         RETURN_JSIFIED(value);
     }
 
@@ -44,12 +54,14 @@ PyObject *List_getitem(PyObject *self, PyObject *key) {
         long index = strtol(str, &endptr, 10);
         if (*endptr == '\0') {
             Py_ssize_t list_size = PyList_Size(((List *)self)->orig);
-            if (index >= 0 && index < list_size) {
-                PyObject *value = PyList_GetItem(((List *)self)->orig, index);
-                if (!value)
-                    Py_RETURN_NONE;
-                return jsify(value);
+            if (index < 0)
+                index += list_size;
+            if (index < 0 || index >= list_size) {
+                Py_INCREF(Undefined);
+                return Undefined;
             }
+            PyObject *value = PyList_GetItem(((List *)self)->orig, index);
+            return jsify(value);
         }
     }
 
@@ -57,6 +69,7 @@ PyObject *List_getitem(PyObject *self, PyObject *key) {
     PyObject *value = PyObject_GenericGetAttr(((List *)self)->orig, key);
     RETURN_JSIFIED(value);
 }
+
 
 // __setitem__ / __delitem__
 static int List_ass_subscript(PyObject *self, PyObject *key, PyObject *value) {
@@ -176,6 +189,12 @@ static PyMethodDef List_methods[] = {
 // ============================
 // === Type definition ========
 // ============================
+
+#ifdef _MSC_VER
+    #ifndef __attribute__
+        #define __attribute__(x)
+    #endif
+#endif
 
 static PyMappingMethods List_as_mapping = {
     .mp_length = (lenfunc)Object_len,

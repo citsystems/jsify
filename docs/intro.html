@@ -2,12 +2,10 @@
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta content="Jsify, Python, JSON, Object, data structures, attribute access, performance efficiency, API development, web development, data transformation" name="keywords" />
-<meta content="Explore the Jsify library, which provides tools for working with JSON-like data structures in Python. Learn about the Object class, jsify and unjsify functions, decorators, and other utilities that make JSON handling more intuitive and efficient." name="description" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; jsify 0.9.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <title>Introduction &mdash; jsify 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
@@ -18,13 +16,13 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f2328ca0"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9bcbadda"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Choosing Between Jsify and SimpleNamespace" href="jsify_vs_simple.html" />
+    <link rel="next" title="Installation" href="installation.html" />
     <link rel="prev" title="Welcome to jsify’s documentation!" href="index.html" /> 
 </head>
 
@@ -50,28 +48,26 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#key-components">Key Components:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#use-cases">Use Cases:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contents">Contents</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="jsify_vs_simple.html">Choosing Between <cite>Jsify</cite> and <cite>SimpleNamespace</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#concepts">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#key-object-types-simplifiedobject-vs-jsify-objects">Key Object Types: SimplifiedObject vs jsify objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplifiedobject-simple-safe-dot-access">SimplifiedObject: Simple &amp; Safe Dot Access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jsify-objects-advanced-dynamic-wrapping">jsify Objects: Advanced Dynamic Wrapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#undefined-error-free-access-for-missing-keys">Undefined: Error-Free Access for Missing Keys</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#advantages">Advantages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-simplifiedobject">Why SimplifiedObject?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-jsify">Why jsify?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-key-conflicts">No Key Conflicts</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloading.html">Downloading from GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsifying_unjsifying.html">Jsifying and unjsyfing objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_dictionaries.html">Using Jsified Dictionaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_lists.html">Using Jsified Lists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_tuples.html">Using Jsified Tuples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_iterators.html">Jsified Iteration Over Native Python Objects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="undefined_value.html"><cite>Undefined</cite> Value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json_serialization.html">Serializing <cite>Object</cite> Instances with JSON</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_assertions.html">Using Assertions in Jsify</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jsified_functions.html">Creating Jsified Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="camelized_functions.html">Creating Camelized Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="properties_exist.html">Checking if Properties Path Exists</a></li>
-<li class="toctree-l1"><a class="reference internal" href="aiohttp.html">Creating flexible API with <cite>Jsify</cite> and <cite>aiohttp</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Jsify’s manual reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simplify.html">SimplifiedObject</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jsify.html">Jsify Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json.html">JSON dump / load</a></li>
 </ul>
 
         </div>
@@ -99,43 +95,189 @@
            <div itemprop="articleBody">
              
   <section id="introduction">
-<span id="intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
-<p>The Jsify library provides a powerful suite of tools for working with JSON-like data structures in Python. At its core, the library introduces the <cite>Object</cite> class, which allows for attribute-style access (using dot notation) and dynamic manipulation of data, closely mimicking the behavior of JavaScript objects. This makes it particularly well-suited for developers working in environments where JSON data is prevalent, such as in web development, API integrations, and data processing tasks.</p>
-<p><strong>Key Concept: Wrapping the Original Object</strong></p>
-<p>One of the key features of the <cite>Object</cite> class is that it wraps the original Python object rather than deeply copying or transforming it. This means that <cite>Object</cite> provides a dynamic interface for interacting with the data while maintaining a reference to the original object.</p>
-<p><strong>Advantages of Wrapping the Original Object:</strong></p>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
+<p id="id1">Welcome to <strong>jsify</strong> – a Python library with a blazing fast C extension that brings JavaScript-like dot access, lazy dynamic wrapping, and safe deep data handling to your nested structures. jsify is designed for complex, unpredictable, or deeply nested JSON and Python data, delivering high performance for common dynamic access patterns.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This library uses a C extension for ultra-fast access to your data structures.</p>
+</div>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Performance Efficiency:</strong> Since <cite>Object</cite> does not create deep copies of the original data, it minimizes memory usage and processing time. This is particularly advantageous when working with large or complex data structures.</p></li>
-<li><p><strong>Data Integrity:</strong> By wrapping the original object, <cite>Object</cite> ensures that changes made through the <cite>Object</cite> interface are reflected in the original data structure and vice versa. This bidirectional linkage helps maintain consistency across your data.</p></li>
-<li><p><strong>Seamless Integration:</strong> Wrapping the original object allows for a seamless integration of <cite>Object</cite> into existing codebases. You can easily add JSON-like behavior to existing data structures without disrupting their core functionality.</p></li>
-<li><p><strong>Flexibility:</strong> The approach of wrapping allows you to selectively apply <cite>Object</cite> features only where needed, providing flexibility in how you structure and manipulate your data.</p></li>
-</ul>
-<p>In addition to <cite>Object</cite>, the library includes a range of utilities for converting between standard Python data structures (like dictionaries, lists, and tuples) and their <cite>Object</cite> counterparts. This includes functions like <cite>jsify</cite>, which wraps native Python objects in <cite>Object</cite> instances, and <cite>unjsify</cite>, which reverts them back to their original forms. The library also supports deep conversions with <cite>deep_unjsify</cite>, ensuring that even complex, nested data structures can be easily managed.</p>
-<section id="key-components">
-<h2>Key Components:<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p><strong>Object Class:</strong> The cornerstone of the library, enabling JavaScript-like interaction with Python data structures. It supports dynamic attribute access, automatic nesting, and enhanced functionality for handling JSON-like data.</p></li>
-<li><p><strong>Dict, List, Tuple:</strong> Specialized subclasses of <cite>Object</cite> tailored to work with dictionaries, lists, and tuples, respectively. These classes extend the functionality of <cite>Object</cite> to provide additional methods specific to each data type.</p></li>
-<li><p><strong>jsify and unjsify Functions:</strong> Essential utilities for converting between native Python types and <cite>Object</cite> instances, allowing for seamless integration of JSON-like behavior in Python applications.</p></li>
-<li><p><strong>Decorators and Encoders:</strong> The library includes decorators like <cite>jsified_function</cite> to automatically manage JSON data within functions, and custom JSON encoders like <cite>ObjectEncoder</cite> to handle serialization of <cite>Object</cite> instances.</p></li>
-<li><p><strong>Exception Handling:</strong> A general-purpose <cite>AnyError</cite> exception is provided to facilitate robust error handling across the library’s functionalities.</p></li>
-<li><p><strong>String Conversion Tools:</strong> Utilities like <cite>stringcase</cite> enable easy conversion between common naming conventions (e.g., <cite>camelCase</cite> to <cite>snake_case</cite>), ensuring consistent data formatting throughout your application.</p></li>
+<li><p><a class="reference internal" href="#concepts"><span class="std std-ref">Concepts</span></a>
+- <a class="reference internal" href="#simplifiedobject"><span class="std std-ref">SimplifiedObject: Simple &amp; Safe Dot Access</span></a>
+- <a class="reference internal" href="#jsifyobjects"><span class="std std-ref">jsify Objects: Advanced Dynamic Wrapping</span></a>
+- <a class="reference internal" href="#undefined"><span class="std std-ref">Undefined: Error-Free Access for Missing Keys</span></a></p></li>
+<li><p><a class="reference internal" href="#advantages"><span class="std std-ref">Advantages</span></a>
+- <a class="reference internal" href="#why-simplifiedobject"><span class="std std-ref">Why SimplifiedObject?</span></a>
+- <a class="reference internal" href="#why-jsify"><span class="std std-ref">Why jsify?</span></a>
+- <a class="reference internal" href="#no-key-conflicts"><span class="std std-ref">No Key Conflicts</span></a></p></li>
 </ul>
 </section>
-<section id="use-cases">
-<h2>Use Cases:<a class="headerlink" href="#use-cases" title="Link to this heading"></a></h2>
-<p>The Jsify library is particularly valuable in the following scenarios:</p>
-<ul class="simple">
-<li><p><strong>API Development:</strong> Simplifies the process of working with JSON data returned from or sent to APIs, allowing for more intuitive data manipulation.</p></li>
-<li><p><strong>Data Transformation:</strong> Facilitates the conversion and processing of data across different formats and structures, making it easier to work with complex datasets.</p></li>
-<li><p><strong>Web Development:</strong> Offers a more JavaScript-like experience when working with data structures in Python, reducing the friction between client-side and server-side code.</p></li>
-<li><p><strong>Configuration Management:</strong> Allows for dynamic and nested configurations that can be easily accessed and modified using attribute-style access.</p></li>
-</ul>
 </section>
-<section id="getting-started">
-<h2>Getting Started:<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
-<p>To get started with Jsify, begin by installing the library and exploring its core components. The <cite>Object</cite> class and its associated utilities provide a strong foundation for managing JSON-like data in Python. Review the detailed documentation for each module to understand how to leverage the full potential of the library in your projects.</p>
-<p>The Jsify library is designed to be developer-friendly, providing intuitive interfaces and robust functionality to streamline the handling of JSON data in Python. Whether you are developing complex APIs, processing large datasets, or simply need a more dynamic way to work with data, Jsify is an essential tool in your Python toolkit.</p>
+<section id="concepts">
+<span id="id2"></span><h1>Concepts<a class="headerlink" href="#concepts" title="Link to this heading"></a></h1>
+<section id="key-object-types-simplifiedobject-vs-jsify-objects">
+<h2>Key Object Types: SimplifiedObject vs jsify objects<a class="headerlink" href="#key-object-types-simplifiedobject-vs-jsify-objects" title="Link to this heading"></a></h2>
+<p>jsify provides two main dynamic wrappers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code>: For simple dot-access with missing-attribute safety, modeled after Python’s <code class="docutils literal notranslate"><span class="pre">SimpleNamespace</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsify</span></code> wrappers (<code class="docutils literal notranslate"><span class="pre">Object</span></code>, <code class="docutils literal notranslate"><span class="pre">Dict</span></code>, <code class="docutils literal notranslate"><span class="pre">List</span></code>, etc): For deep, JavaScript-style dot/item access and automatic lazy wrapping.</p></li>
+</ul>
+<p>You can use either approach depending on your requirements. See below for precise behaviors.</p>
+</section>
+<section id="simplifiedobject-simple-safe-dot-access">
+<span id="simplifiedobject"></span><h2>SimplifiedObject: Simple &amp; Safe Dot Access<a class="headerlink" href="#simplifiedobject-simple-safe-dot-access" title="Link to this heading"></a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> is like an improved <code class="docutils literal notranslate"><span class="pre">SimpleNamespace</span></code>:</p>
+<ul class="simple">
+<li><p>Dot access for every key—missing attributes return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> instead of raising errors.</p></li>
+<li><p>Only the top-level dict is converted by default; nested dicts remain dicts unless you recursively wrap or use <code class="docutils literal notranslate"><span class="pre">loads_simplified</span></code> with an object hook to convert all levels.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify.simplify</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads_simplified</span><span class="p">,</span> <span class="n">Undefined</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;{&quot;user&quot;: {&quot;profile&quot;: null}}&#39;</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">loads_simplified</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Works: user exists (SimplifiedObject), profile is None (no error).</span>
+<span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No profile&quot;</span><span class="p">)</span>
+
+<span class="c1"># If &#39;profile&#39; is a dict and you want further dot access,</span>
+<span class="c1"># use loads_simplified on nested dicts as needed.</span>
+</pre></div>
+</div>
+<p>Missing attributes on a <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code> always return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>—not errors. However, deep safe chaining only works for dicts converted to <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code>.</p>
+<p><strong>Another Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;{&quot;a&quot;: 1, &quot;b&quot;: 2}&#39;</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">loads_simplified</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>  <span class="c1"># 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>  <span class="c1"># &lt;Undefined&gt;, no error</span>
+
+<span class="c1"># If obj.b is a dict, you must wrap it for dot access on its keys.</span>
+</pre></div>
+</div>
+</section>
+<section id="jsify-objects-advanced-dynamic-wrapping">
+<span id="jsifyobjects"></span><h2>jsify Objects: Advanced Dynamic Wrapping<a class="headerlink" href="#jsify-objects-advanced-dynamic-wrapping" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">jsify</span></code> turns dicts, lists, or tuples (even deeply nested) into JavaScript-style objects:</p>
+<ul class="simple">
+<li><p><strong>Blazing fast:</strong> Built on a C extension for top performance.</p></li>
+<li><p><strong>Lazy wrapping:</strong> Only wraps as you access, not eagerly.</p></li>
+<li><p><strong>Reflects changes</strong> in the original structure; wrappers are views, not copies.</p></li>
+<li><p><strong>Supports both dot and item access</strong>, just like in JavaScript.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;theme&quot;</span><span class="p">:</span> <span class="s2">&quot;dark&quot;</span><span class="p">},</span> <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Dot access</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">theme</span><span class="p">)</span>    <span class="c1"># &quot;dark&quot;</span>
+<span class="c1"># List access</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>          <span class="c1"># 2</span>
+
+<span class="c1"># Changes in the original dict are reflected in the wrapper</span>
+<span class="n">data</span><span class="p">[</span><span class="s2">&quot;settings&quot;</span><span class="p">][</span><span class="s2">&quot;theme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;light&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">theme</span><span class="p">)</span>    <span class="c1"># &quot;light&quot;</span>
+</pre></div>
+</div>
+<p><strong>Nested mutation example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">orig</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;bar&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>    <span class="c1"># 1</span>
+<span class="n">orig</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">][</span><span class="s2">&quot;bar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">)</span>    <span class="c1"># 2</span>
+</pre></div>
+</div>
+</section>
+<section id="undefined-error-free-access-for-missing-keys">
+<span id="undefined"></span><h2>Undefined: Error-Free Access for Missing Keys<a class="headerlink" href="#undefined-error-free-access-for-missing-keys" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Undefined</span></code> is a special singleton returned for any missing key or attribute on jsify wrappers or <code class="docutils literal notranslate"><span class="pre">SimplifiedObject</span></code>. It behaves like JavaScript’s <code class="docutils literal notranslate"><span class="pre">undefined</span></code>:</p>
+<ul class="simple">
+<li><p>All missing keys/attributes return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> when accessed on a jsify or SimplifiedObject wrapper.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Undefined</span></code> is safe to chain: any attribute/item access on it yields itself, and it is falsy in boolean checks.</p></li>
+<li><p>Note: You must use <code class="docutils literal notranslate"><span class="pre">jsify()</span></code> or <code class="docutils literal notranslate"><span class="pre">loads_simplified()</span></code> to get this behavior; plain dict/list/tuple will not auto-return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wrapped</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="p">{}})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">wrapped</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>  <span class="c1"># &lt;Undefined&gt;, never raises error</span>
+
+<span class="k">if</span> <span class="n">wrapped</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">email</span> <span class="ow">is</span> <span class="n">Undefined</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Email not available&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Boolean check:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">wrapped</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">notexisting</span><span class="o">.</span><span class="n">anything</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No value!&quot;</span><span class="p">)</span>  <span class="c1"># This line executes because Undefined is falsy</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="advantages">
+<span id="id3"></span><h1>Advantages<a class="headerlink" href="#advantages" title="Link to this heading"></a></h1>
+<section id="why-simplifiedobject">
+<span id="id4"></span><h2>Why SimplifiedObject?<a class="headerlink" href="#why-simplifiedobject" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Never raises exceptions for missing attributes—returns <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>.</p></li>
+<li><p>Cleaner code: no need for multiple checks or try/except blocks.</p></li>
+<li><p>Instantly converts JSON/dict to dot-access objects for convenient use.</p></li>
+<li><p>Can be used with the <code class="docutils literal notranslate"><span class="pre">object_hook</span></code> to recursively wrap dicts from JSON.</p></li>
+</ul>
+<p>See example above at <a class="reference internal" href="#simplifiedobject"><span class="std std-ref">SimplifiedObject: Simple &amp; Safe Dot Access</span></a>.</p>
+</section>
+<section id="why-jsify">
+<span id="id5"></span><h2>Why jsify?<a class="headerlink" href="#why-jsify" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Blazing fast C extension:</strong> Efficient even with very large or deeply nested data.</p></li>
+<li><p><strong>Lazy and reference-based:</strong> You see changes live, as objects are mutated.</p></li>
+<li><p><strong>Handles all nestings:</strong> Works for dicts, lists, tuples, and deep chains.</p></li>
+<li><p><strong>Safe chaining:</strong> Missing paths never error—just return <code class="docutils literal notranslate"><span class="pre">Undefined</span></code>.</p></li>
+<li><p><strong>JSON (de)serialization:</strong> Can automatically omit or include <code class="docutils literal notranslate"><span class="pre">Undefined</span></code> values.</p></li>
+</ul>
+<p>See example above at <a class="reference internal" href="#jsifyobjects"><span class="std std-ref">jsify Objects: Advanced Dynamic Wrapping</span></a>.</p>
+<p><strong>Example: Serialization</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify.json</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsified_dumps</span><span class="p">,</span> <span class="n">Undefined</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="n">Undefined</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jsified_dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>                  <span class="c1"># {&quot;a&quot;: 1, &quot;b&quot;: null}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jsified_dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">omit_undefined</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>  <span class="c1"># {&quot;a&quot;: 1, &quot;b&quot;: null, &quot;c&quot;: null}</span>
+</pre></div>
+</div>
+</section>
+<section id="no-key-conflicts">
+<span id="id6"></span><h2>No Key Conflicts<a class="headerlink" href="#no-key-conflicts" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Your data’s keys always take priority (e.g., <code class="docutils literal notranslate"><span class="pre">obj.items</span></code> gives the value of <code class="docutils literal notranslate"><span class="pre">&quot;items&quot;</span></code> in your dict, not the method).</p></li>
+<li><p>Use helper functions for classic methods: <code class="docutils literal notranslate"><span class="pre">jsified_items(obj)</span></code>, <code class="docutils literal notranslate"><span class="pre">jsified_update(obj,</span> <span class="pre">data)</span></code>, etc.</p></li>
+<li><p>Or unwrap with <code class="docutils literal notranslate"><span class="pre">unjsify(obj)</span></code> to get back the original dict and standard methods.</p></li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsify</span><span class="p">,</span> <span class="n">jsified_items</span><span class="p">,</span> <span class="n">unjsify</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="s2">&quot;DATA&quot;</span><span class="p">}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>                 <span class="c1"># &quot;DATA&quot; (your dict value)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">jsified_items</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>  <span class="c1"># dict items, e.g. [(&quot;items&quot;, &quot;DATA&quot;)]</span>
+
+<span class="c1"># Or get classic dict methods:</span>
+<span class="n">orig</span> <span class="o">=</span> <span class="n">unjsify</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">orig</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>        <span class="c1"># [(&#39;items&#39;, &#39;DATA&#39;)]</span>
+</pre></div>
+</div>
+<p><strong>Example: Key masking built-ins</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;update&quot;</span><span class="p">:</span> <span class="s2">&quot;NOT_A_METHOD&quot;</span><span class="p">}</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">jsify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>   <span class="c1"># &quot;NOT_A_METHOD&quot;</span>
+<span class="c1"># Still call classic update via helper:</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jsify</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsified_update</span>
+<span class="n">jsified_update</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># 5</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><a class="reference internal" href="installation.html"><span class="doc">Next: Installation</span></a></p>
 </section>
 </section>
 
@@ -144,13 +286,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to jsify’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="jsify_vs_simple.html" class="btn btn-neutral float-right" title="Choosing Between Jsify and SimpleNamespace" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Zbigniew Rajewski.</p>
+    <p>&#169; Copyright 2025, Zbigniew Rajewski.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
