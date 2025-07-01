@@ -166,6 +166,10 @@ PyObject *Object_getattr(PyObject *self, PyObject *name) {
                 strcmp(attr, "__doc__") == 0) {
                 return PyObject_GenericGetAttr((PyObject *)Py_TYPE(self), name);
             }
+            if (strcmp(attr, "__orig__") == 0) {
+                Py_INCREF(((Object *)self)->orig);
+                return ((Object *)self)->orig;
+            }
 
             // In Object_getattro:
             PyMethodDef *methdef = find_methoddef_in_type(Py_TYPE(self), attr);
@@ -243,11 +247,12 @@ static PyObject *Object_format(PyObject *self, PyObject *args) {
     return PyObject_Format(((Object *)self)->orig, format_spec);
 }
 
-// __dir__
 static PyObject *Object_dir(PyObject *self, PyObject *Py_UNUSED(args)) {
-    PyObject *dir = ((Object *)self)->orig;
-    Py_INCREF(dir);
-    return dir;
+    PyObject *orig = ((Object *)self)->orig;
+    if (!orig) {
+        return PyList_New(0);  // empty list if no orig
+    }
+    return PyObject_Dir(orig);  // returns list of attribute names (strings)
 }
 
 // ============================

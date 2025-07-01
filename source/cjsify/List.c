@@ -141,29 +141,6 @@ static PyObject *List_sort(PyObject *self, PyObject *args, PyObject *kwargs) {
     return result;
 }
 
-PyObject *List_dir(PyObject *self, PyObject *Py_UNUSED(args)) {
-    Py_ssize_t len = PyObject_Size(((Object *)self)->orig);
-    if (len < 0)
-        return NULL;
-
-    PyObject *dir = PyTuple_New(len);
-    if (!dir)
-        return NULL;
-
-    for (Py_ssize_t i = 0; i < len; ++i) {
-        char buf[32];
-        snprintf(buf, sizeof(buf), "%zd", i);
-        PyObject *str = PyUnicode_FromString(buf);
-        if (!str) {
-            Py_DECREF(dir);
-            return NULL;
-        }
-        PyTuple_SET_ITEM(dir, i, str);  // no INCREF needed
-    }
-
-    return dir;
-}
-
 // ============================
 // === Method tables ==========
 // ============================
@@ -180,7 +157,6 @@ static PyMethodDef List_methods[] = {
     {"reverse", (PyCFunction)List_reverse, METH_NOARGS, NULL},
     {"sort", (PyCFunction)(void(*)(void))List_sort, METH_VARARGS | METH_KEYWORDS, NULL},
     {"copy",(PyCFunction)Object_copy, METH_NOARGS, NULL},
-    {"__dir__", (PyCFunction)List_dir, METH_NOARGS, NULL},
     {"__getstate__", (PyCFunction)Object_getstate, METH_NOARGS, NULL},
     {"__setstate__", (PyCFunction)Object_setstate, METH_VARARGS, NULL},
     {NULL, NULL, 0, NULL}

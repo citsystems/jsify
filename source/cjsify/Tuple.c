@@ -43,7 +43,6 @@ static PyMethodDef Tuple_methods[] = {
     {"count", (PyCFunction)Tuple_count, METH_VARARGS, NULL},
     {"index", (PyCFunction)Tuple_index, METH_O, NULL},
     {"copy",(PyCFunction)Object_copy, METH_NOARGS, NULL},
-    {"__dir__", (PyCFunction)List_dir, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}
 };
 
