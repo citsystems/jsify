@@ -14,8 +14,9 @@ setup(
                 'source/cjsify/List.c',
                 'source/cjsify/Dict.c',
                 'source/cjsify/Iterator.c',
-                'source/cjsify/cjsify.c',
+                'source/cjsify/cjsify.c'
             ],
+            include_dirs=['source/cjsify']
         ),
     ],
     packages=find_packages("source"),
