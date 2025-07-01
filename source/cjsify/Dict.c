@@ -35,39 +35,60 @@ static int Dict_init(Dict *self, PyObject *args, PyObject *kwargs) {
 
 PySequenceMethods Dict_as_sequence = {};
 
-static PyObject *Dict_dir(PyObject *self, PyObject *Py_UNUSED(args)) {
-    static const char *attrs[] = {
-        "__class__",
-        "__name__",
-        "__module__",
-        "__doc__",
-        NULL
-    };
-    PyObject *list = PyList_New(0);
-    if (!list) return NULL;
+static PyObject* Dict_dir(PyObject *self, PyObject *noargs) {
+    static PyObject *static_attrs = NULL;
+    if (!static_attrs) {
+        static_attrs = PyList_New(0);
+        if (!static_attrs) return NULL;
 
-    for (const char **p = attrs; *p; p++) {
-        PyObject *name = PyUnicode_FromString(*p);
-        if (!name) {
-            Py_DECREF(list);
-            return NULL;
+        const char *names[] = {
+            "__class__", "__str__", "__repr__", "__bool__",
+            "__module__", "__name__", "__eq__"
+        };
+        for (int i = 0; i < (int)(sizeof(names)/sizeof(names[0])); i++) {
+            PyObject *s = PyUnicode_InternFromString(names[i]);
+            if (!s) return NULL;
+            PyList_Append(static_attrs, s);
+            Py_DECREF(s);
         }
-        if (PyList_Append(list, name) < 0) {
-            Py_DECREF(name);
-            Py_DECREF(list);
-            return NULL;
-        }
-        Py_DECREF(name);
+        Py_INCREF(static_attrs);
     }
-    return list;
+
+    PyObject *result = PyList_GetSlice(static_attrs, 0, PyList_Size(static_attrs));
+    if (!result) return NULL;
+
+    PyObject *orig = ((Dict *)self)->orig;
+    if (PyDict_Check(orig)) {
+        PyObject *keys = PyDict_Keys(orig);
+        if (!keys) {
+            Py_DECREF(result);
+            return NULL;
+        }
+
+        Py_ssize_t len = PyList_Size(keys);
+        for (Py_ssize_t i = 0; i < len; i++) {
+            PyObject *key = PyList_GetItem(keys, i);
+            if (PyUnicode_Check(key)) {
+                PyList_Append(result, key);
+            } else {
+                PyObject *strkey = PyObject_Str(key);
+                if (strkey) {
+                    PyList_Append(result, strkey);
+                    Py_DECREF(strkey);
+                }
+            }
+        }
+        Py_DECREF(keys);
+    }
+
+    return result;
 }
 
-// ============================
-// === Method tables ==========
-// ============================
+
 
 static PyMethodDef Dict_methods[] = {
     {"__dir__", (PyCFunction)Dict_dir, METH_NOARGS, NULL},
+    // inne metody
     {NULL, NULL, 0, NULL}
 };
 
@@ -83,7 +104,5 @@ PyTypeObject DictType = {
 
     .tp_methods = Dict_methods,
 
-    .tp_as_mapping = &Object_as_mapping,
-
-    .tp_getattro = (getattrofunc)Object_getattr
+    .tp_as_mapping = &Object_as_mapping
 };

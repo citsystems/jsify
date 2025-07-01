@@ -161,8 +161,10 @@ PyObject *Object_getattr(PyObject *self, PyObject *name) {
             if (strcmp(attr, "__class__") == 0) {
                 return (PyObject *)Py_TYPE(self);
             }
+            if (strcmp(attr, "__module__") == 0) {
+                return PyUnicode_FromString("cjsify");
+            }
             if (strcmp(attr, "__name__") == 0 ||
-                strcmp(attr, "__module__") == 0 ||
                 strcmp(attr, "__doc__") == 0) {
                 return PyObject_GenericGetAttr((PyObject *)Py_TYPE(self), name);
             }
@@ -174,7 +176,7 @@ PyObject *Object_getattr(PyObject *self, PyObject *name) {
             // In Object_getattro:
             PyMethodDef *methdef = find_methoddef_in_type(Py_TYPE(self), attr);
             if (methdef) {
-                return PyCFunction_NewEx(methdef, self, (PyObject *)Py_TYPE(self));
+                return PyCFunction_NewEx(methdef, self, NULL);
             }
 
             // Otherwise delegate to orig

@@ -28,7 +28,7 @@ static REDIRECT_TO_ORIG_METHOD_CALL_O_ARGS(PyObject *, List, _remove, "remove")
 // ============================
 
 // __getitem__
-PyObject *List_getitem(PyObject *self, PyObject *key) {
+static PyObject *List_getitem(PyObject *self, PyObject *key) {
     if (PyLong_Check(key)) {
         Py_ssize_t idx = PyLong_AsSsize_t(key);
         PyObject *orig = ((List *)self)->orig;
@@ -141,6 +141,52 @@ static PyObject *List_sort(PyObject *self, PyObject *args, PyObject *kwargs) {
     return result;
 }
 
+static PyObject* List_dir(PyObject *self, PyObject *noargs) {
+    // Statyczna lista stałych atrybutów – inicjalizowana raz
+    static PyObject *static_attrs = NULL;
+    if (!static_attrs) {
+        static_attrs = PyList_New(0);
+        if (!static_attrs) return NULL;
+
+        const char *names[] = {
+            "__class__", "__name__", "__doc__", "__module__",
+            "__class__", "__str__", "__repr__", "__dir__"
+        };
+        for (int i = 0; i < (int)(sizeof(names)/sizeof(names[0])); i++) {
+            PyObject *s = PyUnicode_InternFromString(names[i]);
+            if (!s) return NULL;
+            PyList_Append(static_attrs, s);
+            Py_DECREF(s);
+        }
+        Py_INCREF(static_attrs);
+    }
+
+    // Kopia stałej części
+    PyObject *result = PyList_GetSlice(static_attrs, 0, PyList_Size(static_attrs));
+    if (!result) return NULL;
+
+    // Dodaj indeksy
+    PyObject *orig = ((Object *)self)->orig;
+    if (PyList_Check(orig)) {
+        Py_ssize_t n = PyList_Size(orig);
+        for (Py_ssize_t i = 0; i < n; ++i) {
+            char buf[32];
+            snprintf(buf, sizeof(buf), "%zd", i);
+            PyObject *index_str = PyUnicode_FromString(buf);
+            if (!index_str) {
+                Py_DECREF(result);
+                return NULL;
+            }
+            PyList_Append(result, index_str);
+            Py_DECREF(index_str);
+        }
+    }
+
+    return result;
+}
+
+
+
 // ============================
 // === Method tables ==========
 // ============================
@@ -159,6 +205,7 @@ static PyMethodDef List_methods[] = {
     {"copy",(PyCFunction)Object_copy, METH_NOARGS, NULL},
     {"__getstate__", (PyCFunction)Object_getstate, METH_NOARGS, NULL},
     {"__setstate__", (PyCFunction)Object_setstate, METH_VARARGS, NULL},
+    {"__dir__", (PyCFunction)List_dir, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}
 };
 

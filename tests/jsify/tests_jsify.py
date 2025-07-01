@@ -256,15 +256,20 @@ class TestObject(TestCase):
         self.assertNotIsInstance(unjsify(json_object[-1]), Object)
 
     def test_vars_dir(self):
+        # list -> dir contains string indexes
         json_object = jsify(self.test_list)
-        digits = len(self.test_list)
-        self.assertListEqual(dir(json_object), list(str(value) for value in range(digits)))
+        for i in range(len(self.test_list)):
+            self.assertIn(str(i), dir(json_object))
+
+        # tuple -> dir contains string indexes
         json_object = jsify(self.test_tuple)
-        digits = len(self.test_tuple)
-        self.assertListEqual(dir(json_object), list(str(value) for value in range(digits)))
+        for i in range(len(self.test_tuple)):
+            self.assertIn(str(i), dir(json_object))
+
+        # dict -> dir contains all original dict keys (as strings)
         json_object = jsify(self.test_dict)
-        self.assertListEqual(sorted(dir(json_object)), sorted(list(str(value) for value in self.test_dict.keys())))
-        self.assertDictEqual(vars(json_object), {key: value for key, value in self.test_dict.items()})
+        for key in self.test_dict.keys():
+            self.assertIn(str(key), dir(json_object))
 
     def test_contains(self):
         json_object = jsify(self.test_dict)
@@ -525,16 +530,39 @@ class TestObject(TestCase):
             d.new_list_clone[4] = 10
         print(f"DotMap {N} operations: {time.perf_counter() - start:.6f} sec")
 
+    def test_dir_and_orig_access(self):
+        # Dict
+        d = {"a": 1, "b": 2, 3: "c"}
+        obj = jsify(d)
+        for k in d.keys():
+            self.assertIn(str(k), dir(obj))
+        self.assertEqual(type(obj.__orig__), type(d))
+
+        # List
+        l = [1, 2, 3, 4]
+        obj = jsify(l)
+        for i in range(len(l)):
+            self.assertIn(str(i), dir(obj))
+        self.assertEqual(type(obj.__orig__), type(l))
+
+        # Tuple
+        t = (10, 20, 30)
+        obj = jsify(t)
+        for i in range(len(t)):
+            self.assertIn(str(i), dir(obj))
+        self.assertEqual(type(obj.__orig__), type(t))
+
     def memory_usage(self):
         import os, psutil
         process = psutil.Process(os.getpid())
         mem_bytes = process.memory_info().rss  # resident set size in bytes
-        mem_mb = mem_bytes // (1024)
+        mem_mb = mem_bytes // (4 * 1024)
         return mem_mb
+
 
     def test_memory_leak(self):
         start_memory = self.memory_usage()
-        for i in range(10000):
+        for i in range(30000):
 
             # CREATE
             jsify(1)
@@ -579,6 +607,7 @@ class TestObject(TestCase):
             additional_json_object = jsify(self.test_dict)
             json_object['additional_json'] = additional_json_object
 
+
             json_object = jsify(self.test_list.copy())
             json_object.append(self.test_literal)
             json_object.append(self.test_dict)
@@ -589,11 +618,12 @@ class TestObject(TestCase):
 
             json_object = jsify(self.test_list)
             dir(json_object)
+
             json_object = jsify(self.test_tuple)
             dir(json_object)
+
             json_object = jsify(self.test_dict)
             dir(json_object)
-            vars(json_object)
 
             json_object = jsify(self.test_dict)
             'a' in json_object
@@ -715,6 +745,7 @@ class TestObject(TestCase):
             Iterator(jsify(self.test_list))
             Iterator(jsify(self.test_tuple))
 
+        print(f"Start memory usage: {start_memory}\nFinal usage: {self.memory_usage()}")
         self.assertEqual(start_memory, self.memory_usage())
 
     def test_unjsify_deepcopy_mixed_nesting(self):

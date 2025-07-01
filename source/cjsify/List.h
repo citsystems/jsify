@@ -10,5 +10,3 @@ typedef struct {
 
 // External type declaration
 extern PyTypeObject ListType;
-PyObject *List_dir(PyObject *self, PyObject *Py_UNUSED(args));
-PyObject *List_getitem(PyObject *self, PyObject *key);

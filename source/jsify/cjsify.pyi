@@ -132,7 +132,7 @@ class Tuple(Object):
         """
 
 
-class List(Object):
+class List(Object, list):
     """
     Jsify wrapper for Python lists enabling JavaScript-like attribute access and manipulation.
 
