@@ -19,6 +19,7 @@ static PyObject *Undefined_call(UndefinedObject *self, PyObject *args, PyObject 
 static PyObject *Undefined_getattr(UndefinedObject *self, PyObject *name) {
     if (PyUnicode_Check(name)) {
         const char *attr = PyUnicode_AsUTF8(name);
+        if (attr == NULL) return NULL;
         if (attr && attr[0] == '_' && attr[1] == '_' &&
             attr[strlen(attr) - 2] == '_' && attr[strlen(attr) - 1] == '_') {
 

@@ -155,6 +155,7 @@ static PyMethodDef* find_methoddef_in_type(PyTypeObject *type, const char *name)
 PyObject *Object_getattr(PyObject *self, PyObject *name) {
     if (PyUnicode_Check(name)) {
         const char *attr = PyUnicode_AsUTF8(name);
+        if (attr == NULL) return NULL;
         if (attr && attr[0] == '_' && attr[1] == '_' &&
             attr[strlen(attr) - 2] == '_' && attr[strlen(attr) - 1] == '_') {
 
@@ -166,7 +167,9 @@ PyObject *Object_getattr(PyObject *self, PyObject *name) {
             }
             if (strcmp(attr, "__name__") == 0 ||
                 strcmp(attr, "__doc__") == 0) {
-                return PyObject_GenericGetAttr((PyObject *)Py_TYPE(self), name);
+                PyObject *res = PyObject_GenericGetAttr((PyObject *)Py_TYPE(self), name);
+                SET_MISSING_EXCEPTION_IF_NULL(res, PyExc_AttributeError, "Attribute not found");
+                return res;
             }
             if (strcmp(attr, "__orig__") == 0) {
                 Py_INCREF(((Object *)self)->orig);
@@ -188,7 +191,9 @@ PyObject *Object_getattr(PyObject *self, PyObject *name) {
     if (item) return item;
 
     PyErr_Clear();
-    return PyObject_GenericGetAttr(self, name);
+    PyObject *res = PyObject_GenericGetAttr(self, name);
+    SET_MISSING_EXCEPTION_IF_NULL(res, PyExc_AttributeError, "Attribute not found");
+    return res;
 }
 
 // __setattr__

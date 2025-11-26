@@ -7,6 +7,7 @@
 #include "Dict.h"
 #include "List.h"
 #include "Tuple.h"
+#include "Macro.h"
 
 // ============================
 // === Basic object methods ===
@@ -46,23 +47,23 @@ static PyObject* Dict_dir(PyObject *self, PyObject *noargs) {
             "__module__", "__name__", "__eq__"
         };
         for (int i = 0; i < (int)(sizeof(names)/sizeof(names[0])); i++) {
-            PyObject *s = PyUnicode_InternFromString(names[i]);
-            if (!s) return NULL;
-            PyList_Append(static_attrs, s);
-            Py_DECREF(s);
+            PyObject *result = PyUnicode_InternFromString(names[i]);
+            if (!result) return NULL;
+            PyList_Append(static_attrs, result);
+            Py_DECREF(result);
         }
         Py_INCREF(static_attrs);
     }
 
     PyObject *result = PyList_GetSlice(static_attrs, 0, PyList_Size(static_attrs));
-    if (!result) return NULL;
+    if (!result) { RETURN_EXCEPTION(PyExc_RuntimeError, "Failed to slice __dir__ list"); }
 
     PyObject *orig = ((Dict *)self)->orig;
     if (PyDict_Check(orig)) {
         PyObject *keys = PyDict_Keys(orig);
         if (!keys) {
             Py_DECREF(result);
-            return NULL;
+            RETURN_EXCEPTION(PyExc_RuntimeError, "Failed to get dict keys");
         }
 
         Py_ssize_t len = PyList_Size(keys);

@@ -320,6 +320,8 @@ def simulate_pydevd_windows(obj, max_depth=4, _depth=0, seen=None):
     return out
 
 
+import jsify as jsify_mod
+
 obj = build_jsify_debug_test_objects()
 
 linux_pycharm_like_inspect(obj)

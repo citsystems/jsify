@@ -50,6 +50,7 @@ static PyObject *List_getitem(PyObject *self, PyObject *key) {
 
     if (PyUnicode_Check(key)) {
         const char *str = PyUnicode_AsUTF8(key);
+        if (str == NULL) return NULL;
         char *endptr;
         long index = strtol(str, &endptr, 10);
         if (*endptr == '\0') {
@@ -67,6 +68,7 @@ static PyObject *List_getitem(PyObject *self, PyObject *key) {
 
     // fallback to attribute lookup
     PyObject *value = PyObject_GenericGetAttr(((List *)self)->orig, key);
+    SET_MISSING_EXCEPTION_IF_NULL(value, PyExc_AttributeError, "Attribute not found");
     RETURN_JSIFIED(value);
 }
 

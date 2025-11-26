@@ -58,8 +58,7 @@ Py_DECREF(obj); \
 return orig;
 
 #define RETURN_JSIFIED(obj) \
-if (!obj) \
-        return NULL; \
+if (!obj) return NULL; \
 PyObject *jsified = jsify(obj); \
 Py_DECREF(obj); \
 return jsified;
@@ -87,3 +86,12 @@ PyObject *Py_##name(PyObject *Py_UNUSED(self), PyObject *args) { \
         return NULL; \
     return name(obj1, obj2, obj3); \
 }
+
+#define RETURN_EXCEPTION(exc_type, msg)  \
+    PyErr_SetString((exc_type), (msg));  \
+    return NULL;
+
+#define SET_MISSING_EXCEPTION_IF_NULL(val, exc_type, msg)   \
+    if ((val) == NULL)                          \
+        if (!PyErr_Occurred())                  \
+            PyErr_SetString((exc_type), (msg));
