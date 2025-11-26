@@ -129,7 +129,7 @@ class TestJsifyExamples(unittest.TestCase):
 
     # 9. Custom JSON Serialization
     def test_custom_json_serialization(self):
-        data = {'name': 'Alice', 'details': {'age': 30, 'nickname': Undefined}}
+        data = {'name': 'Alice', 'details_usdc': {'age': 30, 'nickname': Undefined}}
         obj = jsify(data)
         s1 = jsified_dumps(obj)
         self.assertIn('"name": "Alice"', s1)

@@ -218,11 +218,11 @@ print(isinstance(deep_raw, dict)) # True
 from jsify import jsify, Undefined
 from jsify.json import jsified_dumps
 
-data = {'name': 'Alice', 'details': {'age': 30, 'nickname': Undefined}}
+data = {'name': 'Alice', 'details_usdc': {'age': 30, 'nickname': Undefined}}
 obj = jsify(data)
 
-print(jsified_dumps(obj))  # {"name": "Alice", "details": {"age": 30}}
-print(jsified_dumps(obj, omit_undefined=False))  # {"name": "Alice", "details": {"age": 30, "nickname": null}}
+print(jsified_dumps(obj))  # {"name": "Alice", "details_usdc": {"age": 30}}
+print(jsified_dumps(obj, omit_undefined=False))  # {"name": "Alice", "details_usdc": {"age": 30, "nickname": null}}
 ```
 
 ---

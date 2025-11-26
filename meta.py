@@ -17,7 +17,7 @@ class Setup:
         self.description = "Jsify is a blazing-fast Python library powered by a C extension that transforms dictionaries, lists, and tuples into smart objects with JavaScript-style dot access (e.g., obj.key). It supports lazy, dynamic wrapping and safe, deep navigation where missing attributes return a special Undefined object instead of errors. Ideal for handling messy, deeply nested, or unpredictable JSON and Python data, Jsify enables seamless serialization and real-time, reference-based manipulation for clean and efficient code."
         self.long_description = long_description
         self.long_description_content_type = "text/markdown"
-        self.keywords = "jsify, python, json, dot notation, attribute access, javascript, objects, serialization, undefined, c extension, safe access"  # SEO keywords
+        self.keywords = "python, json, dot notation, attribute access, javascript, objects, serialization, undefined, c extension, safe access"  # SEO keywords
         self.url = "https://github.com/citsystems/jsify"  # Replace with the correct URL
         self.classifiers = [
             "Programming Language :: Python :: 3",
