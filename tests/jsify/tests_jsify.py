@@ -508,7 +508,7 @@ class TestObject(TestCase):
         print(f"Jsify {N} operations: {time.perf_counter() - start:.6f} sec")
         start = time.perf_counter()
         for n in range(N):
-            d = SimpleNamespace(self.test_dict)
+            d = SimpleNamespace(**self.test_dict)
             d.new_attribute = SimpleNamespace()
             d.new_attribute.new_subattribute = [1, 2, 3, 4, 5]
             d.new_list_clone = d.new_attribute.new_subattribute
