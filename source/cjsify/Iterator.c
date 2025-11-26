@@ -48,8 +48,15 @@ static PyObject *Iterator_iter(PyObject *self) {
     return self;
 }
 
-static PyObject *Iterator_iternext(PyObject *self) {
-    PyObject *next = PyIter_Next(((Iterator *)self)->iterator);
+static PyObject *Iterator_iternext(PyObject *self_obj) {
+    Iterator *self = (Iterator *)self_obj;
+
+    if (!self->iterator) {
+        PyErr_SetNone(PyExc_StopIteration);
+        return NULL;
+    }
+
+    PyObject *next = PyIter_Next(self->iterator);
     RETURN_JSIFIED(next);
 }
 

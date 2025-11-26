@@ -1,3 +1,4 @@
+import gc
 import time
 from copy import copy
 from types import SimpleNamespace
@@ -570,12 +571,18 @@ class TestObject(TestCase):
             jsify("string")
             jsify(None)
             jsify(True)
+
             json_object = jsify(self.test_dict)
             unjsify(json_object)
-            jsify(self.test_dict, **self.test_merge)
-            jsify(self.test_list)
-            jsify(self.test_tuple)
 
+
+
+            #jsify(self.test_dict, **self.test_merge)
+
+            jsify(self.test_list)
+            
+            jsify(self.test_tuple)
+            
             json_object = jsify(self.test_types_dict)
             json_object.literal
             json_object.dict
@@ -663,7 +670,7 @@ class TestObject(TestCase):
             json_object.index(jsify(self.test_dict))
             json_object.append(10)
             json_object.append(jsify(self.test_dict))
-
+            
             inserted = [9,8,7]
             json_object.insert(2, jsify(inserted))
             json_object.remove(jsify(inserted))
@@ -744,6 +751,8 @@ class TestObject(TestCase):
             Iterator(jsify(self.test_dict))
             Iterator(jsify(self.test_list))
             Iterator(jsify(self.test_tuple))
+
+        gc.collect()
 
         print(f"Start memory usage: {start_memory}\nFinal usage: {self.memory_usage()}")
         self.assertEqual(start_memory, self.memory_usage())

@@ -24,6 +24,7 @@ static PyObject *Undefined_getattr(UndefinedObject *self, PyObject *name) {
             attr[strlen(attr) - 2] == '_' && attr[strlen(attr) - 1] == '_') {
 
             if (strcmp(attr, "__class__") == 0) {
+                //Py_INCREF(Py_TYPE(self));
                 return (PyObject *)Py_TYPE(self);
             }
             if (strcmp(attr, "__dir__") == 0 ||
@@ -87,14 +88,13 @@ static PyObject* Undefined_dir(PyObject *self, PyObject *noargs) {
     if (!result) {
         result = PyList_New(0);
         if (!result) return NULL;
-        PyList_Append(result, PyUnicode_FromString("__class__"));
-        PyList_Append(result, PyUnicode_FromString("__str__"));
-        PyList_Append(result, PyUnicode_FromString("__repr__"));
-        PyList_Append(result, PyUnicode_FromString("__bool__"));
-        PyList_Append(result, PyUnicode_FromString("__module__"));
-        PyList_Append(result, PyUnicode_FromString("__name__"));
-        PyList_Append(result, PyUnicode_FromString("__eq__"));
-        PyList_Append(result, PyUnicode_FromString("__dir__"));
+        const char *names[] = {"__class__", "__str__", "__repr__", "__bool__",
+                               "__module__", "__name__", "__eq__", "__dir__"};
+        for (int i = 0; i < 8; i++) {
+            PyObject *s = PyUnicode_FromString(names[i]);
+            PyList_Append(result, s);
+            Py_DECREF(s);
+        }
         Py_INCREF(result);
     }
     Py_INCREF(result);
