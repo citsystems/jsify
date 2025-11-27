@@ -24,7 +24,7 @@ static PyObject *Undefined_getattr(UndefinedObject *self, PyObject *name) {
             attr[strlen(attr) - 2] == '_' && attr[strlen(attr) - 1] == '_') {
 
             if (strcmp(attr, "__class__") == 0) {
-                //Py_INCREF(Py_TYPE(self));
+                Py_INCREF(Py_TYPE(self));
                 return (PyObject *)Py_TYPE(self);
             }
             if (strcmp(attr, "__dir__") == 0 ||

@@ -575,12 +575,8 @@ class TestObject(TestCase):
             json_object = jsify(self.test_dict)
             unjsify(json_object)
 
-
-
-            #jsify(self.test_dict, **self.test_merge)
-
+            jsify(self.test_dict, **self.test_merge)
             jsify(self.test_list)
-            
             jsify(self.test_tuple)
             
             json_object = jsify(self.test_types_dict)
@@ -752,7 +748,9 @@ class TestObject(TestCase):
             Iterator(jsify(self.test_list))
             Iterator(jsify(self.test_tuple))
 
-        gc.collect()
+        for n in range(10):
+            gc.collect()
+            time.sleep(0.1)
 
         print(f"Start memory usage: {start_memory}\nFinal usage: {self.memory_usage()}")
         self.assertEqual(start_memory, self.memory_usage())
