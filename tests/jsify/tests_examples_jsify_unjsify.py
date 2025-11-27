@@ -8,7 +8,7 @@ from jsify import (
     List,
     Tuple,
     Iterator,
-    Undefined
+    Undefined, Int, Str, Float
 )
 
 
@@ -20,7 +20,10 @@ class TestJsifyDocExamples(unittest.TestCase):
         self.assertIsInstance(jsify(iter([1, 2])), Iterator)
         self.assertIsInstance(jsify((x for x in range(2))), Iterator)
         self.assertEqual(jsify(123), 123)
-        self.assertIsNone(jsify(None))
+        self.assertIsInstance(jsify(123), Int)
+        self.assertIsInstance(jsify("str"), Str)
+        self.assertIsInstance(jsify(123.3), Float)
+        self.assertEqual(jsify(None), Undefined)
 
     def test_jsify_nested_types(self):
         obj = jsify({"foo": [1, {"bar": 2}]})

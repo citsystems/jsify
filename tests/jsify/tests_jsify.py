@@ -563,7 +563,7 @@ class TestObject(TestCase):
 
     def test_memory_leak(self):
         start_memory = self.memory_usage()
-        for i in range(30000):
+        for i in range(300000):
 
             # CREATE
             jsify(1)

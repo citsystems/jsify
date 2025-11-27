@@ -23,9 +23,7 @@ class TestJsifiedIterator(unittest.TestCase):
         self.assertTrue(hasattr(item, "a"))
         self.assertEqual(item.a, 1)
         item2 = next(obj)
-        self.assertFalse(hasattr(item2, "a"))
-        with self.assertRaises(AttributeError):
-            _ = item2.a
+        self.assertTrue(item2.a == Undefined)
 
     def test_jsified_iterator_nested_jsification(self):
         it = iter([{"x": {"y": 5}}])
@@ -37,8 +35,7 @@ class TestJsifiedIterator(unittest.TestCase):
         it = iter([1])
         obj = jsify(it)
         item = next(obj)
-        with self.assertRaises(AttributeError):
-            _ = item.foo
+        self.assertEqual(item.foo, Undefined)
 
     def test_jsified_iterator_exhaustion_and_reuse(self):
         obj = jsify(iter([1, 2]))

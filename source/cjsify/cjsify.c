@@ -8,6 +8,7 @@
 #include "Dict.h"
 #include "List.h"
 #include "Iterator.h"
+#include "Literals.h"
 #include "Macro.h"
 
 PyObject *copy_module = NULL;
@@ -34,8 +35,41 @@ PyObject *jsify(PyObject *obj) {
     if (!obj)
         Py_RETURN_NONE;
 
-    if (obj == Py_None || obj == Undefined || PyLong_Check(obj) || PyFloat_Check(obj) || PyComplex_Check(obj) ||
-        PyUnicode_Check(obj) || PyBool_Check(obj) || PyObject_TypeCheck(obj, &ObjectType)) {
+    // None → Undefined
+    if (obj == Py_None) {
+        Py_INCREF(Undefined);
+        return Undefined;
+    }
+
+    // Undefined stays as-is
+    if (obj == Undefined) {
+        Py_INCREF(obj);
+        return obj;
+    }
+
+    // Int literal
+    if (PyLong_Check(obj)) {
+        return PyObject_CallFunctionObjArgs((PyObject *)&IntType, obj, NULL);
+    }
+
+    // Float literal
+    if (PyFloat_Check(obj)) {
+        return PyObject_CallFunctionObjArgs((PyObject *)&FloatType, obj, NULL);
+    }
+
+    // Str literal
+    if (PyUnicode_Check(obj)) {
+        return PyObject_CallFunctionObjArgs((PyObject *)&StrType, obj, NULL);
+    }
+
+    // Bool stays raw bool (not wrapped)
+    if (PyBool_Check(obj)) {
+        Py_INCREF(obj);
+        return obj;
+    }
+
+    // Already jsified
+    if (PyObject_TypeCheck(obj, &ObjectType)) {
         Py_INCREF(obj);
         return obj;
     }
@@ -70,8 +104,41 @@ PyObject *jsify_kwargs(PyObject *obj, PyObject *kwargs) {
     if (!obj)
         Py_RETURN_NONE;
 
-    if (obj == Py_None || obj == Undefined || PyLong_Check(obj) || PyFloat_Check(obj) || PyComplex_Check(obj) ||
-        PyUnicode_Check(obj) || PyBool_Check(obj) || PyObject_TypeCheck(obj, &ObjectType)) {
+    // None → Undefined
+    if (obj == Py_None) {
+        Py_INCREF(Undefined);
+        return Undefined;
+    }
+
+    // Undefined stays as-is
+    if (obj == Undefined) {
+        Py_INCREF(obj);
+        return obj;
+    }
+
+    // Int literal
+    if (PyLong_Check(obj)) {
+        return PyObject_CallFunctionObjArgs((PyObject *)&IntType, obj, NULL);
+    }
+
+    // Float literal
+    if (PyFloat_Check(obj)) {
+        return PyObject_CallFunctionObjArgs((PyObject *)&FloatType, obj, NULL);
+    }
+
+    // Str literal
+    if (PyUnicode_Check(obj)) {
+        return PyObject_CallFunctionObjArgs((PyObject *)&StrType, obj, NULL);
+    }
+
+    // Bool stays raw bool (not wrapped)
+    if (PyBool_Check(obj)) {
+        Py_INCREF(obj);
+        return obj;
+    }
+
+    // Already jsified
+    if (PyObject_TypeCheck(obj, &ObjectType)) {
         Py_INCREF(obj);
         return obj;
     }
@@ -640,6 +707,10 @@ PyMODINIT_FUNC PyInit_cjsify(void) {
     if (registerType(m, &ListType, "List") < 0) return NULL;
     if (registerType(m, &DictType, "Dict") < 0) return NULL;
     if (registerType(m, &IteratorType, "Iterator") < 0) return NULL;
+    if (registerType(m, &IntType, "Int") < 0) return NULL;
+    if (registerType(m, &FloatType, "Float") < 0) return NULL;
+    if (registerType(m, &StrType, "Str") < 0) return NULL;
+    if (registerType(m, &BoolType, "Bool") < 0) return NULL;
 
     return m;
 }

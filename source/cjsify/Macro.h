@@ -95,3 +95,22 @@ PyObject *Py_##name(PyObject *Py_UNUSED(self), PyObject *args) { \
     if ((val) == NULL)                          \
         if (!PyErr_Occurred())                  \
             PyErr_SetString((exc_type), (msg));
+
+#define DEFINE_LITERAL_TYPE(BaseType, NameStr, TypeVar)          \
+static PyObject *TypeVar##_getattro(PyObject *self, PyObject *name) {        \
+    PyObject *res = PyObject_GenericGetAttr(self, name);                     \
+    if (res) return res;                                                     \
+    PyErr_Clear();                                                           \
+    Py_INCREF(Undefined);                                                    \
+    return Undefined;                                                        \
+}                                                                            \
+                                                                             \
+PyTypeObject TypeVar = {                                                     \
+    PyVarObject_HEAD_INIT(NULL, 0)                                           \
+    .tp_name = NameStr,                                                      \
+    .tp_basicsize = sizeof(BaseType),                                        \
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,                    \
+    .tp_base = (PyTypeObject *)&BaseType,                                    \
+    .tp_getattro = TypeVar##_getattro                                        \
+};
+

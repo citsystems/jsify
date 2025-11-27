@@ -14,6 +14,7 @@ setup(
                 'source/cjsify/List.c',
                 'source/cjsify/Dict.c',
                 'source/cjsify/Iterator.c',
+                'source/cjsify/Literals.c',
                 'source/cjsify/cjsify.c'
             ],
             include_dirs=['source/cjsify']

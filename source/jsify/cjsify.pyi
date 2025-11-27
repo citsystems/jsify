@@ -361,6 +361,36 @@ class Undefined(Object):
 Undefined: Undefined
 
 
+class Int(int):
+    """
+    Literal int subclass: behaves like Python int,
+    but missing attributes return Undefined.
+    """
+    pass
+
+class Float(float):
+    """
+    Literal float subclass: behaves like Python float,
+    but missing attributes return Undefined.
+    """
+    pass
+
+class Str(str):
+    """
+    Literal string subclass: behaves like Python str,
+    but missing attributes return Undefined.
+    """
+    pass
+
+class Bool(bool):
+    """
+    Literal bool subclass: behaves like Python bool,
+    but missing attributes return Undefined.
+    """
+    pass
+
+
+
 def jsify(obj: Any) -> Any:
     """
     Wrap a Python object in a Jsify-compatible wrapper for JavaScript-like behavior.
